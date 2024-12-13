@@ -187,7 +187,9 @@
                 </div>
               </ng-container>
 
-              <ng-container *ngIf="field.input === 'upload' && field.value[0].url">
+              <ng-container
+                *ngIf="field.input === 'upload' && field.value.length === 1 && field.value[0].url"
+              >
                 <span *ngIf="!field.value[0].value">-</span>
                 <div class="post__media">
                   <img *ngIf="field.value[0].value" [src]="field.value[0].url" [alt]="post.title" />
@@ -259,8 +261,9 @@
           </ng-container>
         </ng-container>
       </ng-container>
-      <!-- Skeleton Loader -->
-      <div *ngIf="postChanged" class="loader">
+    </ng-container>
+    <ng-container *ngIf="postChanged">
+      <div class="loader">
         <div class="loader__post-head">
           <span class="loader__post-head-item"></span>
           <span class="loader__post-head-item"></span>
@@ -282,7 +285,6 @@
         </div>
         <div class="loader__content"></div>
       </div>
-      <!--  -->
     </ng-container>
   </ng-container>
 </div>

@@ -13,7 +13,7 @@ import { UshahidiPageTitleStrategy } from '@services';
 import { AccessDeniedComponent } from './shared/components/access-denied/access-denied.component';
 import { PostNotFoundComponent } from './post/post-not-found/post-not-found.component';
 import { PostNotAllowedComponent } from './post/post-not-allowed/post-not-allowed.component';
-import { RedirectByPostIdGuard } from './core/guards/redirect.post-id.guard';
+import { PostResolver } from './core/resolvers/post-resolver';
 import { DeploymentNotFoundComponent } from './shared/components/deployment-not-found/deployment-not-found.component';
 
 const routes: Routes = [
@@ -128,12 +128,12 @@ const routes: Routes = [
   ------------------------------------------------------*/
   {
     path: 'posts/:id',
-    canActivate: [RedirectGuard, RedirectByPostIdGuard],
+    canActivate: [RedirectGuard, PostResolver],
     component: PostNotFoundComponent,
   },
   {
     path: 'posts/:id',
-    canActivate: [RedirectGuard, RedirectByPostIdGuard],
+    canActivate: [RedirectGuard, PostResolver],
     component: PostNotAllowedComponent,
   },
   //-------------------------------------------
@@ -158,7 +158,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule],
   providers: [{ provide: TitleStrategy, useClass: UshahidiPageTitleStrategy }],
 })

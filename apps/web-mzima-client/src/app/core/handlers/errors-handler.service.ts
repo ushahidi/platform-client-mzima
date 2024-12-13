@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class ErrorsHandlerService implements ErrorHandler {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector, private translate: TranslateService) {}
 
   handleError(error: Error | HttpErrorResponse) {
     const translate = this.injector.get(TranslateService);
@@ -29,6 +29,9 @@ export class ErrorsHandlerService implements ErrorHandler {
 
   private showError(message: string) {
     const snackBar = this.injector.get(MatSnackBar);
-    snackBar.open(message, 'Close', { panelClass: ['error'], duration: 3000 });
+    snackBar.open(message, this.translate.instant('notify.snackbar.close'), {
+      panelClass: ['error'],
+      duration: 3000,
+    });
   }
 }

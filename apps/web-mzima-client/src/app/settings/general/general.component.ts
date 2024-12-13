@@ -182,25 +182,25 @@ export class GeneralComponent implements OnInit {
       const confirmed = await this.confirmModalService.open({
         title: this.translate.instant('notify.default.data_has_not_been_saved'),
         description: this.translate.instant('notify.default.proceed_warning'),
-        confirmButtonText: 'OK',
+        confirmButtonText: this.translate.instant('notify.confirm_modal.deleted.success_button'),
       });
       if (confirmed) {
         const currentFormValue = this.generalForm.value;
         if (JSON.stringify(currentFormValue) !== JSON.stringify(this.initialFormValue)) {
           this.generalForm.patchValue(this.initialFormValue);
           this.cancel.emit();
-          this.showSnackbar('Changes discarded successfully');
+          this.showSnackbar(this.translate.instant('notify.snackbar.changes_discarded'));
           this.changesMade = false;
         }
       } else {
         // nothing will happen, will remain in the current state
       }
     } else {
-      this.showSnackbar('No changes made yet');
+      this.showSnackbar(this.translate.instant('notify.snackbar.no_changes_made'));
     }
   }
   public showSnackbar(message: string) {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, this.translate.instant('notify.snackbar.close'), {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom',

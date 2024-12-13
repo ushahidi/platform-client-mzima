@@ -7,6 +7,8 @@ export interface ConfirmDialogData {
   buttonSuccess?: string;
   confirmButtonText?: string;
   cancelButtonText?: string;
+  isCancelDestructive?: boolean;
+  isConfirmNotDestructive?: boolean;
 }
 
 @Component({

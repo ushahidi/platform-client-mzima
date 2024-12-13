@@ -226,8 +226,10 @@ export class WebhookItemComponent implements OnInit {
 
   public async openDialog(): Promise<void> {
     const confirmed = await this.confirmModalService.open({
-      title: this.form.controls['name'].value + ' webhook will be deleted!',
-      description: '<p>This action cannot be undone.</p><p>Are you sure?</p>',
+      title: this.translate.instant('webhook.dialog.delete_warn_title', {
+        name: this.form.controls['name'].value,
+      }),
+      description: this.translate.instant('webhook.dialog.delete_warn_message'),
     });
 
     if (!confirmed) return;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from '@mzima-client/sdk';
+import { TranslateService } from '@ngx-translate/core';
 import { LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 import { Color } from '@swimlane/ngx-charts/lib/utils/color-sets';
 import { ManipulateType } from 'dayjs';
@@ -33,17 +34,22 @@ export class ActivityTimelineComponent implements OnInit {
   };
   public cumulativeTotal = true;
   public dateRange: ManipulateType;
-  public filters = [
-    { displayNane: 'Show all posts', value: '' },
-    { displayNane: 'Categories', value: 'tags' },
-    { displayNane: 'Survey', value: 'form' },
-    { displayNane: 'Status', value: 'status' },
-  ];
+  public filters: { displayName: string; value: string }[] = [];
 
-  constructor(private postsService: PostsService) {}
+  constructor(private postsService: PostsService, private translate: TranslateService) {
+    this.initializeFilters();
+  }
 
   ngOnInit() {
     this.getPostStatistics(this.selectedFilter);
+  }
+  private initializeFilters() {
+    this.filters = [
+      { displayName: this.translate.instant('activity.show_all_posts'), value: '' },
+      { displayName: this.translate.instant('activity.categories'), value: 'tags' },
+      { displayName: this.translate.instant('activity.survey'), value: 'form' },
+      { displayName: this.translate.instant('activity.status'), value: 'status' },
+    ];
   }
 
   public getPostStatistics(value: string) {

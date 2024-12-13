@@ -6,12 +6,12 @@
         <mat-select
           name="filter"
           disableOptionCentering
-          placeholder="Select range"
+          placeholder="{{ 'activity.select_range' | translate }}"
           [(ngModel)]="selectedRange"
           (selectionChange)="rangeChange($event)"
         >
           <mat-option [value]="filter.value" *ngFor="let filter of ranges">
-            {{ filter.displayNane }}
+            {{ filter.displayName }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -22,12 +22,12 @@
         <mat-select
           name="filter"
           disableOptionCentering
-          placeholder="Select filter"
+          placeholder="{{ 'activity.select_filter' | translate }}"
           [(ngModel)]="selectedFilter"
           (selectionChange)="change($event)"
         >
           <mat-option [value]="filter.value" *ngFor="let filter of filters">
-            {{ filter.displayNane }}
+            {{ filter.displayName }}
           </mat-option>
         </mat-select>
       </mat-form-field>

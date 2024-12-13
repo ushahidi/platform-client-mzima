@@ -12,9 +12,9 @@ const routes: Routes = [
   {
     path: 'update/:id',
     component: DataSourceItemComponent,
-    data: { breadcrumb: 'Data Source' },
+    data: { breadcrumb: 'nav.data_source' },
   },
-  { path: 'create', component: DataSourceItemComponent, data: { breadcrumb: 'Data Source' } },
+  { path: 'create', component: DataSourceItemComponent, data: { breadcrumb: 'nav.data_source' } },
 ];
 
 @NgModule({

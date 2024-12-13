@@ -45,7 +45,7 @@
               <mat-form-field appearance="outline">
                 <input matInput type="email" formControlName="email" />
                 <mat-error *ngIf="profileForm.controls['email'].errors">
-                  <p>Email must be a valid email address</p>
+                  <p>{{ 'user.valid.fields.email must be valid' | translate }}</p>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -65,7 +65,7 @@
                   <mat-form-field appearance="outline">
                     <input matInput type="password" formControlName="password" />
                     <mat-error *ngIf="profileForm.controls['password'].errors">
-                      <p>Password must be at least 8 characters long</p>
+                      <p>{{ 'user.password_length' | translate }}</p>
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -85,9 +85,11 @@
                       "
                     >
                       <p *ngIf="profileForm.controls['password'].errors">
-                        Password must be at least 8 characters long
+                        {{ 'user.password_length' | translate }}
                       </p>
-                      <p *ngIf="profileForm.hasError('notSame')">Passwords do not match</p>
+                      <p *ngIf="profileForm.hasError('notSame')">
+                        {{ 'user.password_match' | translate }}
+                      </p>
                     </mat-error>
                   </mat-form-field>
                 </div>

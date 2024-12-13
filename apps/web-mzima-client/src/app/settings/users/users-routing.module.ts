@@ -9,9 +9,9 @@ const routes: Routes = [
   {
     path: 'update/:id',
     component: UserItemComponent,
-    data: { breadcrumb: 'Update user' },
+    data: { breadcrumb: 'user.update_user' },
   },
-  { path: 'create', component: UserItemComponent, data: { breadcrumb: 'Create user' } },
+  { path: 'create', component: UserItemComponent, data: { breadcrumb: 'user.create_user' } },
 ];
 
 @NgModule({

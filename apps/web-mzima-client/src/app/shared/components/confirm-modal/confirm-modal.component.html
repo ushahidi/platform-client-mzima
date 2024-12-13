@@ -38,15 +38,15 @@
     </mzima-client-button>
     <ng-container *ngIf="!data.buttonSuccess">
       <mzima-client-button
-        fill="outline"
-        color="secondary"
+        [fill]="data.isCancelDestructive ? 'solid' : 'outline'"
+        [color]="data.isCancelDestructive ? 'danger' : 'secondary'"
         [mat-dialog-close]="false"
         [data-qa]="'btn-confirm-cancel'"
       >
         {{ data.cancelButtonText || ('app.cancel' | translate) }}
       </mzima-client-button>
       <mzima-client-button
-        color="danger"
+        [color]="data.isConfirmNotDestructive ? 'primary' : 'danger'"
         [mat-dialog-close]="true"
         [data-qa]="'btn-confirm-delete'"
       >

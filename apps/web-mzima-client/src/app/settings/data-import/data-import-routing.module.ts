@@ -10,7 +10,7 @@ const routes: Routes = [
     path: 'results',
     component: ImportResultsComponent,
     data: {
-      breadcrumb: 'Results',
+      breadcrumb: 'nav.results',
     },
   },
 ];

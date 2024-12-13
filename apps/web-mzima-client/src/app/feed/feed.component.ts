@@ -2,7 +2,14 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
+import {
+  ActivatedRoute,
+  Params,
+  Router,
+  NavigationEnd,
+  ResolveEnd,
+  ResolveStart,
+} from '@angular/router';
 import { Location } from '@angular/common';
 import { Permissions } from '@enums';
 import { searchFormHelper } from '@helpers';
@@ -21,7 +28,9 @@ import {
   PostResult,
   PostStatus,
   postHelpers,
+  apiHelpers,
 } from '@mzima-client/sdk';
+import _ from 'lodash';
 
 enum FeedMode {
   Preview = 'PREVIEW',
@@ -63,6 +72,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
   public isLoading: boolean;
+  public isDefaultFilters: boolean;
+  public userIsSearchingPostsByKeyword: number;
   public atLeastOnePostExists: boolean;
   public noPostsYet: boolean = false;
   public loadingMorePosts: boolean;
@@ -103,6 +114,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public urlFromRouteTrigger: string;
   public urlAfterInteractionWithFilters: string;
   private postRequests: Subscription[] = [];
+  public showPostLoader: boolean = false;
+  public isloadingIdMode: boolean = false;
 
   constructor(
     protected override router: Router,
@@ -128,6 +141,19 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       sessionService,
       breakpointService,
     );
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof ResolveStart) {
+        if (this.mode === FeedMode.Preview) {
+          this.isloadingIdMode = true;
+        }
+        this.showPostLoader = true;
+        this.activeCard.slideOutHandler();
+      }
+      if (ev instanceof ResolveEnd) {
+        this.showPostLoader = false;
+        this.isloadingIdMode = false;
+      }
+    });
 
     this.checkDesktop();
     this.setupFeedDefaultFilters();
@@ -227,7 +253,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         }
         if (this.mode === FeedMode.Id) {
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
-          if (this.userEvent === 'load') {
+          if (this.userEvent === 'load' && !this.isDesktop) {
             //----------------------------------
             localStorage.setItem('feedview_postObj', JSON.stringify({}));
             //----------------------------------
@@ -277,8 +303,21 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     ----------------------------------------------*/
     this.postsService.isLoadingPosts$.pipe(untilDestroyed(this)).subscribe({
       next: (isLoading: boolean) => {
-        // Get end of post load directly from the posts API, use it to set is loading state to false
-        this.isLoading = isLoading;
+        // ---------------
+        this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
+          next: (currentUser) => {
+            // Check if default filters is on or not to display "no posts" messages accordingly
+            this.isDefaultFilters = this.getDefaultFilters(currentUser.role as string);
+            // ---------------
+            // Check if default filters is on or not to display "no posts" messages accordingly
+            const searchPostsByKeyword = localStorage.getItem('USH_searchPostByKeyword') as string;
+            this.userIsSearchingPostsByKeyword = searchPostsByKeyword?.length;
+            // ---------------
+            // Get end of post load directly from the posts API, use it to set is loading state to false
+            this.isLoading = isLoading;
+          },
+        });
+        // ---------------
       },
     });
 
@@ -335,7 +374,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       this.masonryUpdateOnModeSwitch({ userEvent: 'resize' });
       //-----------------------------------
       const valueFromPageURL = this.idModePageFromRouter(this.router.url);
-      this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: valueFromPageURL }).resizeHandler({});
+      this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: valueFromPageURL }).resizeHandler();
       //-----------------------------------
       this.activeCard.scrollToView();
     });
@@ -396,8 +435,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       .on(EventType.UpdatedPost)
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: () => {
-          this.refreshPost();
+        next: (post) => {
+          this.refreshPost(post);
         },
       });
 
@@ -405,8 +444,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       .on(EventType.RefreshPosts)
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: () => {
-          this.refreshPost();
+        next: (post) => {
+          this.refreshPost(post);
         },
       });
 
@@ -438,7 +477,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   private getPosts({ params, loadMore }: { params: any; loadMore?: boolean }): void {
     // Call the posts service, keeping the subscription for later
     const postRequestSubscription = this.postsService
-      .getPosts('', { ...params, ...this.activeSorting })
+      .getPosts('', {
+        ...params,
+        only: apiHelpers.ONLY.NEEDED_POSTS_LIST_PROPERTIES,
+        ...this.activeSorting,
+      })
       .subscribe({
         next: (data) => {
           this.posts = loadMore ? [...this.posts, ...data.results] : data.results;
@@ -515,13 +558,68 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     },
   };
 
+  public getDefaultFilters(isUserLoggedIn: string) {
+    /* --------------------------------------------
+      Goal: To help us know about the DEFAULT state
+      of individual filters ALL AT ONCE, so that we 
+      can use it to "make decisions" for anything
+      relating to DEFAULT FILTERS on the UI.
+    ---------------------------------------------*/
+    const filtersObj = JSON.parse(localStorage.getItem('USH_filters') as string);
+
+    const filtersDefaultStatus = {
+      // ---------------
+      surveys: JSON.parse(localStorage.getItem('USH_allSurveysChecked') as string),
+      // ---------------
+      source: _.isEqual(filtersObj.source, [
+        'web',
+        'mobile',
+        'email',
+        'sms',
+        'twitter',
+        'ussd',
+        'whatsapp',
+      ]),
+      // ---------------
+      status: isUserLoggedIn
+        ? _.isEqual(filtersObj.status, ['published', 'draft'])
+        : _.isEqual(filtersObj.status, ['published']),
+      // ---------------
+      categories: _.isEqual(filtersObj.tags, []) || filtersObj.tags === '',
+      // ---------------
+      date_range:
+        filtersObj.date === '' ||
+        _.isEqual(filtersObj.date, {
+          start: '',
+          end: '',
+        }),
+      // ---------------
+      location:
+        filtersObj.center_point === '' ||
+        _.isEqual(filtersObj.center_point, {
+          location: {
+            lat: null,
+            lng: null,
+          },
+          distance: 1,
+        }) ||
+        _.isEqual(filtersObj.center_point, {
+          location: {},
+          distance: 1,
+        }),
+      // ---------------
+    };
+
+    return Object.values(filtersDefaultStatus).every((filterType) => filterType === true);
+  }
+
   public showPostDetails(post: PostResult): void {
     //---------------------------
     this.onlyModeUIChanged = true;
     //---------------------------
     this.userEvent = 'click';
     this.navigateTo().idMode.view({ id: post.id });
-    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).clickHandler({ post });
+    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).loadHandler({ id: post.id });
   }
 
   public navigateTo = () => {
@@ -711,7 +809,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
         this.modal({ showOn: 'TabletAndBelow' })
           .idMode({ page: 'view' })
-          .clickHandler({ post: firstPostOnCurrentPage });
+          .loadHandler({ id: firstPostOnCurrentPage.id });
       }
     }
   };
@@ -725,9 +823,15 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
   public changePostsStatus(status: string): void {
     if (status === PostStatus.Published) {
-      const uncompletedPosts: PostResult[] = this.selectedPosts.filter(
-        (post: PostResult) => !postHelpers.isAllRequiredCompleted(post),
-      );
+      const uncompletedPosts: PostResult[] = this.selectedPosts.filter((post: PostResult) => {
+        if (post.post_content) {
+          return !postHelpers.isAllRequiredCompleted(post);
+        } else {
+          return this.postsService.getById(post.id).subscribe((fetchedPost: PostResult) => {
+            return !postHelpers.isAllRequiredCompleted(fetchedPost);
+          });
+        }
+      });
 
       if (uncompletedPosts.length > 0) {
         this.showMessage(
@@ -879,13 +983,14 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       if (switchButtonValue === FeedMode.Id) {
         this.modal({ showOn: 'TabletAndBelow' })
           .idMode({ page: 'view' })
-          .clickHandler({ post: firstPostOnCurrentPage });
+          .loadHandler({ id: firstPostOnCurrentPage.id });
       }
     }
   }
 
-  refreshPost() {
+  refreshPost(post: PostResult) {
     this.getPosts({ params: this.params });
+    this.showPostDetails(post);
     this.activeCard.scrollCountHandler({ task: 'startCount' });
   }
 
@@ -900,7 +1005,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     //---------------------------
     this.userEvent = 'click';
     this.navigateTo().idMode.edit({ id: post.id });
-    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).clickHandler({ post });
+    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).loadHandler({ id: post.id });
   }
 
   public modal({ showOn }: { showOn: 'TabletAndBelow' }) {
@@ -908,14 +1013,13 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       // Note: SM_Screen means what we say is "tablet and below"
       idMode: ({ page }: { page: IdModePage }) => {
         return {
-          clickHandler: ({ post }: { post: PostResult }) => {
-            if (showOn === 'TabletAndBelow') {
-              if (page === 'view') this.openModal({ post }).forView();
-              if (page === 'edit') this.openModal({ post }).forEdit();
-            }
-          },
           loadHandler: ({ id }: { id: number }) => {
-            if (showOn === 'TabletAndBelow') {
+            // This is used temporarily in the slide-out function
+            localStorage.setItem('feedview_postObj', JSON.stringify({ id }));
+
+            if (page === 'not-found' || page === 'not-allowed') {
+              this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
+            } else if (showOn === 'TabletAndBelow' && !this.isDesktop) {
               this.postsService.getById(id).subscribe({
                 next: (fetchedPost: PostResult) => {
                   if (page === 'view') this.openModal({ post: fetchedPost }).forView();
@@ -926,16 +1030,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                       this.navigateTo().idMode.PostNotAllowed({ id: fetchedPost.id });
                     }
                   }
-                  if (page === 'not-allowed') {
-                    this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
-                  }
                 },
                 error: (err) => {
                   if (err.status === 404) {
-                    if (page === 'not-found') {
-                      this.navigateTo().idMode.postNotFound({ id });
-                      this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
-                    }
+                    this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page: 'not-found' });
                   }
                 },
               });
@@ -943,13 +1041,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           },
           // To be used inside of a window resize event listener
           // eslint-disable-next-line no-empty-pattern
-          resizeHandler: ({}) => {
-            // Simulate card click on RESIZE
+          resizeHandler: () => {
             if (showOn === 'TabletAndBelow') {
               if (this.mode === FeedMode.Id) {
                 if (window.innerWidth >= 1024) {
                   this.postDetailsModal?.close();
-                  // console.log(this.dialog.openDialogs);
                 } else {
                   if (this.dialog.openDialogs.length) {
                     for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
@@ -972,11 +1068,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                     if (page === 'view') this.openModal({ post: postFromStorage }).forView();
                     if (page === 'edit') this.openModal({ post: postFromStorage }).forEdit();
                     if (page === 'not-found' || page === 'not-allowed')
-                      this.openModal({ post: postFromStorage }).forPostNotFoundOrNotAllowed({
+                      this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({
                         page,
                       });
                   }
-                  // console.log(this.dialog.openDialogs);
                 }
               }
             }
@@ -1018,12 +1113,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             this.postDetailsModal.componentInstance.post = configRemainder;
         }
       }
-
-      // Regardless of device size, save post result from/on card click
-      // Saving it will be useful for when we need to be able to trigger modal open/close on resize
-      post = page === 'view' || page === 'edit' ? post : {};
-      localStorage.setItem('feedview_postObj', JSON.stringify(post));
-
       // Smaller devices only - what happens after modal is closed
       // Note: [mat-dialog-close]="false" in the html of the modal takes care of closing the modal
       this.postDetailsModal?.afterClosed().subscribe((data) => {
@@ -1065,7 +1154,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   private showMessage(message: string, type: string, duration = 3000) {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, this.translate.instant('notify.snackbar.close'), {
       panelClass: [type],
       duration,
     });

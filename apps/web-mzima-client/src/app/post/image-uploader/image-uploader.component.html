@@ -59,7 +59,7 @@
     </mat-form-field>
     <mat-error>
       <p *ngIf="captionControl?.hasError('specialCharacters')">
-        This field contains special characters
+        {{ 'post.media.special_char' | translate }}
       </p>
     </mat-error>
   </div>

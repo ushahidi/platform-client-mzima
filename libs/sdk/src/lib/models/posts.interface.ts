@@ -116,6 +116,7 @@ export interface PostResult {
   user?: PostPropertiesUser;
   post_content?: PostContent[];
   enabled_languages: PostEnabledLanguages;
+  post_media?: any;
 }
 
 interface PostTag {

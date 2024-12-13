@@ -162,12 +162,16 @@
 }
 
 .posts-empty {
-  width: 100%;
   display: block;
-  margin: 20vh 0;
+  max-width: 400px;
+  margin: 7vh auto;
+  padding: 20px 10px;
   font-size: 16px;
   line-height: 1.5;
   text-align: center;
+  background: var(--color-light);
+  border-radius: 3px;
+  border: 1px solid var(--color-neutral-30);
 }
 
 .load-more {

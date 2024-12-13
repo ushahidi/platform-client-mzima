@@ -17,9 +17,9 @@
         [ngClass]="{ 'feed-page__results-info__dim': !posts.length }"
         [attr.data-qa]="'feed-page-results'"
       >
-        <ng-container *ngIf="!posts.length && isLoading"
-          >Loading posts in {{ mode }} mode...</ng-container
-        >
+        <ng-container *ngIf="!posts.length && isLoading">{{
+          'post.loading_posts' | translate : { mode: mode }
+        }}</ng-container>
         <ng-container *ngIf="posts.length || (!posts.length && !isLoading)">
           {{ 'app.current_results' | translate }}
           {{ postCurrentLength }}
@@ -200,9 +200,17 @@
       </div>
     </div>
   </ng-container>
+  <div *ngIf="isloadingIdMode" class="main main--loader main__details-or-edit">
+    <div class="loader loader--border">
+      <div *ngFor="let single of postsSkeleton" class="loader--border loader--skeleton"></div>
+    </div>
+    <div class="loader--border">
+      <app-spinner class="loader--spinner"></app-spinner>
+    </div>
+  </div>
 
   <!-- Posts content -->
-  <ng-container *ngIf="!isLoading">
+  <ng-container *ngIf="!isLoading && !isloadingIdMode">
     <div
       class="main"
       [ngClass]="{
@@ -212,9 +220,28 @@
       [attr.data-qa]="'posts'"
     >
       <!-- No posts -->
-      <ng-container *ngIf="!posts.length">
-        <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>
-      </ng-container>
+      <span *ngIf="!posts.length" class="posts-empty">
+        <ng-container *ngIf="isDefaultFilters">
+          <!-- No posts 1a: When there are no posts at all in the deployment or there no posts because none can be viewed by a user due to the permissions they have  -->
+          <ng-container *ngIf="!userIsSearchingPostsByKeyword">
+            {{ 'post.no_posts_yet' | translate }}
+          </ng-container>
+          <!-- No posts 1b: Keyword search (when default filters is on) -->
+          <ng-container *ngIf="userIsSearchingPostsByKeyword">
+            {{ 'post.no_posts_match_search' | translate }}
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="!isDefaultFilters">
+          <!-- No posts 2a: When there's no posts matching user's filter selection/combination -->
+          <ng-container *ngIf="!userIsSearchingPostsByKeyword">
+            {{ 'post.no_posts_match_your_current_filters' | translate }}
+          </ng-container>
+          <!-- No posts 2b: Keyword search (when not in default filters) -->
+          <ng-container *ngIf="userIsSearchingPostsByKeyword">
+            {{ 'post.no_posts_match_search_plus_filter' | translate }}
+          </ng-container>
+        </ng-container>
+      </span>
       <!-- When there are posts -->
       <ng-container *ngIf="posts.length">
         <div
@@ -247,7 +274,7 @@
                 ngxMasonryItem
                 [feedView]="true"
                 (edit)="editPost(post)"
-                (refresh)="refreshPost()"
+                (refresh)="refreshPost(post)"
                 (deleted)="postDeleted([post])"
                 (click)="showPostDetails(post)"
                 [selectable]="isBulkOptionsVisible && !isLocked(post)"
@@ -298,13 +325,18 @@
             'post-list__scroll': mode === FeedMode.Id
           }"
         >
+          <!-- Display loader while post is resolving -->
+          <div *ngIf="showPostLoader && isDesktop && mode === FeedMode.Id">
+            <div class="loader--border">
+              <app-spinner class="loader--spinner"></app-spinner>
+            </div>
+          </div>
           <!-- Router outlet here is only for Desktop, the modal popup for small devices is in .ts file -->
-          <router-outlet *ngIf="isDesktop && mode === FeedMode.Id"></router-outlet>
+          <router-outlet *ngIf="!showPostLoader && mode === FeedMode.Id"></router-outlet>
         </div>
       </ng-container>
     </div>
   </ng-container>
-
   <!-- Loader -->
   <ng-container *ngIf="isLoading">
     <div

@@ -23,6 +23,7 @@ export const enum EventType {
   StopExportPolling = 'STOP_EXPORT_POLLING',
   ExportDone = 'EXPORT_DONE',
   DisplayTranslatedPost = 'DISPLAY_TRANSLATED_POST',
+  StatusChange = 'STATUS_CHANGE',
 }
 
 export interface BusEvent<T = any> {

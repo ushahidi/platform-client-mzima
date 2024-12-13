@@ -10,6 +10,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { TwitterService } from '../../core/services/twitter.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-twitter-widget',
@@ -28,6 +29,7 @@ export class TwitterWidgetComponent implements OnInit, OnChanges {
     private readonly _elementRef: ElementRef,
     private readonly twitterService: TwitterService,
     private readonly _changeDetectorRef: ChangeDetectorRef,
+    private translate: TranslateService,
   ) {}
 
   public ngOnInit(): void {
@@ -79,7 +81,7 @@ export class TwitterWidgetComponent implements OnInit, OnChanges {
         this.isTwitterScriptLoading = false;
         if (!this.tweet) {
           this.isTwitterFailed = true;
-          this.loadingFailed.emit('Tweet failed to load');
+          this.loadingFailed.emit(this.translate.instant('app.tweet_failed_to_load'));
         }
       }, 30000);
     });
