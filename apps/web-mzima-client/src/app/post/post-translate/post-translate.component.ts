@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { LanguageInterface, PostResult, PostsService } from '@mzima-client/sdk';
 import { EventBusService, EventType } from '@services';
@@ -121,7 +121,11 @@ export class PostTranslateComponent implements OnInit {
       .flatMap((task: any) => task.fields)
       .filter((field: any) => this.isTranslateableContent(field))
       .forEach((field: any) => {
-        newForm.addControl(field.key, new FormControl(''));
+        if (field.type === 'title' || field.type === 'description') {
+          newForm.addControl(field.key, new FormControl('', Validators.required));
+        } else {
+          newForm.addControl(field.key, new FormControl(''));
+        }
         const translation = this.getTranslationValue(field);
         if (translation) {
           newForm.get(field.key)?.setValue(translation);
