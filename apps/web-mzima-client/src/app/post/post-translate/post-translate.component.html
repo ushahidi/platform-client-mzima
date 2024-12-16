@@ -12,14 +12,18 @@
   <mat-icon icon svgIcon="close"></mat-icon>
 </mzima-client-button>
 
-<strong mat-dialog-title [data-qa]="'lang-modal-title'"
-  >{{ isTranslateMode ? 'Translate post to ' + activeLanguage.name : 'Translate post' }}
+<strong *ngIf="!isTranslateMode" mat-dialog-title [data-qa]="'lang-modal-title'"
+  >{{ 'translations.translate_post' | translate }}
+</strong>
+
+<strong *ngIf="isTranslateMode" mat-dialog-title [data-qa]="'lang-modal-title'"
+  >{{ 'translations.translate_post_to' | translate : { language: activeLanguage.name } }}
 </strong>
 
 <div mat-dialog-content>
   <ng-container *ngIf="!isTranslateMode; else translate">
     <div class="select-language" *ngIf="enabledLanguages.length > 0">
-      <p>Available translations (select to see post):</p>
+      <p>{{ 'translations.available_languages' | translate }}</p>
       <mat-form-field appearance="outline" class="feed-page__control">
         <mat-select
           name="language"
@@ -35,7 +39,7 @@
       </mat-form-field>
     </div>
     <div *ngIf="post.allowed_privileges.includes('update')">
-      <h3 class="list-label">Select a language to translate to, or edit:</h3>
+      <h3 class="list-label">{{ 'translations.select_translate_edit' | translate }}</h3>
       <ul role="list" class="types-list">
         <li mat-ripple role="listitem" class="type-item" *ngIf="defaultLanguage">
           <mzima-client-button
@@ -44,7 +48,7 @@
             class="type-item__checkbox"
             [disabled]="true"
           >
-            {{ defaultLanguage.name }} (Default language)
+            {{ defaultLanguage.name }} ({{ 'translations.default_language' | translate }})
           </mzima-client-button>
         </li>
         <li mat-ripple role="listitem" class="type-item" *ngFor="let language of languages">
@@ -72,12 +76,14 @@
                 >{{ field?.translations[activeLanguage.code]?.label || field?.label }}
               </mat-label>
               <div class="translate-post__original">
-                <div><i>Text in original language:</i></div>
+                <div>
+                  <i>{{ 'translations.text_in_original' | translate }}</i>
+                </div>
                 <div>
                   <p>{{ getOriginalValue(field) }}</p>
                 </div>
               </div>
-              <span class="field-label">Add your translation below:</span>
+              <span class="field-label">{{ 'translations.add_translation' | translate }}</span>
               <ng-container *ngIf="field.input === 'text' && field.type === 'title'">
                 <span class="color-accent">*</span>
                 <mat-form-field appearance="outline">
