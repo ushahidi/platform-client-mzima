@@ -18,7 +18,7 @@
 
 <div mat-dialog-content>
   <ng-container *ngIf="!isTranslateMode; else translate">
-    <div class="select_language" *ngIf="enabledLanguages.length > 0">
+    <div class="select-language" *ngIf="enabledLanguages.length > 0">
       <p>Available translations (select to see post):</p>
       <mat-form-field appearance="outline" class="feed-page__control">
         <mat-select
@@ -34,8 +34,8 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="fields-list" *ngIf="post.allowed_privileges.includes('update')">
-      <h3 class="field-label">Select a language to translate to, or edit:</h3>
+    <div *ngIf="post.allowed_privileges.includes('update')">
+      <h3 class="list-label">Select a language to translate to, or edit:</h3>
       <ul role="list" class="types-list">
         <li mat-ripple role="listitem" class="type-item" *ngIf="defaultLanguage">
           <mzima-client-button
@@ -63,91 +63,81 @@
   </ng-container>
 
   <ng-template mat-dialog-content #translate>
-    <div class="form-row" *ngIf="post.allowed_privileges.includes('update')">
-      <div class="translate_post">
-        <form class="translate_post__edit" [formGroup]="translateForm">
-          <div class="translate_post__fields" *ngFor="let task of post.post_content">
-            <ng-container *ngFor="let field of task.fields">
-              <div class="form-row" *ngIf="isTranslateableContent(field)">
-                <mat-label
-                  >{{ field?.translations[activeLanguage.code]?.label || field?.label }}
-                </mat-label>
-                <div class="translate_post__original">
-                  <div><i>Text in original language:</i></div>
-                  <div>
-                    <p>{{ getOriginalValue(field) }}</p>
-                  </div>
-                </div>
-                <div class="translate_post__translation">
-                  <span class="field-label">Add your translation below:</span>
-                  <ng-container *ngIf="field.input === 'text' && field.type === 'title'">
-                    <span class="color-accent">*</span>
-                    <mat-form-field appearance="outline">
-                      <input matInput name="title" id="title" [formControlName]="field.key" />
-                    </mat-form-field>
-                  </ng-container>
-                  <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
-                    <span class="color-accent">*</span>
-                    <mat-form-field appearance="outline">
-                      <textarea
-                        matInput
-                        name="description"
-                        id="description"
-                        rows="3"
-                        [formControlName]="field.key"
-                      ></textarea>
-                    </mat-form-field>
-                  </ng-container>
-                  <ng-container *ngIf="field.input === 'textarea'">
-                    <mat-form-field appearance="outline">
-                      <textarea
-                        matInput
-                        name="'field.id'"
-                        id="'field.id'"
-                        [formControlName]="field.key"
-                      ></textarea>
-                    </mat-form-field>
-                  </ng-container>
-                  <ng-container
-                    *ngIf="
-                      field.input === 'text' &&
-                      field.type !== 'title' &&
-                      field.type !== 'description'
-                    "
-                  >
-                    <mat-form-field appearance="outline">
-                      <input
-                        matInput
-                        name="'field.id'"
-                        id="'field.id'"
-                        [formControlName]="field.key"
-                    /></mat-form-field>
-                  </ng-container>
-                  <ng-container *ngIf="field.input === 'markdown'">
-                    <mat-form-field appearance="outline">
-                      <textarea
-                        matInput
-                        name="'field.id'"
-                        id="'field.id'"
-                        [formControlName]="field.key"
-                      ></textarea>
-                    </mat-form-field>
-                  </ng-container>
-                  <mat-error
-                    *ngIf="
-                      translateForm.get(field.key)?.invalid && translateForm.get(field.key)?.touched
-                    "
-                  >
-                    <p *ngIf="translateForm.get(field.key)?.hasError('required')">
-                      {{ 'post.modify.errors.required' | translate : { label: field.label } }}
-                    </p>
-                  </mat-error>
+    <div class="translate-post" *ngIf="post.allowed_privileges.includes('update')">
+      <form class="" [formGroup]="translateForm">
+        <div class="translate-post__fields" *ngFor="let task of post.post_content">
+          <ng-container *ngFor="let field of task.fields">
+            <div class="form-row" *ngIf="isTranslateableContent(field)">
+              <mat-label
+                >{{ field?.translations[activeLanguage.code]?.label || field?.label }}
+              </mat-label>
+              <div class="translate-post__original">
+                <div><i>Text in original language:</i></div>
+                <div>
+                  <p>{{ getOriginalValue(field) }}</p>
                 </div>
               </div>
-            </ng-container>
-          </div>
-        </form>
-      </div>
+              <span class="field-label">Add your translation below:</span>
+              <ng-container *ngIf="field.input === 'text' && field.type === 'title'">
+                <span class="color-accent">*</span>
+                <mat-form-field appearance="outline">
+                  <input matInput name="title" id="title" [formControlName]="field.key" />
+                </mat-form-field>
+              </ng-container>
+              <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
+                <span class="color-accent">*</span>
+                <mat-form-field appearance="outline">
+                  <textarea
+                    matInput
+                    name="description"
+                    id="description"
+                    rows="3"
+                    [formControlName]="field.key"
+                  ></textarea>
+                </mat-form-field>
+              </ng-container>
+              <ng-container *ngIf="field.input === 'textarea'">
+                <mat-form-field appearance="outline">
+                  <textarea
+                    matInput
+                    name="'field.id'"
+                    id="'field.id'"
+                    [formControlName]="field.key"
+                  ></textarea>
+                </mat-form-field>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  field.input === 'text' && field.type !== 'title' && field.type !== 'description'
+                "
+              >
+                <mat-form-field appearance="outline">
+                  <input matInput name="'field.id'" id="'field.id'" [formControlName]="field.key"
+                /></mat-form-field>
+              </ng-container>
+              <ng-container *ngIf="field.input === 'markdown'">
+                <mat-form-field appearance="outline">
+                  <textarea
+                    matInput
+                    name="'field.id'"
+                    id="'field.id'"
+                    [formControlName]="field.key"
+                  ></textarea>
+                </mat-form-field>
+              </ng-container>
+              <mat-error
+                *ngIf="
+                  translateForm.get(field.key)?.invalid && translateForm.get(field.key)?.touched
+                "
+              >
+                <p *ngIf="translateForm.get(field.key)?.hasError('required')">
+                  {{ 'post.modify.errors.required' | translate : { label: field.label } }}
+                </p>
+              </mat-error>
+            </div>
+          </ng-container>
+        </div>
+      </form>
     </div>
 
     <div mat-dialog-actions align="end">
