@@ -765,7 +765,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   private updatePost(postId: number, postData: any) {
-    console.log(postData);
     this.postsService.update(postId, postData).subscribe({
       next: ({ result }) => {
         this.postsService.unlockPost(postId).subscribe();
