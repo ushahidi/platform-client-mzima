@@ -300,7 +300,6 @@ export class PostEditPage {
     this.requireApproval = this.selectedSurvey?.require_approval;
     this.color = this.selectedSurvey?.color;
     this.tasks = this.selectedSurvey?.tasks;
-    console.log(this.selectedSurvey);
     const fields: any = {};
     for (const task of this.tasks ?? []) {
       task.fields
