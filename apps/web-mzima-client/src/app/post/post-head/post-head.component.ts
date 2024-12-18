@@ -168,7 +168,7 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
     });
   }
   public showTranslationsIcon() {
-    const languagesAvailabe = this.post?.enabled_languages?.available;
+    const languagesAvailabe = this.post?.enabled_languages?.available?.length > 0;
     return !this.hideTranslationsIcon && (languagesAvailabe || this.editable);
   }
 }
