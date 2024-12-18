@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
 import { LanguageInterface, PostResult, PostsService } from '@mzima-client/sdk';
 import { EventBusService, EventType } from '@services';
 import { UntilDestroy } from '@ngneat/until-destroy';
@@ -54,7 +53,7 @@ export class PostTranslateComponent implements OnInit {
       type: EventType.DisplayTranslatedPost,
       payload: event.value,
     });
-    this.closeModal();
+    this.closeModal({ displayLanguage: event.value, post: this.post });
   }
   saveTranslation() {
     this.translateForm.disable();
