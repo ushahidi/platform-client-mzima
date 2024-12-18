@@ -14,7 +14,9 @@ export class PostTranslatedComponent {
   constructor(private languageService: LanguageService) {}
 
   public getLanguageName(code: string) {
-    return this.languageService.getLanguages().find((lang) => lang.code === code)?.name || code;
+    return (
+      this.languageService.getEntityLanguages().find((lang) => lang.code === code)?.name || code
+    );
   }
 
   originalPost() {
