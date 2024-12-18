@@ -72,7 +72,10 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
   underReview() {
     this.postsService.updateStatus(this.post.id, PostStatus.Draft).subscribe((res) => {
       this.post = res.result;
-      this.statusChanged.emit();
+      this.eventBusService.next({
+        type: EventType.StatusChange,
+        payload: this.post,
+      });
     });
   }
 
@@ -81,7 +84,10 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
       if (postHelpers.isAllRequiredCompleted(post)) {
         this.postsService.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
           this.post = res.result;
-          this.statusChanged.emit();
+          this.eventBusService.next({
+            type: EventType.StatusChange,
+            payload: this.post,
+          });
         });
       } else {
         this.showMessage(this.translate.instant('notify.post.unfinished_post_task'), 'error', 5000);
@@ -100,7 +106,10 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
   archive() {
     this.postsService.updateStatus(this.post.id, PostStatus.Archived).subscribe((res) => {
       this.post = res.result;
-      this.statusChanged.emit();
+      this.eventBusService.next({
+        type: EventType.StatusChange,
+        payload: this.post,
+      });
     });
   }
 
