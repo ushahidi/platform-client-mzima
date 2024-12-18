@@ -169,7 +169,6 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
   }
   public showTranslationsIcon() {
     const languagesAvailabe = this.post?.enabled_languages?.available;
-    const hideIcon = this.hideTranslationsIcon && this.feedView;
-    return !hideIcon && (languagesAvailabe || this.editable);
+    return !this.hideTranslationsIcon && (languagesAvailabe || this.editable);
   }
 }
