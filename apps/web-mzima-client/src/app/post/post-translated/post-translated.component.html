@@ -4,11 +4,13 @@
       <mat-icon class="icon" icon svgIcon="translate"></mat-icon>
     </div>
     <div>
-      <h3>Translated from {{ getLanguageName(baseLanguage) }}</h3>
+      <h3>
+        {{
+          'translations.translated_to' | translate : { language: getLanguageName(displayLanguage) }
+        }}
+      </h3>
       <p>
-        This post was translated from {{ getLanguageName(baseLanguage) }} to your selected language
-        {{ getLanguageName(displayLanguage) }}.
-        <a (click)="openTranslations()" class="link-blue">Change language</a>
+        {{ 'translations.viewing_translated' | translate }}
       </p>
       <mzima-client-button
         class="original-post"
@@ -20,8 +22,11 @@
         iconPosition="first"
       >
         <mat-icon iconPrefix svgIcon="eye-open"></mat-icon>
-        See original
+        {{ 'translations.view_original' | translate }}
       </mzima-client-button>
+      <a (click)="openTranslations()" class="link-blue">{{
+        'translations.change_lang' | translate
+      }}</a>
     </div>
   </div>
 </ng-container>
