@@ -1,12 +1,15 @@
 <app-header (back)="backNavigation()" title="{{!postId ? 'Create' : 'Edit'}} post"></app-header>
 
 <ion-content class="ion-padding-horizontal ion-padding-top page">
-  <ng-container *ngIf="!surveyList.length">
+  <ng-container *ngIf="!surveyList.length && !postId">
     <p>{{'app.loading' | translate}}</p>
+  </ng-container>
+  <ng-container *ngIf="postId && !selectedSurvey">
+    <p>{{'app.loading_post' | translate}}</p>
   </ng-container>
 
   <ng-container *ngIf="surveyList.length && !form">
-    <ion-title class="list-title">Select a survey</ion-title>
+    <ion-title class="list-title">{{'app.select_survey' | translate}} </ion-title>
     <ion-list class="list">
       <ion-item
         class="list-item"
@@ -27,9 +30,13 @@
     [disabled]="!!postId"
     [(ngModel)]="selectedSurveyId"
     (ngModelChange)="loadForm()"
-    *ngIf="form"
+    *ngIf="form && !postId"
   >
   </app-select>
+  <ion-title class="list-title survey-title" *ngIf="selectedSurvey&& postId">
+    {{selectedSurvey.name}}</ion-title
+  >
+
   <form
     class="form-post-create"
     novalidate
