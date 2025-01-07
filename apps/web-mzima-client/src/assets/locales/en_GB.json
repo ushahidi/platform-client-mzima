@@ -978,7 +978,7 @@
       "locked_tooltip": "This post is being edited by someone else. Please try again later."
 
     },
-    "post_not_authorized": "You are not authorized to perform this action on this post.",
+    "post_not_authorized": "You are not authorised to perform this action on this post.",
     "modify": {
       "intro": "Select survey:",
       "no_task_values": "There are currently no saved values for this task.",
