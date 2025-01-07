@@ -57,12 +57,12 @@ export class OnboardingComponent implements AfterViewInit {
           this.router.navigate(['/settings']);
         }
 
-        // if (this.onboardingSteps[data.order].dynamic) {
-        //   setTimeout(() => {
-        //     this.customTourService.updateHighlightedElements();
-        //     this.isHidden = false;
-        //   }, 1000);
-        // }
+        if (this.onboardingSteps[data.order].dynamic) {
+          setTimeout(() => {
+            this.customTourService.updateHighlightedElements();
+            this.isHidden = false;
+          }, 1000);
+        }
       },
     });
 
