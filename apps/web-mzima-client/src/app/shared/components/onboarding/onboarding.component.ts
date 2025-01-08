@@ -97,14 +97,14 @@ export class OnboardingComponent implements AfterViewInit {
       next: () => this.initOnboarding(),
     });
 
-    this.eventBusService.on(EventType.FeedPostsLoaded).subscribe({
-      next: () => {
-        setTimeout(() => {
-          this.customTourService.updateHighlightedElements();
-          this.isHidden = false;
-        }, 100);
-      },
-    });
+    // this.eventBusService.on(EventType.FeedPostsLoaded).subscribe({
+    //   next: () => {
+    //     setTimeout(() => {
+    //       this.customTourService.updateHighlightedElements();
+    //       this.isHidden = false;
+    //     }, 100);
+    //   },
+    // });
 
     this.sessionService.isFiltersVisible$.pipe(untilDestroyed(this)).subscribe({
       next: (isFiltersVisible) => {
