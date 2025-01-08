@@ -104,6 +104,7 @@ export class OnboardingComponent implements AfterViewInit {
     //       this.isHidden = false;
     //     }, 100);
     //   },
+    //
     // });
 
     this.sessionService.isFiltersVisible$.pipe(untilDestroyed(this)).subscribe({
