@@ -88,9 +88,15 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         this.postId = Number(params['id']);
       }
     });
+
+    //map View
     if (this.postFromModal) {
       this.post = this.postFromModal;
       this.postChanged = false;
+
+      //assign post id and get survey
+      this.postId = this.post.id;
+      this.getSurvey();
     } else {
       this.dataSubscription = this.route.data.subscribe((data) => {
         this.post = data['post'];
