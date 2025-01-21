@@ -24,7 +24,7 @@
   position: fixed;
 }
 .button-group {
-  bottom: 90px;
+  bottom: calc(90px + env(safe-area-inset-bottom, 0));
   position: fixed;
   right: var(--ion-padding);
   z-index: 1000;
