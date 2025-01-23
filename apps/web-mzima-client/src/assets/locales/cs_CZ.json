@@ -2162,15 +2162,19 @@
     "i_agree": "Souhlasím se <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">zásadami ochrany osobních údajů</a> Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Obchodní podmínky</a>."
   },
   "translations": {
+    "available_languages": "Available translations (select to see post):",
+    "translate_post": "Translate post",
+    "translate_post_to": "Translate post to {{language}}",
     "languages": "Jazyky",
     "language": "Jazyk",
     "default": "výchozí",
+    "default_language": "Original language",
+    "text_in_original": "Text in original language:",
     "translation_default": "(default)",
     "translate_field": "Přeložit pole",
     "survey_select_default": "Vyberte výchozí jazyk pro tento průzkum",
     "category_select_default": "Vyberte výchozí jazyk pro tuto kategorii",
     "error_translation_exists": "Tento jazyk nemůžete vybrat, protože pro něj již existuje překlad.",
-    "edit_default_text": "Text ve výchozím jazyce",
     "edit_placeholder": "Sem napište překlad",
     "add_translation": "Přidejte svůj překlad níže:",
     "survey_name_required": "Je vyžadován překlad názvu průzkumu",
@@ -2184,7 +2188,12 @@
     "add_a_language": "Přidat jazyk",
     "error_no_default": "Před přidáním nového překladu musíte určit výchozí jazyk.",
     "select_language": "Vyberte jazyk, do kterého chcete přidat překlad",
-    "default_lang_info": "Toto je jazyk, který se použije, pokud nejsou k dispozici žádné překlady pro jazyk, který uživatel nastavil pro nasazení."
+    "select_translate_edit": "Select a language to translate to, or edit:",
+    "default_lang_info": "Toto je jazyk, který se použije, pokud nejsou k dispozici žádné překlady pro jazyk, který uživatel nastavil pro nasazení.",
+    "translated_to": "Translated to {{language}}",
+    "viewing_translated":"You are viewing a translated version of this post.",
+    "view_original":"View original post",
+    "change_lang": "Change language"
   },
   "languages": {
     "ach": "Acoli",
