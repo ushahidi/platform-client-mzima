@@ -51,17 +51,23 @@
             {{ defaultLanguage.name }} ({{ 'translations.default_language' | translate }})
           </mzima-client-button>
         </li>
-        <li mat-ripple role="listitem" class="type-item" *ngFor="let language of languages">
-          <mzima-client-button
-            fill="clear"
-            color="secondary"
-            class="type-item__checkbox"
+        <ng-container *ngFor="let language of languages">
+          <li
+            mat-ripple
+            role="listitem"
+            class="type-item"
             *ngIf="language.code !== defaultLanguage?.code"
-            (buttonClick)="selectLanguage($event, language)"
           >
-            {{ language.name }}
-          </mzima-client-button>
-        </li>
+            <mzima-client-button
+              fill="clear"
+              color="secondary"
+              class="type-item__checkbox"
+              (buttonClick)="selectLanguage($event, language)"
+            >
+              {{ language.name }}
+            </mzima-client-button>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </ng-container>

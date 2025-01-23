@@ -706,13 +706,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.form.value[field.key]?.map((fieldValue: any) => fieldValue.value) || [];
                 break;
               default:
-                const postField = this.post.post_content[index].fields.find(
-                  (f: any) => f.key === field.key,
-                );
+                if (this.post?.post_content) {
+                  const postField = this.post.post_content[index].fields.find(
+                    (f: any) => f.key === field.key,
+                  );
+                  value.translations = postField?.value?.translations || [];
+                }
                 value.value = this.form.value[field.key] || null;
-                value.translations = postField?.value?.translations || [];
             }
-
             return {
               ...field,
               value,
@@ -731,6 +732,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     try {
       await this.preparationData();
     } catch (error: any) {
+      console.log(error);
       this.form.enable();
       this.submitted = false;
       this.showMessage(error, 'error');

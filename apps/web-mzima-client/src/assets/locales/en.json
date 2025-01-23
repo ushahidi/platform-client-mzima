@@ -2168,7 +2168,7 @@
     "languages": "Languages",
     "language": "Language",
     "default": "default",
-    "default_language": "Default language",
+    "default_language": "Original language",
     "text_in_original": "Text in original language:",
     "translation_default": "(default)",
     "translate_field": "Translate field",

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LanguageInterface, PostResult, PostsService } from '@mzima-client/sdk';
-import { EventBusService, EventType } from '@services';
+import { EventBusService, EventType, SessionService } from '@services';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
@@ -34,6 +34,7 @@ export class PostTranslateComponent implements OnInit {
     private eventBusService: EventBusService,
     private snackBar: MatSnackBar,
     private matDialogRef: MatDialogRef<PostTranslateComponent>,
+    private session: SessionService,
   ) {}
 
   ngOnInit(): void {
@@ -43,8 +44,13 @@ export class PostTranslateComponent implements OnInit {
     this.enabledLanguages = this.languages.filter((lang) =>
       this.post.enabled_languages?.available?.includes(lang.code),
     );
-    this.defaultLanguage = this.languages.find((lang) => lang.code === this.post.base_language);
+    const siteLanguage = this.session.getSiteConfigurations().language || 'en';
+    this.post.base_language = this.post.base_language || siteLanguage;
+    this.defaultLanguage =
+      this.languages.find((lang) => lang.code === this.post.base_language) ||
+      this.languages.find((lang) => lang.code === 'en');
   }
+
   public closeModal(ref?: any): void {
     this.matDialogRef.close(ref);
   }
