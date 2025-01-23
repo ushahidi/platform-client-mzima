@@ -25,11 +25,14 @@ import {
   SurveysService,
 } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
+import { untilDestroyed } from '@ngneat/until-destroy';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import { LanguageService } from '../../core/services/language.service';
+import { PostTranslateComponent } from '../post-translate/post-translate.component';
 
 @Component({
   selector: 'app-post-details',
@@ -51,6 +54,8 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
   public postChanged: boolean;
+  public displayLanguage: string;
+
   public post: PostResult;
   private dataSubscription: Subscription;
   constructor(
@@ -66,6 +71,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private surveyService: SurveysService,
     protected sanitizer: DomSanitizer,
     private eventBusService: EventBusService,
+    private languageService: LanguageService,
   ) {
     super(sessionService, breakpointService);
     this.getUserData();
@@ -86,6 +92,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         //----------------------
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
         this.postId = Number(params['id']);
+        this.translatePost();
       }
     });
 
@@ -103,6 +110,16 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         if (this.post) this.getSurvey();
       });
     }
+  }
+  translatePost() {
+    this.eventBusService
+      .on(EventType.DisplayTranslatedPost)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (language) => {
+          this.displayLanguage = language.code;
+        },
+      });
   }
 
   loadData(): void {}
@@ -319,5 +336,28 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
   public getDate(value: any, format: string): string {
     return dateHelper.getDateWithTz(value, format);
+  }
+
+  public openTranslatePost() {
+    const dialogRef = this.dialog.open(PostTranslateComponent, {
+      width: '100%',
+      maxWidth: '768px',
+      panelClass: ['modal', 'select-languages-modal'],
+      data: {
+        post: this.post,
+        languages: this.languageService.getEntityLanguages(),
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      if (response) {
+        this.post = response.post;
+        this.displayLanguage = response.displayLanguage.code;
+      }
+    });
+  }
+
+  public displayOriginalPost() {
+    this.displayLanguage = '';
   }
 }

@@ -61,6 +61,7 @@ export interface PostPropertiesInterface {
   locks?: any[];
   data_source_message_id?: string;
   allowed_privileges: string[];
+  enabled_languages: PostEnabledLanguages;
 }
 
 export interface PostPropertiesUser {
@@ -80,6 +81,8 @@ export enum PostStatus {
 }
 
 export interface PostResult {
+  translations: any;
+  base_language: string;
   allowed_privileges: string[];
   author_email?: string;
   author_realname?: string;
@@ -112,6 +115,7 @@ export interface PostResult {
   form_id?: number;
   user?: PostPropertiesUser;
   post_content?: PostContent[];
+  enabled_languages: PostEnabledLanguages;
   post_media?: any;
 }
 
@@ -125,6 +129,7 @@ interface PostForm {
   url: string;
   description?: string;
   name?: string;
+  translations: any;
 }
 
 export interface PostContent {
@@ -177,4 +182,9 @@ export interface PostContentField {
   translations: any[];
   type: string;
   value?: any;
+}
+
+export interface PostEnabledLanguages {
+  default: string;
+  available: string[];
 }

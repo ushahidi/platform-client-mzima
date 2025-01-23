@@ -565,11 +565,12 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   async preparationData(): Promise<any> {
-    for (const task of this.tasks) {
+    for (const [index, task] of this.tasks.entries()) {
       task.fields = await Promise.all(
         task.fields.map(
           async (field: { key: string | number; input: string; type: string; options: any }) => {
             let value: any = {
+              translations: [],
               value: this.form.value[field.key],
             };
 
@@ -705,6 +706,12 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.form.value[field.key]?.map((fieldValue: any) => fieldValue.value) || [];
                 break;
               default:
+                if (this.post?.post_content) {
+                  const postField = this.post.post_content[index].fields.find(
+                    (f: any) => f.key === field.key,
+                  );
+                  value.translations = postField?.value?.translations || [];
+                }
                 value.value = this.form.value[field.key] || null;
             }
             return {
@@ -725,24 +732,26 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     try {
       await this.preparationData();
     } catch (error: any) {
+      console.log(error);
       this.form.enable();
       this.submitted = false;
       this.showMessage(error, 'error');
       return;
     }
 
+    const postLanguage = this.selectedLanguage?.code || this.languageService.initialLanguage;
     const postData = {
-      base_language: 'en',
+      base_language: postLanguage,
       completed_stages: this.completeStages,
       content: this.description,
       description: '',
-      enabled_languages: {},
       form_id: this.formId,
       locale: 'en_US',
       post_content: this.tasks,
       published_to: [],
       title: this.title,
       type: 'report',
+      translations: this.post?.translations || [],
     };
 
     if (!this.form.valid) this.form.markAllAsTouched();

@@ -75,4 +75,5 @@ export enum Icons {
   thumbUp = 'thumb-up',
   ellipses = 'ellipses',
   lock = 'lock',
+  translate = 'translate',
 }
