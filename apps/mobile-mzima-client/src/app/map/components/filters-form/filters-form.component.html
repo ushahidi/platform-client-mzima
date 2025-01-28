@@ -51,8 +51,11 @@
         <ion-text color="medium" *ngIf="!form.controls['postsQuery'].value?.length">
           {{ 'app.find_posts' | translate }}
         </ion-text>
-        <ion-text color="medium" *ngIf="form.controls['postsQuery'].value?.length">
-          {{ 'app.no_posts_found' | translate }}
+        <ion-text
+          color="medium"
+          *ngIf="form.controls['postsQuery'].value?.length"
+          [innerHTML]="'app.no_posts_found' | translate"
+        >
         </ion-text>
       </ng-container>
     </div>
