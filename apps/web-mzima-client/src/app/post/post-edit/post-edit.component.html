@@ -343,6 +343,7 @@
                         matInput
                         #otherCheckbox="matInput"
                         type="text"
+                        placeholder="{{ 'form.field_add_other' | translate }}"
                         [formControlName]="'other' + field.key"
                         (focus)="selectOther($event, field)"
                       />
