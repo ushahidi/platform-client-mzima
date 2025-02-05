@@ -46,7 +46,7 @@ import {
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { objectHelpers, formValidators, dateHelper } from '@helpers';
-import { PhotoRequired, PointValidator } from '../../core/validators';
+import { MediaRequired, PointValidator } from '../../core/validators';
 import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '@mzima-client/sdk';
@@ -552,7 +552,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         break;
       case 'media':
         if (field.required) {
-          validators.push(PhotoRequired());
+          validators.push(MediaRequired());
         }
         break;
       default:
