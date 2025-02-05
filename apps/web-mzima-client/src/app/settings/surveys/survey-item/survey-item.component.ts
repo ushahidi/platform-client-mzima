@@ -96,6 +96,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
       targeted_survey: [false],
       type: [''],
     });
+    this.watchFormChanges();
   }
 
   loadData(): void {}
@@ -318,7 +319,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
         {
           ...this.form.value,
           name: this.form.value.name.trim(),
-          description: this.form.value.description.trim(),
+          description: this.form.value.description?.trim(),
           everyone_can_create: !selectedRoles?.length,
         },
         this.configTask.getConfigOptions(),
@@ -344,24 +345,27 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public async openConfirmModal() {
-    if (this.hasChanges()) {
-      const confirmed = await this.confirmModalService.open({
-        title: this.translate.instant('notify.default.discard_changes'),
-        description: this.translate.instant('notify.default.survey_has_not_been_saved'),
-        cancelButtonText: this.translate.instant('notify.survey.discard_changes'),
-        confirmButtonText: this.translate.instant('notify.survey.save_changes'),
-        isCancelDestructive: true,
-        isConfirmNotDestructive: true,
-      });
+  public watchFormChanges() {
+    this.form.valueChanges.subscribe(() => {
+      const formHasChanged = this.form.dirty || !this.form.pristine;
+      localStorage.setItem('USH_survey_form-has-changed', `${formHasChanged}`);
+    });
+  }
 
-      if (confirmed) {
-        this.save();
-      } else {
-        this.navigateBack();
-      }
+  public async openConfirmModal(event: Event) {
+    event.stopPropagation();
+    const confirmed = await this.confirmModalService.open({
+      title: this.translate.instant('notify.default.discard_changes'),
+      description: this.translate.instant('notify.default.survey_has_not_been_saved'),
+      cancelButtonText: this.translate.instant('notify.survey.discard_changes'),
+      confirmButtonText: this.translate.instant('notify.survey.save_changes'),
+      isCancelDestructive: true,
+      isConfirmNotDestructive: true,
+    });
+    if (confirmed) {
+      this.save();
     } else {
-      this.navigateBack();
+      return;
     }
   }
 
