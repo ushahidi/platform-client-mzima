@@ -1,0 +1,21 @@
+.alert {
+  display: flex;
+  .icon {
+    width: 1em;
+    height: 1em;
+    font-size: 32px;
+    margin-inline-end: 18px;
+    margin-top: -2px;
+  }
+  .link-blue {
+    color: #006acd;
+  }
+  ::ng-deep {
+    .original-post {
+      button {
+        width: unset;
+        padding: 4px;
+      }
+    }
+  }
+}

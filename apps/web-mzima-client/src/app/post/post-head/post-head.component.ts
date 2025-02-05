@@ -20,10 +20,12 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
   @Input() public editable: boolean;
   @Input() public feedView: boolean;
   @Input() public deleteable: boolean;
+  @Input() public hideTranslationsIcon: boolean;
   @Output() edit = new EventEmitter();
   @Output() refresh = new EventEmitter();
   @Output() deleted = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
+  @Output() openTranslationModal = new EventEmitter();
   public isLocked: boolean;
 
   constructor(
@@ -164,5 +166,9 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
       panelClass: [type],
       duration,
     });
+  }
+  public showTranslationsIcon() {
+    const languagesAvailabe = this.post?.enabled_languages?.available?.length > 0;
+    return !this.hideTranslationsIcon && (languagesAvailabe || this.editable);
   }
 }

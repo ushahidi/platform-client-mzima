@@ -50,7 +50,6 @@ export class PostsService extends ResourceService<any> {
   private responseObject: any;
   private awaitedResponse = new Subject<any>();
   public awaitedResponse$ = this.awaitedResponse.asObservable();
-
   constructor(
     protected override httpClient: HttpClient,
     protected override currentLoader: EnvLoader,
@@ -69,6 +68,9 @@ export class PostsService extends ResourceService<any> {
 
   updateStatus(id: string | number, status: string) {
     return super.patch(id, { status });
+  }
+  updateTranslations(id: string, post: any) {
+    return super.update(id, post);
   }
 
   override post(params: any): Observable<any> {

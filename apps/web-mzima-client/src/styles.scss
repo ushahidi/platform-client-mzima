@@ -133,6 +133,14 @@ a {
   .notice {
     margin: 0;
   }
+
+  &.success-info {
+    background-color: #e4f9ed;
+    border: none;
+    border-radius: 4px;
+    padding: 16px;
+    font-style: normal;
+  }
 }
 
 .mat-drawer-container {

@@ -17,28 +17,43 @@
           [deleteable]="post.allowed_privileges.includes('delete')"
           (statusChanged)="statusChangedHandle()"
           (deleted)="deletedHandle()"
+          (openTranslationModal)="openTranslatePost()"
         >
         </app-post-head>
       </div>
-
+      <app-post-translated
+        *ngIf="displayLanguage"
+        (openTranslationModal)="openTranslatePost()"
+        (displayOriginalPost)="displayOriginalPost()"
+        [baseLanguage]="post.base_language"
+        [displayLanguage]="displayLanguage"
+      ></app-post-translated>
       <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">
         <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
       </div>
 
       <div class="post__survey" *ngIf="post.form">
-        <h3>{{ post.form.name }}</h3>
-        <p>{{ post.form.description }}</p>
+        <h3>{{ post.form.translations[displayLanguage]?.name || post.form.name }}</h3>
+        <p>{{ post.form.translations[displayLanguage]?.description || post.form.description }}</p>
       </div>
 
       <h2 *ngIf="post.title?.length || post.content?.length" data-qa="postTitleValue">
-        {{ post.title || post.content }}
+        {{
+          post.translations[displayLanguage]?.title ||
+            post.title ||
+            post.translations[displayLanguage]?.description ||
+            post.content
+        }}
       </h2>
       <div class="post__metadata-container">
         <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
       </div>
 
       <div class="post__description" *ngIf="post.title?.length && post.content?.length">
-        <p [innerHTML]="post.content" data-qa="postDescriptionValue"></p>
+        <p
+          [innerHTML]="post.translations[displayLanguage]?.description || post.content"
+          data-qa="postDescriptionValue"
+        ></p>
       </div>
 
       <ng-container *ngFor="let post_content of post.post_content; let i = index">
@@ -60,7 +75,7 @@
               *ngIf="field.input !== 'tags' ? field.value : field.value?.length"
               class="post__group"
             >
-              <h3>{{ field.label }}</h3>
+              <h3>{{ field.translations[displayLanguage]?.label || field.label }}</h3>
 
               <ng-container *ngIf="field.input === 'tags'">
                 <ng-container *ngFor="let category of field.value">
@@ -121,12 +136,21 @@
                   <p *ngIf="!field.value.value">-</p>
                 </ng-container>
                 <ng-container *ngIf="field.label !== 'Media Link'">
-                  <p>{{ field.value.value || '-' }}</p>
+                  <p>
+                    {{
+                      field.value.translations[displayLanguage]?.value || field.value.value || '-'
+                    }}
+                  </p>
                 </ng-container>
               </ng-container>
 
               <ng-container *ngIf="field.input === 'textarea'">
-                <p [innerHTML]="field.value.value" data-qa="longTextValue"></p>
+                <p
+                  [innerHTML]="
+                    field.value.translations[displayLanguage]?.value || field.value.value
+                  "
+                  data-qa="longTextValue"
+                ></p>
               </ng-container>
 
               <ng-container *ngIf="field.input === 'checkbox'">
@@ -228,7 +252,9 @@
 
               <ng-container *ngIf="field.input === 'markdown'">
                 <span class="code-container">
-                  <code>{{ field.value.value || '-' }}</code>
+                  <code>{{
+                    field.value.translations[displayLanguage]?.value || field.value.value || '-'
+                  }}</code>
                 </span>
               </ng-container>
             </div>

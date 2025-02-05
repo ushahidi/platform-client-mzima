@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { LanguageInterface } from '@mzima-client/sdk';
 import LangJSON from '../../../assets/locales/languages.json';
+import entityLanguages from '../../../assets/locales/entity-languages.json';
 import { SessionService } from './session.service';
 
 @Injectable({
@@ -40,6 +41,9 @@ export class LanguageService {
 
   private set initialLanguage(value: string) {
     localStorage.setItem(this.languageKey, value);
+  }
+  getEntityLanguages() {
+    return entityLanguages;
   }
 
   getLanguages(): LanguageInterface[] {
