@@ -63,4 +63,9 @@ export class SettingsLayoutComponent extends BaseComponent {
       },
     });
   }
+
+  public settingsAreaClickHandler(event: Event) {
+    event.stopPropagation();
+    localStorage.setItem('USH_outside-settings-page-area-clicked', `${false}`);
+  }
 }

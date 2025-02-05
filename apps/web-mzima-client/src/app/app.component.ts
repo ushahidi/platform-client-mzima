@@ -248,4 +248,18 @@ export class AppComponent extends BaseComponent implements OnInit {
       this.metaService.removeTag(`property='${tag}'`);
     }
   }
+
+  public async pageClickHandler() {
+    localStorage.setItem('USH_outside-settings-page-area-clicked', `${true}`);
+    const outsideSettingsAreaClicked = JSON.parse(
+      localStorage.getItem('USH_outside-settings-page-area-clicked') as string,
+    );
+    const formHasChanged = JSON.parse(
+      localStorage.getItem('USH_survey_form-has-changed') as string,
+    );
+    if (outsideSettingsAreaClicked && formHasChanged) {
+      const test = document.querySelector('#open-settings-confirm-modal') as HTMLElement;
+      test?.click();
+    }
+  }
 }

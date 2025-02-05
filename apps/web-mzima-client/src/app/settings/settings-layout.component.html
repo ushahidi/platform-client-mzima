@@ -5,7 +5,11 @@
     [userRole]="user.role!"
     [permissions]="user.permissions!"
   ></app-settings>
-  <div class="settings-router" *ngIf="isDesktop || isInnerPage">
+  <div
+    (click)="settingsAreaClickHandler($event)"
+    class="settings-router"
+    *ngIf="isDesktop || isInnerPage"
+  >
     <div [ngClass]="{ 'page-content': isDesktop }">
       <router-outlet></router-outlet>
     </div>
