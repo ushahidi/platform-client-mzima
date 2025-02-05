@@ -11,7 +11,7 @@ export function MediaRequired(): ValidatorFn {
     ) {
       return null; // this should be valid if at least one media file exists
     } else {
-      return { photoRequired: true };
+      return { mediaRequired: true };
     }
   };
 }
