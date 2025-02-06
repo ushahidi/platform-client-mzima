@@ -353,6 +353,16 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
       $event.returnValue = 'Form has changed! - Just to let browser popup show up';
   }
 
+  @HostListener('window:popstate', ['$event']) onPopState($event: any) {
+    console.log('Back button pressed: ', $event);
+    const formHasChanged = JSON.parse(
+      localStorage.getItem('USH_survey_form-has-changed') as string,
+    );
+    if (formHasChanged) {
+      this.openConfirmModal($event);
+    }
+  }
+
   public watchFormChanges() {
     this.form.valueChanges.subscribe(() => {
       const formHasChanged = this.form.dirty || !this.form.pristine;
