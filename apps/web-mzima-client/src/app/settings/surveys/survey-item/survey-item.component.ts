@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -343,6 +343,14 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     } else {
       this.notification.showError(this.translate.instant('notify.survey.translations_missing'));
     }
+  }
+
+  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any): void {
+    const formHasChanged = JSON.parse(
+      localStorage.getItem('USH_survey_form-has-changed') as string,
+    );
+    if (formHasChanged)
+      $event.returnValue = 'Form has changed! - Just to let browser popup show up';
   }
 
   public watchFormChanges() {
