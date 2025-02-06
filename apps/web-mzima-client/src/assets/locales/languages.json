@@ -21,5 +21,6 @@
   {"name":"Russian","code":"ru","nplurals":4,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Spanish","code":"es","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Swahili","code":"sw","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Ukrainian","code":"uk-UA","nplurals":4,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Vietnamese","code":"vi","nplurals":2,"pluralequation":"language.pluralequation","rtl":false}
 ]}
