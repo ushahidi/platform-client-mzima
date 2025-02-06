@@ -398,7 +398,7 @@
                   [hasCaption]="field.config.hasCaption"
                   (change)="maxSizeError = false"
                   [requiredError]="
-                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
                   "
                   [maxSizeError]="maxSizeError"
                 >
@@ -412,7 +412,7 @@
                   [maxUploadSize]="field.config.maxUploadSize"
                   (change)="maxSizeError = false"
                   [requiredError]="
-                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
                   "
                 >
                 </app-media-uploader>
@@ -424,7 +424,7 @@
                   [maxUploadSize]="field.config.maxUploadSize"
                   (change)="maxSizeError = false"
                   [requiredError]="
-                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
                   "
                 >
                 </app-media-uploader>
@@ -436,7 +436,7 @@
                   media="document"
                   (change)="maxSizeError = false"
                   [requiredError]="
-                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
                   "
                 >
                 </app-media-uploader>
