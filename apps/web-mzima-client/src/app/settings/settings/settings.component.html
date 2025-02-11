@@ -2,9 +2,9 @@
   <ng-container *ngFor="let item of settingsItems">
     <a
       matRipple
-      [routerLink]="item.router"
+      [routerLink]="getFormHasChanged(item).navigate"
       class="single-menu"
-      [routerLinkActive]="'single-menu-active'"
+      [routerLinkActive]="getFormHasChanged(item).activeRouter"
       [data-qa]="'btn-' + item.router"
       *ngIf="item.visible"
     >

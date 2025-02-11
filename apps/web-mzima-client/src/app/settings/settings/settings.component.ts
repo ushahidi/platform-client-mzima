@@ -25,6 +25,7 @@ export class SettingsComponent implements OnInit {
   isManageImportExport = false;
   public settingsItems: SettingsItem[] = [];
   public isDonateAvailable = false;
+  // public formHasChanged: boolean = false;
 
   constructor(private session: SessionService) {}
 
@@ -120,5 +121,15 @@ export class SettingsComponent implements OnInit {
         visible: this.isAdmin || this.isManageSettings,
       },
     ];
+  }
+
+  public getFormHasChanged(item: SettingsItem) {
+    const formHasChanged = JSON.parse(
+      localStorage.getItem('USH_survey_form-has-changed') as string,
+    );
+    return {
+      navigate: formHasChanged ? '' : item.router,
+      activeRouter: formHasChanged ? '' : 'single-menu-active',
+    };
   }
 }

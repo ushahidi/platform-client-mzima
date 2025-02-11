@@ -13,6 +13,7 @@ import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EventEmitter, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IDeactivateGuard } from '../../core/guards/deactivate-settings-route.guard';
 
 @UntilDestroy()
 @Component({
@@ -20,7 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './general.component.html',
   styleUrls: ['./general.component.scss'],
 })
-export class GeneralComponent implements OnInit {
+export class GeneralComponent implements OnInit, IDeactivateGuard {
   @Output() cancel = new EventEmitter();
   @ViewChild('mapSettings') mapSettings: SettingsMapComponent;
   public isDesktop$: Observable<boolean>;
@@ -34,6 +35,7 @@ export class GeneralComponent implements OnInit {
   uploadedFile?: File;
   minObfuscation = 0;
   maxObfuscation = 9;
+  public formHasChanged: boolean = false;
 
   constructor(
     private sessionService: SessionService,
@@ -82,6 +84,83 @@ export class GeneralComponent implements OnInit {
       this.changesMade = true;
     });
     this.initialFormValue = this.generalForm.value;
+  }
+
+  canExit() {
+    this.formHasChanged = JSON.parse(localStorage.getItem('USH_survey_form-has-changed') as string);
+    if (this.formHasChanged === null || this.formHasChanged === undefined)
+      this.formHasChanged = false;
+
+    return !this.formHasChanged;
+
+    // if (this.formHasChanged) {
+    //   console.log(' Changed! ');
+    //   return false;
+    // } else {
+    //   localStorage.setItem('USH_survey_form-has-changed', 'false');
+    //   return true;
+    // }
+
+    // if (this.formHasChanged) {
+    //   const test = document.querySelector('#open-settings-confirm-modal') as HTMLElement;
+    //   test?.click();
+    // }
+
+    // return !this.formHasChanged;
+
+    // // console.log('allowNavigate: ', this.formHasChanged);
+    // // return this.formHasChanged;
+
+    // if (this.formHasChanged) {
+    //   console.log(' Changed! ');
+    //   return false;
+    // } else {
+    //   localStorage.setItem('USH_survey_form-has-changed', 'false');
+    //   return true;
+    // }
+
+    // let formChangeFromLocalStorage = JSON.parse(
+    //   localStorage.getItem('USH_survey_form-has-changed') as string,
+    // );
+
+    // if (formChangeFromLocalStorage === null || formChangeFromLocalStorage === undefined)
+    //   formChangeFromLocalStorage = false;
+
+    // if (formChangeFromLocalStorage) {
+    //   console.log(' Changed! ');
+    //   return false;
+    // } else {
+    //   // localStorage.setItem('USH_survey_form-has-changed', 'false');
+    //   return true;
+    // }
+
+    // if (formChangeFromLocalStorage) {
+    //   // formChangeFromLocalStorage = true;
+    //   localStorage.setItem('USH_survey_form-has-changed', 'false');
+    // }
+    // else {
+    //   formChangeFromLocalStorage = true;
+    // }
+
+    // return formChangeFromLocalStorage;
+
+    // if (formChangeFromLocalStorage) {
+
+    // }
+
+    // this.formHasChanged = JSON.parse(localStorage.getItem('USH_survey_form-has-changed') as string);
+    // if (this.formHasChanged === null || this.formHasChanged === undefined)
+    //   this.formHasChanged = false;
+    // // console.log('allowNavigate: ', this.formHasChanged);
+    // // return !this.formHasChanged;
+
+    // if (this.formHasChanged) {
+    //   console.log(' Changed! ');
+    //   return false;
+    // } else {
+    //   localStorage.setItem('USH_survey_form-has-changed', 'false');
+    //   return true;
+    // }
   }
 
   fileUploaded(event: any) {

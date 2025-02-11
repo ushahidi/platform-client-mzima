@@ -6,6 +6,7 @@ import { forkJoin, Observable, take } from 'rxjs';
 import { SurveysService, SurveyItem, apiHelpers } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IDeactivateGuard } from '../../core/guards/deactivate-settings-route.guard';
 
 @UntilDestroy()
 @Component({
@@ -13,11 +14,12 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   templateUrl: './surveys.component.html',
   styleUrls: ['./surveys.component.scss'],
 })
-export class SurveysComponent implements OnInit {
+export class SurveysComponent implements OnInit, IDeactivateGuard {
   public isDesktop$: Observable<boolean>;
   public surveys: SurveyItem[] = [];
   public selectedSurveys: SurveyItem[] = [];
   public isShowActions = false;
+  public formHasChanged: boolean;
 
   public params = {
     page: 1,
@@ -40,6 +42,62 @@ export class SurveysComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSurveys();
+  }
+
+  canExit() {
+    this.formHasChanged = JSON.parse(localStorage.getItem('USH_survey_form-has-changed') as string);
+    if (this.formHasChanged === null || this.formHasChanged === undefined)
+      this.formHasChanged = false;
+
+    return !this.formHasChanged;
+
+    // if (this.formHasChanged) {
+    //   const test = document.querySelector('#open-settings-confirm-modal') as HTMLElement;
+    //   test?.click();
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+
+    // return true;
+
+    // if (this.formHasChanged) {
+    //   console.log(' Changed! ');
+    //   return false;
+    // } else {
+    //   localStorage.setItem('USH_survey_form-has-changed', 'false');
+    //   return true;
+    // }
+
+    // if (this.formHasChanged) {
+    //   const test = document.querySelector('#open-settings-confirm-modal') as HTMLElement;
+    //   test?.click();
+    // }
+
+    // if (this.formHasChanged) return;
+
+    // return !this.formHasChanged;
+
+    // this.formHasChanged = JSON.parse(localStorage.getItem('USH_survey_form-has-changed') as string);
+    // if (this.formHasChanged === null || this.formHasChanged === undefined)
+    //   this.formHasChanged = false;
+    // // console.log('allowNavigate: ', this.formHasChanged);
+    // // return this.formHasChanged;
+
+    // if (this.formHasChanged) {
+    //   console.log(' Changed! ');
+    //   return false;
+    // } else {
+    //   localStorage.setItem('USH_survey_form-has-changed', 'false');
+    //   return true;
+    // }
+
+    // this.formHasChanged = JSON.parse(localStorage.getItem('USH_survey_form-has-changed') as string);
+    // if (this.formHasChanged !== null || this.formHasChanged !== undefined) {
+    //   // console.log('allowNavigate: ', this.formHasChanged);
+    //   return !this.formHasChanged;
+    // }
+    // return false;
   }
 
   private getSurveys(isAdd = false): void {

@@ -383,8 +383,9 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     if (confirmed) {
       this.save();
     } else {
-      return;
+      this.navigateBack();
     }
+    localStorage.setItem('USH_survey_form-has-changed', 'false');
   }
 
   navigateBack() {
