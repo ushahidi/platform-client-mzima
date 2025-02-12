@@ -31,7 +31,7 @@ export class UploadFileProgressHelper {
       const event: any = await lastValueFrom(uploadProgress);
 
       if (event?.body?.result?.id) {
-        field.value = { value: event.body.result.id };
+        field.value = { value: [event.body.result.id] };
       }
 
       Filesystem.deleteFile({
