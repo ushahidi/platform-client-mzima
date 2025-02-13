@@ -12,6 +12,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { FileUploaderComponent } from './components';
 import { SettingsLayoutComponent } from './settings-layout.component';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
+import { DeactivateGuardService } from '../core/guards/deactivate-settings-route.guard';
 
 @NgModule({
   declarations: [SettingsComponent, FileUploaderComponent, SettingsLayoutComponent],
@@ -26,6 +27,7 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     MatRippleModule,
     MzimaUiModule,
   ],
+  providers: [DeactivateGuardService],
   exports: [FileUploaderComponent],
 })
 export class SettingsModule {}
