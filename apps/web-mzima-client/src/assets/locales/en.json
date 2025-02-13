@@ -2061,6 +2061,7 @@
       "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
       "discard_changes": "Discard changes",
       "save_changes": "Save Changes",
+      "back_to_editing": "Back to editing",
       "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
       "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
