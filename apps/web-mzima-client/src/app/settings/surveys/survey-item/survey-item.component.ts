@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -55,6 +55,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   public errorTaskField = false;
   public submitted = false;
   isDefaultLanguageSelected = true;
+  public browserBackButtonClicked: boolean;
 
   constructor(
     protected override sessionService: SessionService,
@@ -344,25 +345,13 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public async openConfirmModal() {
-    if (this.hasChanges()) {
-      const confirmed = await this.confirmModalService.open({
-        title: this.translate.instant('notify.default.discard_changes'),
-        description: this.translate.instant('notify.default.survey_has_not_been_saved'),
-        cancelButtonText: this.translate.instant('notify.survey.discard_changes'),
-        confirmButtonText: this.translate.instant('notify.survey.save_changes'),
-        isCancelDestructive: true,
-        isConfirmNotDestructive: true,
-      });
+  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any): void {
+    if (this.changesMade)
+      $event.returnValue = 'Form has changed! - Just to let browser popup show up';
+  }
 
-      if (confirmed) {
-        this.save();
-      } else {
-        this.navigateBack();
-      }
-    } else {
-      this.navigateBack();
-    }
+  @HostListener('window:popstate', ['$event']) onPopState() {
+    this.browserBackButtonClicked = true;
   }
 
   navigateBack() {
