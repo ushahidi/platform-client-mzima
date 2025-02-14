@@ -1,5 +1,5 @@
 import { HttpEventType, HttpProgressEvent } from '@angular/common/http';
-import { Directory, Filesystem } from '@capacitor/filesystem';
+// import { Directory, Filesystem } from '@capacitor/filesystem';
 import { MediaService } from '@mzima-client/sdk';
 import { lastValueFrom, Observable, tap } from 'rxjs';
 
@@ -8,7 +8,7 @@ export class UploadFileProgressHelper {
 
   async uploadFileField(
     field: any,
-    { data, name, caption, path }: any,
+    { data, name, caption }: any,
     progressCallback: (progress: number) => void,
   ) {
     try {
@@ -34,10 +34,10 @@ export class UploadFileProgressHelper {
         field.value = { value: [event.body.result.id] };
       }
 
-      Filesystem.deleteFile({
-        directory: Directory.Data,
-        path: path,
-      });
+      // Filesystem.deleteFile({
+      //   directory: Directory.Data,
+      //   path: path,
+      // });
     } catch (error: any) {
       throw new Error(`Error uploading file: ${error.message}`);
     }
