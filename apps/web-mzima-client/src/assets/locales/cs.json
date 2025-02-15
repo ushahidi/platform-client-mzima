@@ -211,7 +211,7 @@
     "aMomentAgo": "před chvílí",
     "second": {
       "singular": "před {{time}} sekundou",
-      "plural": "{{time}} seconds ago"
+      "plural": " před {{time}} sekundami"
     },
     "minute": {
       "singular": "{{time}} minute ago",
