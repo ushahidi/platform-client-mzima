@@ -129,7 +129,7 @@
     "add_role": "Přidat roli",
     "webhooks": "Webhooks",
     "edit_webhook": "Upravit Roli",
-    "add_webhook": "Add Webhook ",
+    "add_webhook": "Přidat Webhook",
     "categories": "Kategorie",
     "edit_category": "Upravit kategorii",
     "add_category": "Přidat kategorii",
@@ -1170,7 +1170,7 @@
     "only_me": "Pouze já"
   },
   "webhook": {
-    "add_webhook": "Add Webhook ",
+    "add_webhook": "Přidat Webhook",
     "edit_webhook": "Upravit Roli",
     "create_webhook": "Create webhook",
     "update_webhook": "Update webhook",
