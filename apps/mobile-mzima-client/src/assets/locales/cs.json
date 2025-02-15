@@ -92,7 +92,7 @@
         "filter_info": {
           "subcategories": {
             "selected": "Vybráno {{ checkedOption }} z {{ optionsTotal }}",
-            "none": "No Sub categories"
+            "none": "Žádné podkategorie"
           }
         }
       },
