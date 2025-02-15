@@ -9,11 +9,11 @@
     },
     "filtering": {
       "title": "Filtrování",
-      "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+      "content": "<p>Výsledky můžete filtrovat podle stavu, kategorií, rozsahu data a umístění. Filtry můžete také uložit, abyste se k nim mohli rychle vrátit.</p><p>Chcete-li rychle a efektivně snížit množství dat, použijte levou lištu pro výběr konkrétních průzkumů a zdrojů dat.</p>"
     },
     "sorting": {
       "title": "Řazení",
-      "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
+      "content": "<p>Výsledky můžete seřadit podle data příspěvku, nejnovějších aktualizací a data vytvoření - od nejnovějšího po nejstarší.</p>"
     },
     "activity": {
       "title": "Aktivita",
