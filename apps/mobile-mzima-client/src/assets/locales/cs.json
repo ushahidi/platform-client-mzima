@@ -2,10 +2,10 @@
     "app": {
       "activity_view_wip": "Zobrazení aktivit již brzy",
       "welcome_back": "Vítejte zpět!",
-      "placeholder_enter_name": "Enter your name",
-      "placeholder_enter_email": "Enter your email",
-      "placeholder_enter_password": "Enter password",
-      "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol.",
+      "placeholder_enter_name": "Zadejte své jméno",
+      "placeholder_enter_email": "Zadejte svůj e-mail",
+      "placeholder_enter_password": "Zadejte heslo",
+      "password_hint": "Heslo by mělo mít alespoň 8 znaků, jedno malé písmeno, jedno velké písmeno, jednu číslici a jeden symbol.",
       "login_private": "Přihlášení do soukromého nasazení",
       "login_details_desc": "Pro přístup k nasazení zadejte své přihlašovací údaje. Nebo kontaktujte správce",
       "forgot_password": "Zapomněli jste heslo?",
@@ -30,13 +30,13 @@
       "internal_task_instruction": "Tento úkol je označen pouze pro interní použití. Uživatelé ho při vytváření příspěvku nevidí.",
       "task_completed": "Úkol splněn",
       "select_all": "Vybrat vše",
-      "related_post_hint": "Vezměte prosím na vědomí, že příspěvky, na které se mají vztahovat, musí být zveřejněny, příspěvky, které jsou „V hodnocení“, se ve výsledcích vyhledávání nezobrazí.",
+      "related_post_hint": "Ve výsledcích vyhledávání se zobrazí pouze příspěvky, které byly zveřejněny, a tudíž s nimi budou souviset.",
       "no_options": "Žádné možnosti",
       "submit":"Odeslat",
       "published":"Zveřejněno",
       "under_review": "Probíhá kontrola",
       "archived": "Archivováno",
-      "via_source": "Via {{source}}",
+      "via_source": "Přes {{source}}",
       "privacy_policy_text": "<p>Ushahidi se zavazuje chránit vaše soukromí.</p><p>Máte právo být informováni o tom, jak Ushahidi spravuje vaše osobní údaje. Tyto zásady ochrany osobních údajů poskytujeme, abychom vysvětlili, jak shromažďujeme, přijímáme, používáme, ukládáme, sdílíme a zveřejňujeme vaše údaje prostřednictvím našich služeb. </p><p>pro snazší čtení těchto zásad se Stránky, naše služby, platformy a Aplikace souhrnně nazývají „Služby“. Máte-li jakékoli dotazy týkající se vašich osobních údajů a našich zásad, napište nám na adresu <a href=\"mailto:privacy@ushahidi.com\">privacy@ushahidi.com</a></p><p>Tyto Zásady ochrany osobních údajů se nevztahují na žádné služby třetích stran (jak je definováno níže), a to ani v případě, že jsou přístupné prostřednictvím našich služeb. </p><p>Vezměte prosím také na vědomí, že pokud v těchto Zásadách ochrany osobních údajů nedefinujeme nějaký termín, mají všechny termíny s velkými písmeny použité v těchto Zásadách ochrany osobních údajů stejný význam jako v našich Podmínkách poskytování služeb. Proto se prosím ujistěte, že jste si přečetli naše Podmínky služby a že jim rozumíte.</p><h2>Zahrnuto v našich Zásadách</h2><p>Kdo jsme</p><ul><li>Shromažďování a používání informací</li><li>Způsoby, jakými vaše informace používáme</li><li>Informace, které sdílíme s třetími stranami</li><li>Zákony na ochranu dat</li><li>Vaše práva</li><li>Vaše volby</li><li>Odpovědi na signály Do Not Track</li><li>Zabezpečení vašich informací</li><li>Jak dlouho vaše údaje uchováváme.</li></ul>",
       "profile_name":"Název profilu",
       "profile_settings": "Nastavení profilu",
@@ -45,6 +45,7 @@
       "select_language": "Vyberte jazyk ze seznamu",
       "current": "aktuální",
       "bulk_actions": "Hromadné akce",
+      "done": "Dokončeno",
       "no_posts": "Nenalezeny žádné příspěvky!",
       "support_info": "Podpora a informace",
       "nothing_found":"Nic nenalezeno!",
@@ -62,6 +63,7 @@
       "required_location":"Pole lokality je vyžadované",
       "invisible_task":"Tento úkol se zobrazí po zveřejnění příspěvku.",
       "select_time": "Vyberte čas",
+      "select_dates": "Zvolte data",
       "create_new_collection":"Vytvořte novou kolekci",
       "collections": "Kolekce",
       "no_collections": "Zatím nejsou žádné kolekce!",
@@ -74,17 +76,28 @@
       "edit": "Upravit",
       "toc_text":"<p>Tyto Podmínky služby (dále jen „Podmínky“) a naše Zásady ochrany osobních údajů se vztahují na všechny webové stránky vlastněné nebo provozované společností Ushahidi Inc. (dále jen „Ushahidi“), na kterých je umístěn odkaz na tyto Podmínky (dále jen „Stránky“), služby Ushahidi přístupné prostřednictvím Stránek (včetně všech cloudových serverů nebo platforem) a aplikace Ushahidi pro mobilní zařízení (dále jen „Aplikace“), a řídí se jimi.</p><p>Pro snazší čtení těchto Podmínek se Stránky, naše služby, platformy a Aplikace souhrnně nazývají „Služby“. Upozorňujeme, že tyto Podmínky se nevztahují na žádné naše produkty, které si stáhnete pod licencí open source. Kromě toho se tyto Podmínky nemusí vztahovat na případy, kdy jste se společností Ushahidi uzavřeli samostatnou smlouvu, která upravuje váš vztah s námi, například samostatně sjednanou podnikovou smlouvu. </p><h2>Souhlas s těmito Podmínkami</h2><p>, nepoužívejte  Služby. Pokud přistupujete ke Službám a používáte je jménem společnosti (například svého zaměstnavatele) nebo jiné právnické osoby, prohlašujete a zaručujete, že jste oprávněni zavázat tuto společnost nebo jinou právnickou osobu těmito Podmínkami. </p><p>v takovém případě se „vy“ a „vaše“ vztahují na tuto společnost nebo jinou právnickou osobu.</p>",
       "skip": "Přeskočit",
-      "loading":"Získávání dat...",
+      "loading":"Získávání průzkumů...",
+      "loading_post":"Načítání příspěvku",
+      "select_survey": "Výběr průzkumu",
       "emtpy_field_error": "Toto pole nesmí být prázdné",
       "info" : {
         "auth_not_online" : "Litujeme. Jste offline...zkontrolujte prosím své internetové připojení.",
-        "post_submitted_online" : "Děkujeme vám za zaslání zprávy. Příspěvek je prověřován naším týmem a brzy se objeví na platformě.",
-        "post_submitted_offline" : "Děkujeme za vaši zprávu. Po obnovení spojení bude odeslána zpráva.",
+        "post_submitted_online" : "Děkujeme vám za zaslání příspěvku. Příspěvek je nyní prověřován a brzy se objeví na platformě.",
+        "post_submitted_offline" : "Thank you for your post. A message will be sent when the connection is restored.",
         "posts_not_uploaded" : "<b>{{num_posts}} Příspěvky nebyly nahrány!</b><br/>Příspěvky nebyly nahrány z důvodu špatného připojení k internetu nebo jste byli offline. Budou automaticky nahrány, jakmile se připojíte k internetu.",
         "posts_uploading" : "<b>Nahrávání {{num_posts}} příspěvků. </b><br/>V současné době nahráváme vaše příspěvky",
         "posts_uploaded" : "<b>{{num_posts}} příspěvky byly úspěšně nahrány!</b><br/>Vaše příspěvky byly úspěšně nahrány. Můžete je vidět v části „Moje příspěvky“"
       },
+      "categories": {
+        "filter_info": {
+          "subcategories": {
+            "selected": "Selected {{ checkedOption }} of {{ optionsTotal }}",
+            "none": "No Sub categories"
+          }
+        }
+      },
       "map": "Map",
+      "map_search":"Enter city or address",
       "activity": "Activity",
       "profile": "Profile",
       "language": "Language",
@@ -96,6 +109,10 @@
       "my_posts_desc":"Post you’ve created",
       "logout" : "Logout",
       "login_register":"Log in or Sign up",
-      "add_edit_collection":"Add or Edit collections"
+      "add_edit_collection":"Add or Edit collections",
+      "contact_support":"Contact Support",
+      "contact_support_desc_1":"Head over to ",
+      "contact_support_desc_2": "our support pages",
+      "contact_support_desc_3": "to get help with Ushahidi."
     }
 }
