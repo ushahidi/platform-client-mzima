@@ -91,7 +91,7 @@
       "categories": {
         "filter_info": {
           "subcategories": {
-            "selected": "Selected {{ checkedOption }} of {{ optionsTotal }}",
+            "selected": "Vybráno {{ checkedOption }} z {{ optionsTotal }}",
             "none": "No Sub categories"
           }
         }
