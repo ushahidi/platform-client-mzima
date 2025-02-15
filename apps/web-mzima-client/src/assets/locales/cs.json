@@ -129,7 +129,7 @@
     "add_role": "Přidat roli",
     "webhooks": "Webhooks",
     "edit_webhook": "Upravit Webhook",
-    "add_webhook": "Add Webhook ",
+    "add_webhook": "Přidat Webhook",
     "categories": "Kategorie",
     "edit_category": "Upravit kategorii",
     "add_category": "Přidat kategorii",
@@ -187,7 +187,7 @@
     "you_are_not_authorized": "Nejste oprávněni",
     "lost_internet_connection": "Ztráta připojení k internetu",
     "tweet_is_unavailable": "Tento tweet není k dispozici",
-    "tweet_failed_to_load": "Tweet failed to load",
+    "tweet_failed_to_load": "Tweet se nepodařilo načíst",
     "file_uploader": "Nahravač souboru",
     "preview_image": "Náhled obrázku",
     "privacy_policy": "Zásady ochrany osobních údajů",
@@ -1170,7 +1170,7 @@
     "only_me": "Pouze já"
   },
   "webhook": {
-    "add_webhook": "Add Webhook ",
+    "add_webhook": "Přidat Webhook",
     "edit_webhook": "Upravit Roli",
     "create_webhook": "Create webhook",
     "update_webhook": "Update webhook",
