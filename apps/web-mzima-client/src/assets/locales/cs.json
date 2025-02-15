@@ -4,7 +4,7 @@
     "intro": "<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>",
     "ready": "Jste připraveni!",
     "data_collection": {
-      "title": "Data collection",
+      "title": "Sběr dat",
       "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
     },
     "filtering": {
