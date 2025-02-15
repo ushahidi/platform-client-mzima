@@ -17,7 +17,7 @@
     },
     "activity": {
       "title": "Aktivita",
-      "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
+      "content": "<p>Zkontrolujte aktivitu nasazení v čase a podle objemu. Najetím na každý řádek nebo sloupec jej zvýrazníte a zobrazíte podrobnosti.</p>"
     },
     "collections": {
       "title": "Kolekce",
