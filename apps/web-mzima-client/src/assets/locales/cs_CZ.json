@@ -210,7 +210,7 @@
     "justNow": "právě teď",
     "aMomentAgo": "před chvílí",
     "second": {
-      "singular": "{{time}} second ago",
+      "singular": "před {{time}} sekundou",
       "plural": "{{time}} seconds ago"
     },
     "minute": {
