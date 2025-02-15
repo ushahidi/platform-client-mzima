@@ -5,7 +5,7 @@
     "ready": "Jste připraveni!",
     "data_collection": {
       "title": "Sběr dat",
-      "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
+      "content": "<p>Všechna shromážděná data si můžete prohlédnout při pohybu v zobrazení Mapa nebo v zobrazení Data.</p>"
     },
     "filtering": {
       "title": "Filtering",
