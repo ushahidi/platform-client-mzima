@@ -208,7 +208,7 @@
   "date": {
     "aLongTimeAgo": "před dlouhou dobou",
     "justNow": "právě teď",
-    "aMomentAgo": "a moment ago",
+    "aMomentAgo": "před chvílí",
     "second": {
       "singular": "{{time}} second ago",
       "plural": "{{time}} seconds ago"
