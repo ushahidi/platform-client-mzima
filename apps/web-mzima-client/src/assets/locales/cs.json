@@ -25,7 +25,7 @@
     },
     "settings": {
       "title": "Nastavení",
-      "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
+      "content": "<p>Změňte nasazení v Nastavení. Můžete spravovat podrobnosti o nasazení, pokud jde o průzkumy, zdroje dat, import a dárcovství.</p> <p> Také vám umožňuje exportovat data, vytvářet kategorie, spravovat oprávnění uživatelů a mnoho dalšího!</p>"
     },
     "final_step": {
       "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
