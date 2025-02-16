@@ -300,9 +300,9 @@
     "status": "Stav",
     "statuses": "Statusy",
     "all_time": "Pořád",
-    "last_week": "Last week",
-    "last_month": "Last month",
-    "last_year": "Last year"
+    "last_week": "Poslední týden",
+    "last_month": "Poslední měsíc",
+    "last_year": "Poslední rok"
   },
   "form": {
     "add_field": "Přidat pole",
@@ -395,7 +395,7 @@
     "survey_name": "Název průzkumu",
     "describe_your_survey": "Popište svůj průzkum ...",
     "describe_this_task": "Popsat tuto úlohu ...",
-    "create_survey": "Create survey",
+    "create_survey": "Vytvořit průzkum",
     "update_survey": "Update survey",
     "untitled_task": "Nepojmenovaná úloha",
     "add_task": "Přidat úlohu",
