@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 
 export interface IDeactivateGuard {
   changesMade: boolean | null;
-  browserBackButtonClicked: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -17,7 +16,7 @@ export class DeactivateGuardService implements CanDeactivate<IDeactivateGuard> {
   ) {}
 
   canDeactivate(component: IDeactivateGuard): boolean | Promise<boolean> | Observable<boolean> {
-    if (component.changesMade || (component.changesMade && component.browserBackButtonClicked)) {
+    if (component.changesMade) {
       const confirmModalResult = this.openConfirmModal().then((confirmed: boolean) => confirmed);
       return confirmModalResult;
     } else {

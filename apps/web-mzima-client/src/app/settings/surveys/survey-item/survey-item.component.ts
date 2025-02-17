@@ -55,7 +55,6 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   public errorTaskField = false;
   public submitted = false;
   isDefaultLanguageSelected = true;
-  public browserBackButtonClicked: boolean;
 
   constructor(
     protected override sessionService: SessionService,
@@ -348,10 +347,6 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any): void {
     if (this.changesMade)
       $event.returnValue = 'Form has changed! - Just to let browser popup show up';
-  }
-
-  @HostListener('window:popstate', ['$event']) onPopState() {
-    this.browserBackButtonClicked = true;
   }
 
   navigateBack() {
