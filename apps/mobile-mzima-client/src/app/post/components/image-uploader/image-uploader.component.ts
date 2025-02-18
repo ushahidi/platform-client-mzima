@@ -139,7 +139,6 @@ export class ImageUploaderComponent implements ControlValueAccessor {
         };
       }
       this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(this.photo.data);
-      console.log('previewUrl from photo.webPath:', this.previewUrl);
       this.upload = true;
     } catch (e) {
       console.log(e);
@@ -213,7 +212,6 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     let params = {
       caption: this.captionControl.value,
       photo: this.photo,
-      previewUrl: this.previewUrl,
       id: this.id,
     };
     params = { ...params, ...action };
