@@ -62,7 +62,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     };
 
     // Set preview URL
-    this.previewUrl = objData.url; // Directly assign the URL
+    this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(objData.url); // Directly assign the URL
     console.log('Updated previewUrl:', this.previewUrl);
   }
 
