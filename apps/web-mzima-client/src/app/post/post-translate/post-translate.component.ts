@@ -85,28 +85,21 @@ export class PostTranslateComponent implements OnInit {
               this.post.translations[this.activeLanguage.code] || {};
             this.post.translations[this.activeLanguage.code][field.type] = translatedValue;
           }
-        } else {
-          if (field.input === 'upload' || field.type === 'media') {
-            if (field.value) {
-              const values = { value: [] as any[] };
-              field.value.forEach((value: any) => {
-                values.value.push(value.value);
-              });
-              field.value = values;
-            }
+        } else if (field.input === 'upload' || field.type === 'media') {
+          if (field.value) {
+            field.value = { value: field.value.map((v: any) => v.value) };
           }
         }
       });
     });
+
     this.post.enabled_languages = { default: 'en', available: this.enabledLanguages };
     delete this.post.completed_stages;
-    this.translateForm.enable();
 
     this.postsService.updateTranslations(this.post.id, this.post).subscribe({
       next: ({ result }) => {
         this.postsService.unlockPost(this.post.id).subscribe();
         this.showMessage('Translation saved successfully', 'success');
-        this.postsService.unlockPost(this.post.id).subscribe();
         this.closeModal({ displayLanguage: this.activeLanguage, post: result });
       },
       error: ({ error }) => {
