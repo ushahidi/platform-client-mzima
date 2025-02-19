@@ -64,9 +64,8 @@ export class PostTranslateComponent implements OnInit {
   saveTranslation() {
     this.translateForm.disable();
     this.post.post_content.forEach((task: any) => {
-      task.fields
-        .filter((field: any) => field.key in this.translateForm.controls)
-        .forEach((field: any) => {
+      task.fields.forEach((field: any) => {
+        if (field.key in this.translateForm.controls) {
           const translatedValue = this.translateForm.controls[field.key].value;
           field.value = field.value || {};
           field.value.translations = field.value.translations || {};
@@ -86,10 +85,22 @@ export class PostTranslateComponent implements OnInit {
               this.post.translations[this.activeLanguage.code] || {};
             this.post.translations[this.activeLanguage.code][field.type] = translatedValue;
           }
-        });
+        } else {
+          if (field.input === 'upload' || field.type === 'media') {
+            if (field.value) {
+              const values = { value: [] as any[] };
+              field.value.forEach((value: any) => {
+                values.value.push(value.value);
+              });
+              field.value = values;
+            }
+          }
+        }
+      });
     });
     this.post.enabled_languages = { default: 'en', available: this.enabledLanguages };
     delete this.post.completed_stages;
+    this.translateForm.enable();
 
     this.postsService.updateTranslations(this.post.id, this.post).subscribe({
       next: ({ result }) => {
