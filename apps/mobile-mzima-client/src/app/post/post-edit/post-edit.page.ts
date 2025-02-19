@@ -830,7 +830,7 @@ export class PostEditPage {
       for (const content of postData.post_content) {
         for (const field of content.fields) {
           if (field.input === 'upload') {
-            field.value.value = null;
+            field.value.value = [];
           }
         }
       }
