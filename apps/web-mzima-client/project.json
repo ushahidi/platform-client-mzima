@@ -25,6 +25,7 @@
           "node_modules/primeng/resources/themes/saga-blue/theme.css",
           "node_modules/primeng/resources/primeng.min.css",
           "node_modules/ol/ol.css",
+          "node_modules/ol-layerswitcher/dist/ol-layerswitcher.css",
           "node_modules/ngx-custom-tour/styles/styles.scss",
           "apps/web-mzima-client/src/styles.scss"
         ],
