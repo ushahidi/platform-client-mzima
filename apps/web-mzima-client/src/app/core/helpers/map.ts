@@ -31,7 +31,7 @@ export const pointToLayer = (feature: any, latlng: any) => {
 export const mapboxStaticTiles = (name: string, mapid: string, code: string, visible = true) => {
   return {
     name,
-    url: 'https://api.mapbox.com/styles/v1/{mapid}/tiles/{z}/{x}/{y}?access_token={apikey}',
+    url: `https://api.mapbox.com/styles/v1/${mapid}/tiles/{z}/{x}/{y}?access_token=${EnvService.ENV.mapbox_api_key}`,
     layerOptions: {
       apikey: EnvService.ENV.mapbox_api_key,
       tileSize: 512,
@@ -45,7 +45,24 @@ export const mapboxStaticTiles = (name: string, mapid: string, code: string, vis
     code,
   };
 };
-
+export const getOpenLayersMapConfig = () => {
+  return [
+    mapboxStaticTiles('Satellite', 'mapbox/satellite-v9', 'satellite'),
+    mapboxStaticTiles('Satellite', 'mapbox/satellite-v9', 'MapQuestAerial', false),
+    mapboxStaticTiles('Streets', 'mapbox/streets-v11', 'streets'),
+    mapboxStaticTiles('Streets', 'mapbox/streets-v11', 'MapQuest', false),
+    {
+      name: 'Humanitarian',
+      url: '//{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+      layerOptions: {
+        attribution:
+          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>',
+      },
+      visible: true,
+      code: 'hOSM',
+    },
+  ];
+};
 export const getMapLayers = () => {
   return {
     baselayers: {
