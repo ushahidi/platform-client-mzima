@@ -97,6 +97,11 @@ export class MapComponent extends MainViewComponent implements OnInit {
       reverse: true,
       groupSelectStyle: 'children',
       startActive: true,
+      activationMode: 'click',
+      label:'',
+      collapseLabel: '',
+
+      
     });
 
     this.map.addControl(layerSwitcher);

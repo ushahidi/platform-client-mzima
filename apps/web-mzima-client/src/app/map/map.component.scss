@@ -1,7 +1,9 @@
+@import 'helpers';
 :host {
   display: flex;
   flex-direction: column;
   height: 100%;
+  
 }
 
 .map-container {
@@ -47,4 +49,16 @@
 }
 .ol-popup-closer:after {
   content: "✖";
+}
+
+::ng-deep {
+  .ol-unselectable.ol-control.layer-switcher.layer-switcher-group-select-style-children.layer-switcher-activation-mode-click.activationModeClick.shown button {
+    display: none;
+  }
+  .layer-switcher.shown.layer-switcher-activation-mode-click {
+    top: 0.5em;
+    @include breakpoint-max($tablet) {
+      top: 5em;
+    }
+  }
 }
