@@ -1173,7 +1173,7 @@
     "add_webhook": "Přidat Webhook",
     "edit_webhook": "Upravit Roli",
     "create_webhook": "Vytvořit webhook",
-    "update_webhook": "Update webhook",
+    "update_webhook": "Aktualizovat webhook",
     "uuid": "Webhook UUID",
     "name": "Název",
     "shared_secret": "Sdílené tajemství",
