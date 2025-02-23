@@ -218,8 +218,8 @@
       "plural": "před {{time}} minutami"
     },
     "hour": {
-      "singular": "{{time}} hour ago",
-      "plural": "{{time}} hours ago"
+      "singular": "před {{time}} hodinou",
+      "plural": "před {{time}} hodinami"
     },
     "day": {
       "singular": "{{time}} day ago",
