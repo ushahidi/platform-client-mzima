@@ -222,7 +222,7 @@
       "plural": "před {{time}} hodinami"
     },
     "day": {
-      "singular": "{{time}} day ago",
+      "singular": "před {{time}} dnem",
       "plural": "{{time}} days ago"
     },
     "month": {
