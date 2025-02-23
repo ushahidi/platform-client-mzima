@@ -2169,7 +2169,7 @@
     "languages": "Jazyky",
     "language": "Jazyk",
     "default": "výchozí",
-    "default_language": "Original language",
+    "default_language": "Původní jazyk",
     "text_in_original": "Text in original language:",
     "translation_default": "(default)",
     "translate_field": "Přeložit pole",
