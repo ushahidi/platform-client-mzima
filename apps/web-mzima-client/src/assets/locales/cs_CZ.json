@@ -230,8 +230,8 @@
       "plural": "před {{time}} měsíci"
     },
     "year": {
-      "singular": "{{time}} year ago",
-      "plural": "{{time}} years ago"
+      "singular": "před {{time}} rokem",
+      "plural": "před {{time}} roky"
     }
 },
   "cookies": {
