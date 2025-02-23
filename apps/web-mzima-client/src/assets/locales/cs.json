@@ -2068,7 +2068,7 @@
     "confirm_modal": {
       "add_post_success": {
         "success": "Úspěch!",
-        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
+        "success_description": "Děkujeme vám za zaslání příspěvku. Příspěvek je nyní prověřován a brzy se na platformě objeví.",
         "success_button": "OK, zní to dobře"
       },
       "deleted": {
