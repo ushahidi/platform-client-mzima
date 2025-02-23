@@ -223,14 +223,14 @@
     },
     "day": {
       "singular": "před {{time}} dnem",
-      "plural": "{{time}} days ago"
+      "plural": "před {{time}} dny"
     },
     "month": {
-      "singular": "{{time}} month ago",
-      "plural": "{{time}} months ago"
+      "singular": "před {{time}} měsícem",
+      "plural": "před {{time}} měsíci"
     },
     "year": {
-      "singular": "{{time}} year ago",
+      "singular": "před {{time}} rokem",
       "plural": "{{time}} years ago"
     }
 },
