@@ -1724,7 +1724,7 @@
     "uploading_data": "Nahrávání dat ...",
     "uploading_data_desc": "Nahrávání dat na účet služby Humanitarian Data Exchange (HDX) probíhá ... <br /><br />Během tohoto nahrávání můžete opustit tuto stranu, ale nezavírejte prohlížeč.",
     "uploading_data_err": "Uh oh ... Při nahrávání dat došlo k chybě, zkontrolujte prosím požadovaná pole a váš api-key a zkuste to znovu.",
-    "data_export_err":"Failed to export",
+    "data_export_err":"Selhalo exportování",
     "no_fields_selected": "Nevybrali jste žádné políčka nebo jste nepřiřadili žádné značky nebo atributy HXL. Zvolte alespoň jedno pole a přiřadte alespoň jednu značku, abyste mohli exportovat do souboru CSV nebo nahrajte na účet Humanitarian Data Exchange (HDX).",
     "validation": {
       "title": "Titul je vyžadován",
@@ -1778,8 +1778,8 @@
     "password_length": "Heslo musí mít alespoň 8 znaků",
     "password_match": "Hesla se neshodují",
     "enter_new_password": "Zadejte vaše nové heslo",
-    "password_change_success": "Your password was successfully changed",
-    "password_change_success_info": "Now you can login with new credentials",
+    "password_change_success": "Vaše heslo bylo úspěšně změněno",
+    "password_change_success_info": "Nyní se můžete přihlásit pomocí nových přihlašovacích údajů",
     "check_email": "Zkontrolujte svůj e-mail",
     "name_will_be_a_display_name": "Název, který zadáte, bude zobrazovaný název.",
     "valid": {
