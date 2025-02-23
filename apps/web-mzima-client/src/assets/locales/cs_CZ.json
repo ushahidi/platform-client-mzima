@@ -2189,7 +2189,7 @@
     "add_a_language": "Přidat jazyk",
     "error_no_default": "Před přidáním nového překladu musíte určit výchozí jazyk.",
     "select_language": "Vyberte jazyk, do kterého chcete přidat překlad",
-    "select_translate_edit": "Select a language to translate to, or edit:",
+    "select_translate_edit": "Vyberte jazyk, do kterého chcete překládat, nebo jej upravte:",
     "default_lang_info": "Toto je jazyk, který se použije, pokud nejsou k dispozici žádné překlady pro jazyk, který uživatel nastavil pro nasazení.",
     "translated_to": "Translated to {{language}}",
     "viewing_translated":"You are viewing a translated version of this post.",
