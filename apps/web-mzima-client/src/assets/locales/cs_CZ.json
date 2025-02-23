@@ -2193,8 +2193,8 @@
     "default_lang_info": "Toto je jazyk, který se použije, pokud nejsou k dispozici žádné překlady pro jazyk, který uživatel nastavil pro nasazení.",
     "translated_to": "Přeloženo do {{language}}",
     "viewing_translated":"Prohlížíte si přeloženou verzi tohoto příspěvku.",
-    "view_original":"View original post",
-    "change_lang": "Change language"
+    "view_original":"Zobrazit původní příspěvek",
+    "change_lang": "Změnit jazyk"
   },
   "languages": {
     "ach": "Acoli",
