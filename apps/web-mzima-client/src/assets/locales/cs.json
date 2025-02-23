@@ -1013,7 +1013,7 @@
       },
       "input_empty_warn": "Vstup nemůže být prázdný",
       "max_size": "Maximální velikost: {{size}} MB",
-      "invalid_video_embed": "Invalid video embed url",
+      "invalid_video_embed": "Neplatná adresa url pro vložení videa",
       "errors": {
         "required" : "{{label}} field is a required field *",
         "too_short": "{{label}} field is too short, use at least 2 characters",
