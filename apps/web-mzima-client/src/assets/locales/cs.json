@@ -1362,8 +1362,8 @@
         "pick_location": "Vyberte umístění..."
       },
       "satellite": "Satelitní",
-      "streets": "Streets",
-      "humanitarian": "Humanitarian"
+      "streets": "Ulice",
+      "humanitarian": "Humanitární"
       
     },
     "user_settings": {
@@ -1414,7 +1414,7 @@
       "do_you_really_want_to_disconnect": "Opravdu chcete odpojit svého poskytovatele?",
       "add_source": "Přidat zdroj",
       "edit": "Edit {{provider}} Data Source",
-      "add_data_source": "Add Data Source",
+      "add_data_source": "Přidat zdroj dat",
       "associate_with_form": "Import do průzkumu",
       "associate_with_form_desc": "Všechna příchozí data od {{provider}} budou použita k vytvoření odpovědí na vybraný průzkum",
       "data_sources": "Zdroje dat",
