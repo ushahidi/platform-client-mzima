@@ -215,7 +215,7 @@
     },
     "minute": {
       "singular": "před {{time}} minutou",
-      "plural": "{{time}} minutes ago"
+      "plural": "před {{time}} minutami"
     },
     "hour": {
       "singular": "{{time}} hour ago",
