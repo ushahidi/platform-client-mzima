@@ -1724,7 +1724,7 @@
     "uploading_data": "Nahrávání dat ...",
     "uploading_data_desc": "Nahrávání dat na účet služby Humanitarian Data Exchange (HDX) probíhá ... <br /><br />Během tohoto nahrávání můžete opustit tuto stranu, ale nezavírejte prohlížeč.",
     "uploading_data_err": "Uh oh ... Při nahrávání dat došlo k chybě, zkontrolujte prosím požadovaná pole a váš api-key a zkuste to znovu.",
-    "data_export_err":"Failed to export",
+    "data_export_err":"Selhalo exportování",
     "no_fields_selected": "Nevybrali jste žádné políčka nebo jste nepřiřadili žádné značky nebo atributy HXL. Zvolte alespoň jedno pole a přiřadte alespoň jednu značku, abyste mohli exportovat do souboru CSV nebo nahrajte na účet Humanitarian Data Exchange (HDX).",
     "validation": {
       "title": "Titul je vyžadován",
