@@ -1017,7 +1017,7 @@
       "errors": {
         "required" : "Pole {{label}} je povinné pole *",
         "too_short": "pole {{label}} je příliš krátké, použijte alespoň 2 znaky",
-        "invvalid_pattern": "{{label}} field is invalid",
+        "invvalid_pattern": "Pole {{label}} je neplatné",
         "special_char": "{{label}} field contains special characters"
       }
     },
