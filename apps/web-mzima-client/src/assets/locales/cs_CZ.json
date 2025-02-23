@@ -1779,7 +1779,7 @@
     "password_match": "Hesla se neshodují",
     "enter_new_password": "Zadejte vaše nové heslo",
     "password_change_success": "Vaše heslo bylo úspěšně změněno",
-    "password_change_success_info": "Now you can login with new credentials",
+    "password_change_success_info": "Nyní se můžete přihlásit pomocí nových přihlašovacích údajů",
     "check_email": "Zkontrolujte svůj e-mail",
     "name_will_be_a_display_name": "Název, který zadáte, bude zobrazovaný název.",
     "valid": {
