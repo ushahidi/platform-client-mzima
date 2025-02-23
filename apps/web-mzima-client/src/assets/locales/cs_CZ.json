@@ -1361,8 +1361,8 @@
       "placeholder": {
         "pick_location": "Vyberte umístění..."
       },
-      "satellite": "Satellite",
-      "streets": "Streets",
+      "satellite": "Satelitní",
+      "streets": "Ulice",
       "humanitarian": "Humanitarian"
       
     },
