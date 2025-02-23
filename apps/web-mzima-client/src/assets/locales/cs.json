@@ -1150,7 +1150,7 @@
   "role": {
     "are_you_sure_you_want_to_delete_role": "Opravdu chcete odstranit {{roleName}} rolí?",
     "add_role": "Přidat roli",
-    "create_role": "Create role",
+    "create_role": "Vytvořit roli",
     "update_role": "Update role",
     "edit_role": "Upravit roli",
     "name": "Název",
