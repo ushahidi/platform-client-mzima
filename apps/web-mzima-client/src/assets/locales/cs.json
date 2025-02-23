@@ -1012,7 +1012,7 @@
         }
       },
       "input_empty_warn": "Vstup nemůže být prázdný",
-      "max_size": "Max size: {{size}} MB",
+      "max_size": "Maximální velikost: {{size}} MB",
       "invalid_video_embed": "Invalid video embed url",
       "errors": {
         "required" : "{{label}} field is a required field *",
