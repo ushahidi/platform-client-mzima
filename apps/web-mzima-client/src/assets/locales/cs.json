@@ -2078,7 +2078,7 @@
       }
     },
     "snackbar": {
-      "changes_discarded": "Changes discarded successfully",
+      "changes_discarded": "Změny byly úspěšně zamítnuty",
       "no_changes_made": "No changes made yet",
       "close": "Zavřít"
     },
