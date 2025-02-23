@@ -862,7 +862,7 @@
     "share_on_facebook": "Sdílet na Facebooku"
   },
   "post": {
-    "loading_posts": "Loading posts in {{ mode }} mode...",
+    "loading_posts": "Načítání příspěvků v režimu {{ mode }}...",
     "post_count": "{{count}} příspěvků",
     "see_more_plural": "Viz {{newPostsCount}} nové příspěvky",
     "see_more_singular": "Viz {{newPostsCount}} nových příspěvků",
