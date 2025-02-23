@@ -1172,7 +1172,7 @@
   "webhook": {
     "add_webhook": "Přidat Webhook",
     "edit_webhook": "Upravit Roli",
-    "create_webhook": "Create webhook",
+    "create_webhook": "Vytvořit webhook",
     "update_webhook": "Update webhook",
     "uuid": "Webhook UUID",
     "name": "Název",
