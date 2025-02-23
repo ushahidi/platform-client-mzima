@@ -2165,7 +2165,7 @@
   "translations": {
     "available_languages": "Dostupné překlady (vyberte pro zobrazení příspěvku):",
     "translate_post": "Přeložit příspěvek",
-    "translate_post_to": "Translate post to {{language}}",
+    "translate_post_to": "Přeložit příspěvek do {{language}}",
     "languages": "Jazyky",
     "language": "Jazyk",
     "default": "výchozí",
