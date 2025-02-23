@@ -1740,7 +1740,7 @@
     "contact": "{{type}}: {{contact}}",
     "add_user": "Přidat uživatele",
     "create_user": "Vytvořit uživatele",
-    "update_user": "Update user",
+    "update_user": "Aktualizovat uživatele",
     "edit_user": "Upravit uživatele",
     "update_password": "Aktualizovat heslo",
     "change_role": "Změnit Roli",
