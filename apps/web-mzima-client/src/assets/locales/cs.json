@@ -978,7 +978,7 @@
       "locked_tooltip": "Tento příspěvek upravuje někdo jiný. Zkuste to prosím později."
 
     },
-    "post_not_authorized": "You are not authorized to perform this action on this post.",
+    "post_not_authorized": "Nejste oprávněni provádět tuto akci na tomto příspěvku.",
     "modify": {
       "intro": "Vybrat průzkum",
       "no_task_values": "V současné době nejsou k této úloze uloženy žádné hodnoty.",
