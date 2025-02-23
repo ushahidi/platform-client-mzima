@@ -2191,7 +2191,7 @@
     "select_language": "Vyberte jazyk, do kterého chcete přidat překlad",
     "select_translate_edit": "Vyberte jazyk, do kterého chcete překládat, nebo jej upravte:",
     "default_lang_info": "Toto je jazyk, který se použije, pokud nejsou k dispozici žádné překlady pro jazyk, který uživatel nastavil pro nasazení.",
-    "translated_to": "Translated to {{language}}",
+    "translated_to": "Přeloženo do {{language}}",
     "viewing_translated":"You are viewing a translated version of this post.",
     "view_original":"View original post",
     "change_lang": "Change language"
