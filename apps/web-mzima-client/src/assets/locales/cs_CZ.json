@@ -2060,7 +2060,7 @@
       "destroy_confirm_desc": "Odstraněním tohoto průzkumu se odstraní také všechny shromážděné příspěvky a všechna související data v průzkumu. Tento krok nelze vrátit zpět.",
       "destroy_confirm_desc_end": "Před odstraněním můžete stáhnout a importovat všechna data.",
       "discard_changes": "Zahodit změny",
-      "save_changes": "Save Changes",
+      "save_changes": "Uložit změny",
       "back_to_editing": "Back to editing",
       "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
       "translations_missing": "Je třeba přidat překlady všech názvů a zajistit, aby zaškrtávací políčka a rádia neobsahovala duplikáty. Zkontrolujte, zda jste přeložili názvy dotazníků pro všechny přidané jazyky a zda jsou hodnoty zaškrtávacích políček a rádiových tlačítek jedinečné (v rámci každého jazyka)."
