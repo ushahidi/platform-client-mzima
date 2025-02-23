@@ -226,7 +226,7 @@
       "plural": "před {{time}} dny"
     },
     "month": {
-      "singular": "{{time}} month ago",
+      "singular": "před {{time}} měsícem",
       "plural": "{{time}} months ago"
     },
     "year": {
