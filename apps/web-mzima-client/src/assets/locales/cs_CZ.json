@@ -1113,7 +1113,7 @@
         "upload_complete" : "Nahrávání dokončeno!",
         "upload_failed" : "Nahrávání se nezdařilo!"
       },
-      "special_char": "This field contains special characters"
+      "special_char": "Toto pole obsahuje speciální znaky"
     },
     "video": {
       "enter_a_url": "Zadejte adresu URL videa z Youtube nebo Vimeo."
