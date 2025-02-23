@@ -219,11 +219,11 @@
     },
     "hour": {
       "singular": "před {{time}} hodinou",
-      "plural": "{{time}} hours ago"
+      "plural": "před {{time}} hodinami"
     },
     "day": {
-      "singular": "{{time}} day ago",
-      "plural": "{{time}} days ago"
+      "singular": "před {{time}} dnem",
+      "plural": "před {{time}} dny"
     },
     "month": {
       "singular": "{{time}} month ago",
