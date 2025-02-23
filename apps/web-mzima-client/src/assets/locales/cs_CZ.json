@@ -1143,7 +1143,7 @@
         "decimal_lat": "Pouze desetinné číslo zeměpisné šířky",
         "decimal_lng": "Zeměpisná délka: pouze desetinné číslo",
         "special_lng": "Pole zeměpisná délka obsahuje speciální znaky",
-        "special_lat": "Field latitude contains special characters"
+        "special_lat": "Pole zeměpisná šířka obsahuje speciální znaky"
       }
     }
   },
