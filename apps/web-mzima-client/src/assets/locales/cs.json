@@ -1785,7 +1785,7 @@
     "valid": {
       "fields": {
         "email must be unique": "Uživatel s tímto e-mailem již existuje",
-        "email must be valid": "Email must be a valid email address"
+        "email must be valid": "E-mail musí být platná e-mailová adresa"
       },
       "name": {
         "required": "Zobrazovaný název je povinný",
