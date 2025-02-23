@@ -2059,7 +2059,7 @@
       "destroy_confirm": "Opravdu chcete tento průzkum odstranit?",
       "destroy_confirm_desc": "Odstraněním tohoto průzkumu se odstraní také všechny shromážděné příspěvky a všechna související data v průzkumu. Tento krok nelze vrátit zpět.",
       "destroy_confirm_desc_end": "Před odstraněním můžete stáhnout a importovat všechna data.",
-      "discard_changes": "Discard changes",
+      "discard_changes": "Zahodit změny",
       "save_changes": "Save Changes",
       "back_to_editing": "Back to editing",
       "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
