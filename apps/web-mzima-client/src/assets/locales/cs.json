@@ -2163,7 +2163,7 @@
     "i_agree": "Souhlasím se <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">zásadami ochrany osobních údajů</a> Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Obchodní podmínky</a>."
   },
   "translations": {
-    "available_languages": "Available translations (select to see post):",
+    "available_languages": "Dostupné překlady (vyberte pro zobrazení příspěvku):",
     "translate_post": "Translate post",
     "translate_post_to": "Translate post to {{language}}",
     "languages": "Jazyky",
