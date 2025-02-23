@@ -1186,7 +1186,7 @@
     "delete_webhook": "Vymazat tento webhook",
     "delete_webhook_desc": "<strong>Pokud odstraníte tento webhook</strong>, ztratí se všechny přidružené události. Postupovat opatrně.",
     "dialog": {
-      "delete_warn_title": "{{ name }} webhook will be deleted!",
+      "delete_warn_title": "{{ name }} webhook bude smazán!",
       "delete_warn_message": "<p>Tuto akci nelze vrátit zpět.</p><p>Opravdu?</p>"
     }
   },
