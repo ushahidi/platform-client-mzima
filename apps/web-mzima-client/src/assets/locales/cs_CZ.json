@@ -2171,7 +2171,7 @@
     "default": "výchozí",
     "default_language": "Původní jazyk",
     "text_in_original": "Text v původním jazyce:",
-    "translation_default": "(default)",
+    "translation_default": "(výchozí)",
     "translate_field": "Přeložit pole",
     "survey_select_default": "Vyberte výchozí jazyk pro tento průzkum",
     "category_select_default": "Vyberte výchozí jazyk pro tuto kategorii",
