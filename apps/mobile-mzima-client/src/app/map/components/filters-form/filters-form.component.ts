@@ -347,7 +347,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
         const formValue = this.surveys.map((s: SurveyItem) => s.id);
         formFilter.value = formValue;
         this.activeFilters = _.cloneDeep(searchFormHelper.DEFAULT_FILTERS);
-        this.activeFilters['form'] = formValue;
+        if (this.activeFilters?.form) this.activeFilters.form = formValue;
         this.applyFilters();
       } else {
         formFilter.value = this.surveys
@@ -357,7 +357,8 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     } else {
       if (!this.activeSavedFilter?.filter.form) {
         formFilter.value = this.surveys.map((s: SurveyItem) => s.id);
-        this.activeFilters['form'] = this.surveys.map((s: SurveyItem) => s.id);
+        if (this.activeFilters?.form)
+          this.activeFilters.form = this.surveys.map((s: SurveyItem) => s.id);
         this.applyFilters();
       }
     }
@@ -450,7 +451,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
       } else {
         f.value = this.getFilterDefaultValue(f.name);
       }
-      this.activeFilters[f.name] = f.value;
+      if (this.activeFilters) this.activeFilters[f.name] = f.value;
       this.updateFilterSelectedText(f);
     });
     localStorage.setItem(this.session.getLocalStorageNameMapper('allSurveysChecked'), String(true));
@@ -620,7 +621,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
   }
 
   private applyFilters(): void {
-    delete this.activeFilters['saved-filters'];
+    if (this.activeFilters) delete this.activeFilters['saved-filters'];
     this.isTotalLoading = true;
     localStorage.setItem(
       this.session.getLocalStorageNameMapper('filters'),
