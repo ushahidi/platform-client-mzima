@@ -514,8 +514,8 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
         localStorage.removeItem(this.session.getLocalStorageNameMapper('activeSavedSearch'));
         this.clearAllFilters();
       }
-      this.router.navigate(value ? ['search', value] : ['']);
       this.filtersModal.closeModal(true);
+      setTimeout(() => this.router.navigate(value ? ['search', value] : ['']), 2);
       return;
     }
 
