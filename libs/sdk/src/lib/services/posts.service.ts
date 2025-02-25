@@ -365,6 +365,9 @@ export class PostsService extends ResourceService<any> {
       }
     }
     if (updated) {
+      // This is where it deletes them from...?
+      delete newFilters.date_before;
+      delete newFilters.date_after;
       this.postsFilters.next(newFilters);
     }
   }
