@@ -48,7 +48,6 @@ export class ImageUploaderComponent implements ControlValueAccessor {
 
   writeValue(obj: any): void {
     if (!obj) return;
-    console.log('writeValue > obj', obj);
     const objData = Array.isArray(obj) ? obj[0] : obj;
 
     this.upload = false;
@@ -63,7 +62,6 @@ export class ImageUploaderComponent implements ControlValueAccessor {
 
     // Set preview URL
     this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(objData.url); // Directly assign the URL
-    console.log('Updated previewUrl:', this.previewUrl);
   }
 
   registerOnChange(fn: any): void {
