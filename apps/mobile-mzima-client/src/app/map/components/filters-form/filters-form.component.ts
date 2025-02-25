@@ -300,13 +300,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
           currentView: 'feed',
           include_unstructured_posts: true,
         };
-
-        // It doesn't delete from here...
-
-        // delete this.activeFilters.date_before;
-        // delete this.activeFilters.date_after;
       }
-      // console.log('end activeSavedSearch: ', this.activeSavedFilter);
     }
   }
 
