@@ -238,6 +238,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
 
   public radioChangeHandle(event: any): void {
     this.isPristine = false;
+    this.isSubcategoriesPristine = false;
     this.value = event.detail.value;
   }
 
@@ -304,11 +305,10 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   }
 
   public applyFilter(): void {
-    this.onChange(
-      this.type === FilterType.MULTISELECT || this.type === FilterType.MULTILEVELSELECT
-        ? [...this.value]
-        : this.value,
-    );
+    let value: number | number[] = this.value;
+    if (this.type === FilterType.MULTISELECT || this.type === FilterType.MULTILEVELSELECT)
+      value = [...this.value];
+    this.onChange(value);
   }
 
   public async clearFilter(): Promise<void> {
