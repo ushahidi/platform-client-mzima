@@ -293,6 +293,20 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
         this.applyFilter(this.activeSavedFilter!.filter[key], key, isLastKey, isLastKey);
         return acc;
       }, []);
+
+      if (!this.activeSavedFilter.filter.currentView) {
+        this.activeSavedFilter.filter = {
+          ...this.activeSavedFilter.filter,
+          currentView: 'feed',
+          include_unstructured_posts: true,
+        };
+
+        // It doesn't delete from here...
+
+        // delete this.activeFilters.date_before;
+        // delete this.activeFilters.date_after;
+      }
+      // console.log('end activeSavedSearch: ', this.activeSavedFilter);
     }
   }
 
