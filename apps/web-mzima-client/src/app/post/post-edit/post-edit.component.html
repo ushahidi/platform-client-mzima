@@ -389,9 +389,6 @@
             </ng-container>
 
             <ng-container *ngIf="field.type === 'media'">
-              <span class="form-row__instruction" *ngIf="maxImageSize">
-                {{ 'post.modify.max_size' | translate : { size: field.config.maxUploadSize } }}
-              </span>
               <div *ngIf="field.input === 'upload'">
                 <app-image-uploader
                   [formControlName]="field.key"
@@ -405,6 +402,16 @@
                 </app-image-uploader>
               </div>
               <div *ngIf="field.input === 'image'">
+                <span class="form-row__instruction" *ngIf="maxImageSize">
+                  {{
+                    'post.modify.max_size'
+                      | translate
+                        : {
+                            size: field.config.maxUploadSize,
+                            format: 'post.modify.format.image' | translate
+                          }
+                  }}
+                </span>
                 <app-media-uploader
                   [formControlName]="field.key"
                   media="image"
@@ -418,6 +425,16 @@
                 </app-media-uploader>
               </div>
               <div *ngIf="field.input === 'audio'">
+                <span class="form-row__instruction" *ngIf="maxImageSize">
+                  {{
+                    'post.modify.max_size'
+                      | translate
+                        : {
+                            size: field.config.maxUploadSize,
+                            format: 'post.modify.format.audio' | translate
+                          }
+                  }}
+                </span>
                 <app-media-uploader
                   [formControlName]="field.key"
                   media="audio"
@@ -430,6 +447,16 @@
                 </app-media-uploader>
               </div>
               <div *ngIf="field.input === 'document'">
+                <span class="form-row__instruction" *ngIf="maxImageSize">
+                  {{
+                    'post.modify.max_size'
+                      | translate
+                        : {
+                            size: field.config.maxUploadSize,
+                            format: 'post.modify.format.document' | translate
+                          }
+                  }}
+                </span>
                 <app-media-uploader
                   [formControlName]="field.key"
                   [maxUploadSize]="field.config.maxUploadSize"
