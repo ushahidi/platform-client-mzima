@@ -47,15 +47,21 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   domSanitizer: DomSanitizer;
 
   writeValue(obj: any): void {
-    if (obj) {
-      console.log('writeValue > obj', obj);
-      this.upload = false;
-      this.captionControl.patchValue(obj.caption);
-      this.id = obj.id;
-      this.photo = obj.photo;
-      if (typeof obj.photo === 'string') this.previewUrl = obj.photo;
-      else this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(obj.photo.data);
-    }
+    if (!obj) return;
+    const objData = Array.isArray(obj) ? obj[0] : obj;
+
+    this.upload = false;
+    this.captionControl.patchValue(objData.caption);
+    this.id = objData.id;
+
+    this.photo = {
+      name: this.fileName,
+      path: objData.url,
+      data: objData.url,
+    };
+
+    // Set preview URL
+    this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(objData.url); // Directly assign the URL
   }
 
   registerOnChange(fn: any): void {

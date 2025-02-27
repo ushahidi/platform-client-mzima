@@ -34,14 +34,22 @@ export class UploadFileProgressHelper {
         field.value = { value: [event.body.result.id] };
       }
 
-      Filesystem.deleteFile({
+      await Filesystem.stat({
         directory: Directory.Data,
         path: path,
-      });
+      })
+        .then(async () => {
+          await Filesystem.deleteFile({
+            directory: Directory.Data,
+            path: path,
+          });
+        })
+        .catch(() => {
+          console.warn(`File not found to delete: ${path}`);
+        });
     } catch (error: any) {
       throw new Error(`Error uploading file: ${error.message}`);
     }
-
     return field;
   }
 }

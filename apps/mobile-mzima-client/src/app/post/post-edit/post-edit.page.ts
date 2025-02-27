@@ -634,13 +634,18 @@ export class PostEditPage {
                   caption: this.form.value[field.key]?.caption,
                   upload: this.form.value[field.key]?.upload,
                 };
+                value.value = {
+                  photo: this.form.value[field.key]?.photo,
+                  caption: this.form.value[field.key]?.caption,
+                };
               } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
                 this.fileToUpload = {
                   fileId: this.form.value[field.key]?.id,
                   delete: this.form.value[field.key]?.delete,
                 };
+                value.value = [];
               } else {
-                value.value = this.form.value[field.key]?.id || null;
+                value.value = this.form.value[field.key]?.id || [];
               }
             } else if (field.input === 'checkbox') {
               if (
@@ -771,21 +776,24 @@ export class PostEditPage {
           if (field?.file?.delete) {
             postData = await this.deleteFile(postData, field.file);
           } else if (field.value.value && typeof field.value.value !== 'number') {
-            const photo = {
-              data: field.value.value.photo.data,
-              name: field.value.value.photo.name,
-              caption: field.value.value.caption,
-              path: field.value.value.photo.path,
-            };
-            const fieldUpload = new UploadFileProgressHelper(this.mediaService).uploadFileField(
-              field,
-              photo,
-              (progress) =>
-                setTimeout(() => {
-                  this.uploadProgress$[field.id].next(progress);
-                }),
-            );
-            promises.push(fieldUpload);
+            const photoValue = field.value.value;
+            if (photoValue && photoValue.photo && photoValue.photo.data) {
+              const photo = {
+                data: photoValue.photo.data,
+                name: photoValue.photo.name,
+                caption: photoValue.caption,
+                path: photoValue.photo.path,
+              };
+              const fieldUpload = new UploadFileProgressHelper(this.mediaService).uploadFileField(
+                field,
+                photo,
+                (progress) =>
+                  setTimeout(() => {
+                    this.uploadProgress$[field.id].next(progress);
+                  }),
+              );
+              promises.push(fieldUpload);
+            }
           }
         }
       }
@@ -822,7 +830,7 @@ export class PostEditPage {
       for (const content of postData.post_content) {
         for (const field of content.fields) {
           if (field.input === 'upload') {
-            field.value.value = null;
+            field.value.value = [];
           }
         }
       }
