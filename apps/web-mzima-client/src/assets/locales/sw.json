@@ -2061,6 +2061,7 @@
       "destroy_confirm_desc_end": "Unaweza <a href=\"settings/data-import\">kupakua na kuagiza</a> data yako yote kabla ya kufuta.",
       "discard_changes": "Katisha mabadilikio",
       "save_changes": "Hifadhi Mabadilikio",
+      "back_to_editing": "Back to editing",
       "invalid_characters": "Tafadhali ondoa vibambo batili (kama vile +, $, ^, =)",
       "translations_missing": "Unahitaji kuongeza tafsiri za majina yote, na uhakikishe kuwa visanduku vya kuteua na redio hazina nakala. Hakikisha kuwa umetafsiri majina ya uchunguzi kwa lugha zote zilizoongezwa na kwamba kisanduku cha kuteua na thamani za vitufe vya redio ni za kipekee (ndani ya kila lugha)."
     },
@@ -2162,15 +2163,19 @@
     "i_agree": "Nakubaliana na<a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Sera ya Faragha</a> ya Ushahidi na\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Sheria na Masharti</a>."
   },
   "translations": {
+    "available_languages": "Available translations (select to see post):",
+    "translate_post": "Translate post",
+    "translate_post_to": "Translate post to {{language}}",
     "languages": "Lugha",
     "language": "Lugha",
     "default": "Kaida",
+    "default_language": "Original language",
+    "text_in_original": "Text in original language:",
     "translation_default": "(chaguo-msingi)",
     "translate_field": "Tafsiri ya uga",
     "survey_select_default": "Chagua lugha chaguo-msingi kwa ajili ya utafiti huu",
     "category_select_default": "Chagua lugha chaguo-msingi kwa kategoria hii",
     "error_translation_exists": "Huwezi kuchagua lugha hii kwa sababu tayari kuna tafsiri yake.",
-    "edit_default_text": "Matini katika lugha chaguo-msingi",
     "edit_placeholder": "Andika tafsiri yako hapa",
     "add_translation": "Ongeza tafsiri yako hapa chini:",
     "survey_name_required": "Tafsiri ya jina la utafiti inahitajika",
@@ -2184,7 +2189,12 @@
     "add_a_language": "Ongeza lugha",
     "error_no_default": "Unahitaji kutaja lugha chaguo-msingi kabla ya kuongeza tafsiri mpya.",
     "select_language": "Chagua lugha ya kuongeza tafsiri kwa",
-    "default_lang_info": "Hii ni lugha ambayo itatumika ikiwa hakuna tafsiri zinazopatikana kwa lugha ambayo mtumiaji ameweka kwa kupelekwa."
+    "select_translate_edit": "Select a language to translate to, or edit:",
+    "default_lang_info": "Hii ni lugha ambayo itatumika ikiwa hakuna tafsiri zinazopatikana kwa lugha ambayo mtumiaji ameweka kwa kupelekwa.",
+    "translated_to": "Translated to {{language}}",
+    "viewing_translated":"You are viewing a translated version of this post.",
+    "view_original":"View original post",
+    "change_lang": "Change language"
   },
   "languages": {
     "ach": "Acoli",
