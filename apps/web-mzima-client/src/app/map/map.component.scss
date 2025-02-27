@@ -9,31 +9,22 @@
 .map-container {
   flex-grow: 1;
 }
-.ol-popup {
-  position: absolute;
-  background-color: white;
-  padding: 15px;
-  border-radius: 10px;
-  bottom: 12px;
-  left: -50px;
-  min-width: 280px;
-}
+
 
 ::ng-deep {
-  .ol-overlay-container.ol-selectable {
-    z-index: 1000;
-    position: absolute;
+  .popup-container, .post {
     background-color: white;
     padding: 15px;
     border-radius: 10px;
   }
+  
   .ol-unselectable.ol-control.layer-switcher.layer-switcher-group-select-style-children.layer-switcher-activation-mode-click.activationModeClick.shown button {
     display: none;
   }
   .layer-switcher.shown.layer-switcher-activation-mode-click {
-    top: 0.5em;
+    top: 1em;
     @include breakpoint-max($tablet) {
       top: 5em;
     }
   }
-}
+ }

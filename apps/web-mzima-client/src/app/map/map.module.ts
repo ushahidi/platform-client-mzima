@@ -12,6 +12,7 @@ import { MapComponent } from './map.component';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 import { PostModule } from '../post/post.module';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
+import { SpinnerModule } from '../shared/components/spinner/spinner.module';
 
 @NgModule({
   declarations: [MapComponent, PostDetailsModalComponent],
@@ -27,6 +28,7 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     TranslateModule,
     DirectiveModule,
     MzimaUiModule,
+    SpinnerModule,
   ],
 })
 export class MapModule {}

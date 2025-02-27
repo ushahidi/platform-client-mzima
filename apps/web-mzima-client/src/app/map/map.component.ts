@@ -1,8 +1,7 @@
 import { Component, NgZone, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -10,8 +9,6 @@ import { MapConfigInterface } from '@models';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import Style from 'ol/style/Style';
-import Fill from 'ol/style/Fill';
-import CircleStyle from 'ol/style/Circle';
 import Icon from 'ol/style/Icon';
 import Overlay from 'ol/Overlay';
 import { mapHelper, searchFormHelper } from '@helpers';
@@ -21,11 +18,15 @@ import { BaseLayerOptions, GroupLayerOptions } from 'ol-layerswitcher';
 import LayerGroup from 'ol/layer/Group';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MainViewComponent } from '@shared';
-import { SavedsearchesService, PostsService, GeoJsonPostsResponse } from '@mzima-client/sdk';
+import {
+  SavedsearchesService,
+  PostsService,
+  GeoJsonPostsResponse,
+  MediaService,
+} from '@mzima-client/sdk';
 import GeoJSON from 'ol/format/GeoJSON';
 import { SessionService, EventBusService, EventType, BreakpointService } from '@services';
 import { fromLonLat } from 'ol/proj';
-import { get, over } from 'lodash';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
 
@@ -42,6 +43,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   baseMaps: LayerGroup;
   surveyLayer!: VectorLayer;
   post: any;
+  isPostLoading: boolean;
 
   constructor(
     protected override router: Router,
@@ -54,6 +56,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
     private dialog: MatDialog,
     private view: ViewContainerRef,
     private zone: NgZone,
+    private mediaService: MediaService,
   ) {
     super(
       router,
@@ -151,32 +154,19 @@ export class MapComponent extends MainViewComponent implements OnInit {
               })),
             ),
           };
+
           const style = (feature: any) => {
-            const color = feature.getProperties().color
-              ? `#${feature.getProperties().color}`
-              : '#ffff';
+            const color = feature.getProperties().color;
+            const marker = mapHelper.imageIcon(color);
             return new Style({
-              image: new CircleStyle({
-                fill: new Fill({ color }),
-                radius: 5,
+              image: new Icon({
+                src: marker,
+                anchor: [0.5, 50],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
               }),
             });
           };
-
-          // const style = (feature: any) => {
-          //   // const color = feature.getProperties().color || 'fff';
-          //   // const marker = mapHelper.pointIcon(color);
-          //   // const src = typeof marker.options.html === 'string' ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(marker.options.html) : '';
-
-          //   return new Style({
-          //     image: new Icon({
-          //       src: './assets/icons/marker.svg',
-          //       offset: [0, 0],
-          //       opacity: 1,
-          //       scale: 0.35,
-          //     }),
-          //   });
-          // };
 
           const vectorSource = new VectorSource({
             features: new GeoJSON().readFeatures(geoJson, {
@@ -199,64 +189,81 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
   initiatePopups() {
     const container = document.getElementById('popup');
-
     if (!container) return;
 
     const overlay = new Overlay({
       element: container,
-      autoPan: {
-        animation: {
-          duration: 250,
-        },
-      },
+      autoPan: { animation: { duration: 250 } },
+      positioning: 'bottom-center',
+      offset: [0, -10],
     });
 
     this.map.addOverlay(overlay);
+
     this.map.on('click', (evt) => {
       const coordinate = evt.coordinate;
-      const feature = this.map.forEachFeatureAtPixel(evt.pixel, (feat: any, layer: any) => {
-        return layer === this.surveyLayer ? feat : null;
-      });
+      const feature = this.map.forEachFeatureAtPixel(evt.pixel, (feat, layer) =>
+        layer === this.surveyLayer ? feat : null,
+      );
+
+      const comp = this.view.createComponent(PostPreviewComponent);
+
       if (feature) {
+        this.isPostLoading = true;
+
         const { id } = feature.getProperties();
         if (id) {
-          const comp = this.view.createComponent(PostPreviewComponent);
+          overlay.setElement(container);
+          overlay.setPosition(coordinate);
 
           this.postsService.getById(id).subscribe({
             next: (post) => {
-              comp.setInput('post', post);
+              this.post = post;
+              comp.setInput('post', this.post);
               comp.setInput('user', this.user);
+              overlay.setElement(comp.location.nativeElement);
+              overlay.setPosition(coordinate);
+              this.isPostLoading = false;
+
               this.postsService.getById(id).subscribe({
                 next: (postV5) => {
-                  overlay.setElement(comp.location.nativeElement);
                   comp.instance.details$.subscribe({
-                    next: () => {
-                      this.showPostDetailsModal(postV5, post.color, post.data_source_message_id);
-                    },
+                    next: () =>
+                      this.showPostDetailsModal(postV5, post.color, post.data_source_message_id),
                   });
                   comp.instance.edit.subscribe({
-                    next: () => {
+                    next: () =>
                       this.showPostDetailsModal(
                         postV5,
                         post.color,
                         post.data_source_message_id,
                         true,
-                      );
+                      ),
+                  });
+                  comp.instance.deleted$.subscribe({
+                    next: () => {
+                      overlay.setPosition(undefined);
+                      overlay.setElement(undefined);
+                      comp.destroy();
+                      this.map.removeLayer(this.surveyLayer);
+
+                      this.loadData();
+                      this.eventBusService.next({
+                        type: EventType.RefreshSurveysCounters,
+                        payload: true,
+                      });
                     },
                   });
-
-                  overlay.setPosition(coordinate);
                 },
               });
             },
-            error: (error) => {
-              console.error('Error fetching post details', error);
-            },
+            error: (error) => console.error('Error fetching post details', error),
           });
-          overlay.setPosition(coordinate);
-        } else {
-          overlay.setPosition(undefined);
         }
+      } else {
+        overlay.setPosition(undefined);
+        overlay.setElement(undefined);
+        comp.destroy();
       }
     });
   }
