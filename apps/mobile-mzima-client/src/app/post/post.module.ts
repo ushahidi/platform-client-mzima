@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { IonicModule } from '@ionic/angular';
 import { PostComponentsModule } from './components/post-components.module';
 import { PostPage } from './post.page';
 import { PipeModule, SharedModule } from '@shared';
@@ -10,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
+    IonicModule,
     SharedModule,
     PostPageRoutingModule,
     TwitterWidgetModule,

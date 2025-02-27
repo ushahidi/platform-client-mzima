@@ -11,12 +11,15 @@ import { DateSelectModule } from '../../map/components/date-select/date-select.m
 import { PostComponentsModule } from '../components/post-components.module';
 import { PostEditPage } from './post-edit.page';
 import { PostEditRoutingModule } from './post-edit.routing.module';
+import { MediaUploaderComponent } from '../components/media-uploader/media-uploader.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
     PostEditRoutingModule,
     CommonModule,
     IonicModule,
+    MatIconModule,
     ReactiveFormsModule,
     SharedModule,
     DateSelectModule,
@@ -28,6 +31,6 @@ import { PostEditRoutingModule } from './post-edit.routing.module';
     TranslateModule,
     MatProgressBarModule,
   ],
-  declarations: [PostEditPage],
+  declarations: [PostEditPage, MediaUploaderComponent],
 })
 export class PostEditModule {}

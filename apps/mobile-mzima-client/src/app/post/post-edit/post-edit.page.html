@@ -433,6 +433,101 @@
             </div>
           </ng-container>
 
+          <!--multimedia fields-->
+
+          <!--multimedia photo-->
+          <div *ngIf="field.input === 'image'">
+            <div class="form-control--section">
+              <div>
+                <ion-label class="field-label">
+                  {{ field?.label }}
+                  <span class="color-accent" *ngIf="field?.required">*</span>
+                </ion-label>
+                <span
+                  class="form-row__instruction"
+                  *ngIf="field?.instructions"
+                  [innerHTML]="field?.instructions"
+                ></span>
+                <span class="form-row__instruction" *ngIf="maxImageSize">
+                  {{ 'post.modify.max_size' | translate : { size: field.config.maxUploadSize } }}
+                </span>
+              </div>
+
+              <app-media-uploader
+                [formControlName]="field.key"
+                media="image"
+                [hasCaption]="field.config.hasCaption"
+                [maxUploadSize]="field.config.maxUploadSize"
+                (change)="maxSizeError = false"
+                [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
+                  "
+              >
+              </app-media-uploader>
+            </div>
+          </div>
+
+          <!--multimedia audio-->
+
+          <div *ngIf="field.input === 'audio'">
+            <div class="form-control--section">
+              <div>
+                <ion-label class="field-label">
+                  {{ field?.label }}
+                  <span class="color-accent" *ngIf="field?.required">*</span>
+                </ion-label>
+                <span
+                  class="form-row__instruction"
+                  *ngIf="field?.instructions"
+                  [innerHTML]="field?.instructions"
+                ></span>
+                <span class="form-row__instruction" *ngIf="maxImageSize">
+                  {{ 'post.modify.max_size' | translate : { size: field.config.maxUploadSize } }}
+                </span>
+              </div>
+              <app-media-uploader
+                [formControlName]="field.key"
+                media="audio"
+                [maxUploadSize]="field.config.maxUploadSize"
+                (change)="maxSizeError = false"
+                [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
+                  "
+              >
+              </app-media-uploader>
+            </div>
+          </div>
+          <!--multimedia documents-->
+
+          <div *ngIf="field.input === 'document'">
+            <div class="form-control--section">
+              <div>
+                <ion-label class="field-label">
+                  {{ field?.label }}
+                  <span class="color-accent" *ngIf="field?.required">*</span>
+                </ion-label>
+                <span
+                  class="form-row__instruction"
+                  *ngIf="field?.instructions"
+                  [innerHTML]="field?.instructions"
+                ></span>
+                <span class="form-row__instruction" *ngIf="maxImageSize">
+                  {{ 'post.modify.max_size' | translate : { size: field.config.maxUploadSize } }}
+                </span>
+              </div>
+              <app-media-uploader
+                [formControlName]="field.key"
+                [maxUploadSize]="field.config.maxUploadSize"
+                media="document"
+                (change)="maxSizeError = false"
+                [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
+                  "
+              >
+              </app-media-uploader>
+            </div>
+          </div>
+
           <!-- video -->
           <ng-container *ngIf="field.input === 'video'">
             <div class="form-control--section">

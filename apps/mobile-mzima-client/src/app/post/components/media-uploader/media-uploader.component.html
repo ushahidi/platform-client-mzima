@@ -1,0 +1,104 @@
+<div class="media-loader">
+  <div class="media-loader__btn">
+    <div class="media-loader__preview" *ngIf="mediaFiles.length > 0">
+      <div class="media-loader__preview-{{ media }}">
+        <div
+          [class]="'media-preview ' + media + ' ' + mediaFile.status"
+          *ngFor="let mediaFile of mediaFiles; let i = index"
+        >
+          <ng-container
+            *ngIf="
+              mediaFile.status === MediaFileStatus.READY ||
+                mediaFile.status === MediaFileStatus.UPLOADED;
+              then itemReady;
+              else inProgress
+            "
+          >
+          </ng-container>
+
+          <ng-template #itemReady>
+            <img *ngIf="media === 'document'" class="thumbnail" [src]="mediaFile.icon" />
+            <img
+              *ngIf="media === 'image'"
+              class="thumbnail"
+              [src]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url!)"
+            />
+            <audio
+              *ngIf="media === 'audio'"
+              controls
+              [src]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url!)"
+            ></audio>
+            <div class="media-details">
+              <div class="filename">{{ mediaFile.filename }}</div>
+              <div class="filesize">{{ mediaFile.fileSize }}</div>
+            </div>
+          </ng-template>
+
+          <ng-template #inProgress>
+            <div class="media-blank">
+              <app-icon
+                *ngIf="mediaFile.status === MediaFileStatus.ERROR"
+                class="xicon"
+                icon
+                name="warning"
+              ></app-icon>
+              <div class="media-error" *ngIf="mediaFile.status === MediaFileStatus.ERROR">
+                {{ mediaFile.error! | translate }}
+              </div>
+              <app-spinner
+                class="loading-spinner"
+                *ngIf="mediaFile.status === MediaFileStatus.UPLOADING"
+              ></app-spinner>
+              <div class="media-status" *ngIf="mediaFile.status === MediaFileStatus.UPLOADING">
+                {{ 'post.media.status.uploading' | translate }}
+              </div>
+            </div>
+          </ng-template>
+
+          <div
+            class="status-button"
+            (click)="clickDeleteButton(mediaFile.value, mediaFile.generatedId)"
+          >
+            <ng-container
+              *ngIf="mediaFile.status === MediaFileStatus.UPLOADED; then check; else cross"
+            >
+            </ng-container>
+            <ng-template #check>
+              <ion-icon class="xicon" name="checkmark-outline"></ion-icon>
+            </ng-template>
+            <ng-template #cross>
+              <ion-icon class="xicon" name="close-outline"></ion-icon>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="media-loader__controls">
+      <app-button
+        fill="solid"
+        color="primary"
+        [disabled]="maxFiles !== -1 && this.mediaFiles.length < maxFiles"
+        class="media-loader__control"
+        (buttonClick)="fileInput.click()"
+        [ngSwitch]="mediaType"
+      >
+        <div>
+          <app-icon name="{{ mediaType.name }}" class="icon"></app-icon>
+          {{ mediaType.buttonText | translate }}
+        </div>
+      </app-button>
+      <input
+        hidden
+        #fileInput
+        multiple
+        type="file"
+        accept="{{ mediaType.fileTypes }}"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    <!-- <mat-error class="error-msg" *ngIf="error !== 'none'">
+      {{ error | translate }}
+    </mat-error> -->
+  </div>
+</div>
