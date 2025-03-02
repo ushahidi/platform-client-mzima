@@ -506,7 +506,7 @@
     "who": "کێ دەتوانێت ئەمە ببینێت؟",
     "task": {
       "delete": {
-        "desc": "<strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.",
+        "desc": "ئەگەر ئەم ئەرکە بسڕیتەوە، هەموو ئەو داتایانەی تێیدا گیراون هەروەها دەسڕێنەوە. بە وریاییەوە بەردەوام بە.",
         "delete": "سڕینەوەی ئەرک",
         "delete_this": "سڕینەوەی ئەم ئەرکە"
       }
@@ -892,7 +892,7 @@
     "no_search_results_location": "گەڕانەکەت هاوتای هیچ بابەتێک نەبوو لەگەڵ زانیاری شوێن",
     "no_posts_match_search": "هیچ بابەتێک هاوتایە لەگەڵ گەڕانی وشەی سەرەکی. تکایە گەڕانی وشەی سەرەکی بگۆڕە یان خاوێن بکەرەوە بۆ بینینی بابەتە هاوشێوەکان.",
     "no_posts_match_search_plus_filter": "هیچ بابەتێک هاوتایە لەگەڵ گەڕانی وشەی سەرەکی + فلتەر. تکایە گەڕانی وشەی سەرەکی و/یان فلتەرەکان بگۆڕە یان بسڕەوە بۆ بینینی بابەتە هاوشێوەکان.",
-    "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
+    "no_posts_match_your_current_filters": "هیچ بابەتێک لەگەڵ فلتەرەکانی ئێستادا ناگونجێت. تکایە فلتەرەکان بگۆڕە یان بسڕەوە بۆ بینینی بابەتە هاوشێوەکان.",
     "no_posts_yet": "هێشتا هیچ بابەتێک نییە!",
     "no_posts_yet_location": "هێشتا هیچ بابەتێک نیە کە زانیاری شوێنەکەی تێدابێت!",
     "add_first_post": "بابەتی یەکەم زیاد بکە",
@@ -1014,7 +1014,7 @@
       "input_empty_warn": "تێکردن نابێت بەتاڵ بێت",
       "max_size": "زۆرترین قەبارە: {{size}} مێگابایت فۆرمات: {{format}}",
       "format": {
-        "image": "jpeg or png only",
+        "image": "تەنها JPEG یان PNG",
         "audio": "mp3, aac or ogg only",
         "document": "PDF or Word only"
       },
