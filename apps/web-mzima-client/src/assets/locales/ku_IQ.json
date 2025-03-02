@@ -2884,7 +2884,7 @@
       "message": "{{sitename}} بابەتی نوێ: {{title}}"
     },
     "publishedPostsLimitReached": "سنوور:{{بابەتەکان}}",
-    "tagDoesNotExist": "category :value does not exist",
+    "tagDoesNotExist": "پۆل:بەها بوونی نیە",
     "attributeDoesNotExist": "attribute {{param1}} does not exist",
     "tooManyValues": "Too many values for {{param1}} (max: {{param2}})",
     "valueDoesNotExist": "value id {{param2}} for field {{param1}} does not exist",
