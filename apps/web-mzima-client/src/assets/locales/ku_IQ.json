@@ -2915,7 +2915,7 @@
       "invalidForm": "خانەی {{param1}} جۆری بابەتی هەڵەی هەیە، Post id:{{param2}}",
       "numeric": "خانەی {{param1}} پێویستە ژمارەیی بێت، دراوە: {{param2}}",
       "scalar": "خانەی {{param1}} پێویستە سکالر بێت، دراوە: {{param2}}",
-      "point": "The field {{param1}} must be an array of lat and lon",
+      "point": "خانەی {{param1}} پێویستە ریزبەندێک بێت لە lat و lon",
       "lat": "the field {{param1}} must contain a valid latitude",
       "lon": "the field {{param1}} must contain a valid longitude",
       "url": "The field {{param1}} must be a url, Given: {{param2}}",
