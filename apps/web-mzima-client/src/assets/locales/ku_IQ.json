@@ -2848,14 +2848,14 @@
     "Uruguay": "ئوروگوای",
     "Uzbekistan": "ئوزبێکستان",
     "Vanuatu": "ڤانواتوو",
-    "Venezuela, Bolivarian Republic of Venezuela": "Venezuela, Bolivarian Republic of Venezuela",
-    "Vietnam": "Vietnam",
-    "Virgin Islands, British": "Virgin Islands, British",
-    "Virgin Islands, U.S.": "Virgin Islands, U.S.",
-    "Wallis and Futuna": "Wallis and Futuna",
-    "Yemen": "Yemen",
-    "Zambia": "Zambia",
-    "Zimbabwe": "Zimbabwe"
+    "Venezuela, Bolivarian Republic of Venezuela": "ڤەنزوێلا، کۆماری بۆلیڤاری ڤێنزوێلا",
+    "Vietnam": "ڤیتنام",
+    "Virgin Islands, British": "دورگەکانی ڤێرجین، بەریتانیا",
+    "Virgin Islands, U.S.": "دورگەکانی ڤێرجین، ویلایەتە یەکگرتووەکان",
+    "Wallis and Futuna": "والیس و فوتونا",
+    "Yemen": "یەمەن",
+    "Zambia": "زامبیا",
+    "Zimbabwe": "زیمبابوێ"
   },
   "api": {
     "providerNotAvailable": "One or more of the enabled providers is not available :param1",
