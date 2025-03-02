@@ -2859,7 +2859,7 @@
   },
   "api": {
     "providerNotAvailable": "یەکێک یان زیاتر لە دابینکارە چالاککراوەکان بەردەست نییە :p aram1",
-    "range": "The file size should be less than {{param3}} KB",
+    "range": "قەبارەی فایلەکە دەبێت کەمتر بێت لە {{param3}} KB",
     "mime_type": "File type not supported. Please upload a .csv file.",
     "not_empty": ":field must not be empty",
     "isKeyAvailable": "The key {{value}} is not available",
