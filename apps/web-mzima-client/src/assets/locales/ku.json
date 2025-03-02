@@ -2897,7 +2897,7 @@
     "scalar": "بەهای بابەت بۆ {{param1}} دەبێت سکالر بێت",
     "doesTranslationExist": "وەرگێڕانی {{value}} بۆ بابەتی {{param2}} پێشتر هەیە",
     "published_to": {
-      "exists": "The role you are publishing to {{value}} does not exist"
+      "exists": "ئەو ڕۆڵەی لە {{value}} بڵاوی دەکەیتەوە بوونی نییە"
     },
     "stageDoesNotExist": "Stage {{param1}} does not exist",
     "stageRequired": "Stage {{param1}} is required before publishing",
