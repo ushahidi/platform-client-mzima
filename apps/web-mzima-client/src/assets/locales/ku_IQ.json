@@ -2883,7 +2883,7 @@
     "sms": {
       "message": "{{sitename}} بابەتی نوێ: {{title}}"
     },
-    "publishedPostsLimitReached": "limit:{{posts}}",
+    "publishedPostsLimitReached": "سنوور:{{بابەتەکان}}",
     "tagDoesNotExist": "category :value does not exist",
     "attributeDoesNotExist": "attribute {{param1}} does not exist",
     "tooManyValues": "Too many values for {{param1}} (max: {{param2}})",
