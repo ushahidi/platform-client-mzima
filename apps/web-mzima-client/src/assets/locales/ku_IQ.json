@@ -2890,7 +2890,7 @@
     "valueDoesNotExist": "ناسنامەی بەها {{param2}} بۆ خانەی {{param1}} بوونی نیە",
     "canNotUseExistingValueOnNewPost": "ناتوانێت بەهای بەردەست {{param2}} بەکار بهێنێت بۆ خانەی {{param1}} لە بابەتێکی نوێ",
     "postAttributeRequired": "تایبەتمەندی {{param1}} پێویستە",
-    "taskAttributeRequired": "attribute {{param1}} is required before stage {{param2}} can be completed",
+    "taskAttributeRequired": "تایبەتمەندی {{param1}} پێویستە پێش تەواوکردنی قۆناغی {{param2}}",
     "emptyIdAndLocale": "Must have at least id or locale",
     "emptyParentWithLocale": "Must have at parent id when passing locale",
     "notAnArray": "Post values for {{param1}} must be an array",
