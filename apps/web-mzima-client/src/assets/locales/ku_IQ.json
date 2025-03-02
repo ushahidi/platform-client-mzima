@@ -2885,7 +2885,7 @@
     },
     "publishedPostsLimitReached": "سنوور:{{بابەتەکان}}",
     "tagDoesNotExist": "پۆل:بەها بوونی نیە",
-    "attributeDoesNotExist": "attribute {{param1}} does not exist",
+    "attributeDoesNotExist": "تایبەتمەندی {{param1}} بوونی نییە",
     "tooManyValues": "Too many values for {{param1}} (max: {{param2}})",
     "valueDoesNotExist": "value id {{param2}} for field {{param1}} does not exist",
     "canNotUseExistingValueOnNewPost": "Cannot use existing value {{param2}} for field {{param1}} on a new post",
