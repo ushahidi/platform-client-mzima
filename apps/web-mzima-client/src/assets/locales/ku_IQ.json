@@ -2865,7 +2865,7 @@
     "isKeyAvailable": "کلیلی {{value}} بەردەست نییە",
     "contactIsValid": "ژمارەی تەلەفۆن نادروستە",
     "roleDoesNotExist": "role_id {{value}} بوونی نییە",
-    "invalidFormStageId": "form_stage_id :value does not exist",
+    "invalidFormStageId": "form_stage_id :value بوونی نیە",
     "postTypeLimitReached": "limit: {{posttypes}}",
     "dataUrlOrMediaRequired": "One of data_url or media_id is required",
     "dataUrlMediaConflict": "Only one of data_url or media_id can be defined",
