@@ -2871,7 +2871,7 @@
     "dataUrlMediaConflict": "تەنها یەکێک لە data_url یان media_id دەتوانرێت پێناسە بکرێت",
     "size_error": "قەبارەی فایلەکە دەبێت کەمتر بێت لە :p aram1 مێگابایت",
     "mime_type_not_allowed": "جۆری فایل پشتگیری نەکراوە. تکایە پەڕگەیەکی وێنەیی باربکە.",
-    "mime_not_empty": "MIME type not found. The MIME type must be set for the file.",
+    "mime_not_empty": "جۆری MIME نەدۆزرایەوە. جۆری MIME پێویستە بۆ فایلەکە رێکخرێت.",
     "contact": {
       "invalid_phone": "Invalid phone number {{param1}}",
       "invalid_email": "Invalid email {{param1}}"
