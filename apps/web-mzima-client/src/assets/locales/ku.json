@@ -2883,8 +2883,8 @@
     "sms": {
       "message": "{{sitename}} بابەتی نوێ: {{title}}"
     },
-    "publishedPostsLimitReached": "limit:{{posts}}",
-    "tagDoesNotExist": "category :value does not exist",
+    "publishedPostsLimitReached": "سنوور:{{بابەتەکان}}",
+    "tagDoesNotExist": "پۆل:بەها بوونی نیە",
     "attributeDoesNotExist": "attribute {{param1}} does not exist",
     "tooManyValues": "Too many values for {{param1}} (max: {{param2}})",
     "valueDoesNotExist": "value id {{param2}} for field {{param1}} does not exist",
