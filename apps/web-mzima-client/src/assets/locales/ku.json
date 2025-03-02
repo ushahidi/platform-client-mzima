@@ -1016,7 +1016,7 @@
       "format": {
         "image": "تەنها JPEG یان PNG",
         "audio": "MP3، AAC یان OGG تەنها",
-        "document": "PDF or Word only"
+        "document": "تەنها PDF یان Word"
       },
       "invalid_video_embed": "بەستەری بنچینکراوی ڤیدیۆ نادروستە",
       "errors": {
@@ -2729,8 +2729,8 @@
     "Korea, Republic of South Korea": "کۆریا، کۆماری کۆریای باشوور",
     "Kosovo": "کۆسۆڤۆ",
     "Kuwait": "کوێت",
-    "Kyrgyzstan": "Kyrgyzstan",
-    "Laos": "Laos",
+    "Kyrgyzstan": "کیرغیزیا",
+    "Laos": "لاوس",
     "Latvia": "Latvia",
     "Lebanon": "Lebanon",
     "Lesotho": "Lesotho",
