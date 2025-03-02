@@ -2927,8 +2927,8 @@
     },
     "description_regex": "پێویستە وەسفەکە تەنها پیت، ژمارە، بۆشایی و خاڵبەندی تێدابێت",
     "regex": "ناوی پۆلەکە دەبێت تەنها پیت، ژمارە، بۆشایی و خاڵبەندی لەخۆ بگرێت",
-    "isUniqueEmail": "{{field}} is already in use",
-    "isUniqueUsername": "{{field}} is already in use",
+    "isUniqueEmail": "{{field}} لەمەو پێش بەکارهێنراوە",
+    "isUniqueUsername": "{{field}} لەمەو پێش بەکارهێنراوە",
     "isUserSelf": "ناتوانیت ڕۆڵی خۆت بگۆڕیت",
     "adminUserLimitReached": "limit:{{:admin}}"
   }
