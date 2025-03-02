@@ -1015,8 +1015,8 @@
       "max_size": "زۆرترین قەبارە: {{size}} مێگابایت فۆرمات: {{format}}",
       "format": {
         "image": "تەنها JPEG یان PNG",
-        "audio": "mp3, aac or ogg only",
-        "document": "PDF or Word only"
+        "audio": "MP3، AAC یان OGG تەنها",
+        "document": "تەنها PDF یان Word"
       },
       "invalid_video_embed": "بەستەری بنچینکراوی ڤیدیۆ نادروستە",
       "errors": {
