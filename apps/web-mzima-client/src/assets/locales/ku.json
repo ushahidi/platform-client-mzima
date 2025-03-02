@@ -506,7 +506,7 @@
     "who": "کێ دەتوانێت ئەمە ببینێت؟",
     "task": {
       "delete": {
-        "desc": "<strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.",
+        "desc": "ئەگەر ئەم ئەرکە بسڕیتەوە، هەموو ئەو داتایانەی تێیدا گیراون هەروەها دەسڕێنەوە. بە وریاییەوە بەردەوام بە.",
         "delete": "سڕینەوەی ئەرک",
         "delete_this": "سڕینەوەی ئەم ئەرکە"
       }
