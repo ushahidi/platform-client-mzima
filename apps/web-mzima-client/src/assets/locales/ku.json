@@ -1014,8 +1014,8 @@
       "input_empty_warn": "تێکردن نابێت بەتاڵ بێت",
       "max_size": "زۆرترین قەبارە: {{size}} مێگابایت فۆرمات: {{format}}",
       "format": {
-        "image": "jpeg or png only",
-        "audio": "mp3, aac or ogg only",
+        "image": "تەنها JPEG یان PNG",
+        "audio": "MP3، AAC یان OGG تەنها",
         "document": "PDF or Word only"
       },
       "invalid_video_embed": "بەستەری بنچینکراوی ڤیدیۆ نادروستە",
