@@ -2902,7 +2902,7 @@
     "stageDoesNotExist": "قۆناغی {{param1}} بوونی نییە",
     "stageRequired": "قۆناغی {{param1}} پێویستە پێش بڵاوکردنەوە",
     "postNeedsApprovalBeforePublishing": "بابەت پێویستی بە ڕەزامەندی بەڕێوەبەر هەیە پێش ئەوەی بڵاوبکرێتەوە",
-    "postCanOnlyBeUnpublishedByAdmin": "Post can only be unpublished by an administrator",
+    "postCanOnlyBeUnpublishedByAdmin": "بابەت تەنها لەلایەن بەڕێوەبەرێکەوە دەتوانرێت بڵاو بکرێتەوە",
     "alreadyLockedByDifferentUser": "Post is currently locked by a different user and can not be updated.",
     "values": {
       "date": "The field {{param1}} must be a date, Given: {{param2}}",
