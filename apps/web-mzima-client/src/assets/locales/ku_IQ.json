@@ -2926,7 +2926,7 @@
       "exists": "ڕۆڵی {{value}} بوونی نییە"
     },
     "description_regex": "پێویستە وەسفەکە تەنها پیت، ژمارە، بۆشایی و خاڵبەندی تێدابێت",
-    "regex": "The category name must contain only letters, numbers, spaces and punctuation",
+    "regex": "ناوی پۆلەکە دەبێت تەنها پیت، ژمارە، بۆشایی و خاڵبەندی لەخۆ بگرێت",
     "isUniqueEmail": "{{field}} is already in use",
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "ناتوانیت ڕۆڵی خۆت بگۆڕیت",
