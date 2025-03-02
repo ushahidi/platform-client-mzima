@@ -2917,7 +2917,7 @@
       "scalar": "خانەی {{param1}} پێویستە سکالر بێت، دراوە: {{param2}}",
       "point": "خانەی {{param1}} پێویستە ریزبەندێک بێت لە lat و lon",
       "lat": "خانەی {{param1}} پێویستە پانی دروستی تێدابێت",
-      "lon": "the field {{param1}} must contain a valid longitude",
+      "lon": "خانەی {{param1}} پێویستە هێڵی درێژی دروستی تێدابێت",
       "url": "The field {{param1}} must be a url, Given: {{param2}}",
       "video_type": "The field {{param1}} must be either a youtube or vimeo url, Given: {{param2}}"
     },
