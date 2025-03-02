@@ -2862,7 +2862,7 @@
     "range": "قەبارەی فایلەکە دەبێت کەمتر بێت لە {{param3}} KB",
     "mime_type": "جۆری فایل پشتگیری نەکراوە. تکایە فایلێکی .csv باربکە.",
     "not_empty": "فیلد نابێت بەتاڵ بێت:",
-    "isKeyAvailable": "The key {{value}} is not available",
+    "isKeyAvailable": "کلیلی {{value}} بەردەست نییە",
     "contactIsValid": "Invalid phone number",
     "roleDoesNotExist": "role_id {{value}} does not exist",
     "invalidFormStageId": "form_stage_id :value does not exist",
