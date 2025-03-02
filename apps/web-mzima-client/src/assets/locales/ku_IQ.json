@@ -2930,6 +2930,6 @@
     "isUniqueEmail": "{{field}} لەمەو پێش بەکارهێنراوە",
     "isUniqueUsername": "{{field}} لەمەو پێش بەکارهێنراوە",
     "isUserSelf": "ناتوانیت ڕۆڵی خۆت بگۆڕیت",
-    "adminUserLimitReached": "limit:{{:admin}}"
+    "adminUserLimitReached": "سنوور:{{:admin}}"
   }
 }
