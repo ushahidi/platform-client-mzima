@@ -2878,7 +2878,7 @@
     },
     "email": {
       "title": "{{sitename}} بابەتی نوێ: {{title}}",
-      "message": "New post on {{sitename}}{{title}}{{content}}View post: {{url}}"
+      "message": "بابەتێکی نوێ لە {{sitename}}{{title}}{{content}} بینینی بابەت: {{url}}"
     },
     "sms": {
       "message": "{{sitename}} بابەتی نوێ: {{title}}"
