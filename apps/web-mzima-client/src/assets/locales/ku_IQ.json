@@ -2877,11 +2877,11 @@
       "invalid_email": "ئیمەیڵی {{param1}} نادروست"
     },
     "email": {
-      "title": "{{sitename}} New post: {{title}}",
-      "message": "New post on {{sitename}}{{title}}{{content}}View post: {{url}}"
+      "title": "{{sitename}} بابەتی نوێ: {{title}}",
+      "message": "بابەتێکی نوێ لە {{sitename}}{{title}}{{content}} بینینی بابەت: {{url}}"
     },
     "sms": {
-      "message": "{{sitename}} New post: {{title}}"
+      "message": "{{sitename}} بابەتی نوێ: {{title}}"
     },
     "publishedPostsLimitReached": "limit:{{posts}}",
     "tagDoesNotExist": "category :value does not exist",
