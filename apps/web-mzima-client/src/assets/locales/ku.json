@@ -2925,10 +2925,10 @@
       "isRoleValid": "ڕۆڵ دەبێت هاوتابێت لەگەڵ هاوپۆلی باوان",
       "exists": "ڕۆڵی {{value}} بوونی نییە"
     },
-    "description_regex": "The description must contain only letters, numbers, spaces and punctuation",
-    "regex": "The category name must contain only letters, numbers, spaces and punctuation",
-    "isUniqueEmail": "{{field}} is already in use",
-    "isUniqueUsername": "{{field}} is already in use",
+    "description_regex": "پێویستە وەسفەکە تەنها پیت، ژمارە، بۆشایی و خاڵبەندی تێدابێت",
+    "regex": "ناوی پۆلەکە دەبێت تەنها پیت، ژمارە، بۆشایی و خاڵبەندی لەخۆ بگرێت",
+    "isUniqueEmail": "{{field}} لەمەو پێش بەکارهێنراوە",
+    "isUniqueUsername": "{{field}} لەمەو پێش بەکارهێنراوە",
     "isUserSelf": "ناتوانیت ڕۆڵی خۆت بگۆڕیت",
     "adminUserLimitReached": "limit:{{:admin}}"
   }
