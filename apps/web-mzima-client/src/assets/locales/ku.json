@@ -2895,7 +2895,7 @@
     "emptyParentWithLocale": "پێویستە لە ناسنامەی باوانە هەبێت لەکاتی تێپەڕبوونی شوێن",
     "notAnArray": "بەهای بابەت بۆ {{param1}} دەبێت ریزبەند بێت",
     "scalar": "بەهای بابەت بۆ {{param1}} دەبێت سکالر بێت",
-    "doesTranslationExist": "Translation {{value}} for post {{param2}} already exists",
+    "doesTranslationExist": "وەرگێڕانی {{value}} بۆ بابەتی {{param2}} پێشتر هەیە",
     "published_to": {
       "exists": "The role you are publishing to {{value}} does not exist"
     },
