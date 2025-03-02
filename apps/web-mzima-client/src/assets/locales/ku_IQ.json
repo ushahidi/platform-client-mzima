@@ -2874,7 +2874,7 @@
     "mime_not_empty": "جۆری MIME نەدۆزرایەوە. جۆری MIME پێویستە بۆ فایلەکە رێکخرێت.",
     "contact": {
       "invalid_phone": "ژمارەی تەلەفۆن نادروستە {{param1}}",
-      "invalid_email": "Invalid email {{param1}}"
+      "invalid_email": "ئیمەیڵی {{param1}} نادروست"
     },
     "email": {
       "title": "{{sitename}} New post: {{title}}",
