@@ -2905,8 +2905,8 @@
     "postCanOnlyBeUnpublishedByAdmin": "بابەت تەنها لەلایەن بەڕێوەبەرێکەوە دەتوانرێت بڵاو بکرێتەوە",
     "alreadyLockedByDifferentUser": "بابەت لە ئێستادا داخراوە لەلایەن بەکارهێنەرێکی جیاوازەوە و ناکرێت نوێبکرێتەوە.",
     "values": {
-      "date": "The field {{param1}} must be a date, Given: {{param2}}",
-      "decimal": "The field {{param1}} must be a decimal with 2 places, Given: {{param2}}",
+      "date": "خانەی {{param1}} دەبێت بەروار بێت، دراوە: {{param2}}",
+      "decimal": "خانەی {{param1}} دەبێت دەیی بێت لەگەڵ 2 شوێن، دراوە: {{param2}}",
       "digit": "The field {{param1}} must be a digit, Given: {{param2}}",
       "email": "The field {{param1}} must be an email address, Given: {{param2}}",
       "exists": "The field {{param1}} must be a valid post id, Post id: {{param2}}",
