@@ -2913,7 +2913,7 @@
       "tagExists": "خانەی {{param1}} دەبێت ناسنامە یان ناوێکی هاوپۆلی دروست بێت، پۆل:{{param2}}",
       "max_length": "خانەی {{param1}} نابێت لە درێژی :p aram2 هێما تێپەڕ بکات، پێدراو: {{param2}}",
       "invalidForm": "خانەی {{param1}} جۆری بابەتی هەڵەی هەیە، Post id:{{param2}}",
-      "numeric": "The field {{param1}} must be numeric, Given: {{param2}}",
+      "numeric": "خانەی {{param1}} پێویستە ژمارەیی بێت، دراوە: {{param2}}",
       "scalar": "The field {{param1}} must be scalar, Given: {{param2}}",
       "point": "The field {{param1}} must be an array of lat and lon",
       "lat": "the field {{param1}} must contain a valid latitude",
