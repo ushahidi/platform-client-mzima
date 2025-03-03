@@ -81,9 +81,7 @@
         <div class="post__images" *ngIf="field.input === 'image' && field.value.length > 0">
           <ng-container *ngIf="isConnection; else noConnection">
             <div class="post__images__item" *ngFor="let media of field.value">
-              <div class="post__images__item" *ngFor="let media of field.value">
-                <img class="post__media" [src]="media.url" />
-              </div>
+              <img class="post__media" [src]="media.url" />
             </div>
           </ng-container>
 

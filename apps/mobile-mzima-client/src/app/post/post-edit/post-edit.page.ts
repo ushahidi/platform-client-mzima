@@ -21,6 +21,8 @@ import {
   SurveysService,
   generalHelpers,
   postHelpers,
+  MediaFile,
+  MediaFileStatus,
 } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
@@ -100,6 +102,8 @@ export class PostEditPage {
   public connectionInfo = '';
   private queryParams: Params;
   public requireApproval = false;
+  maxSizeError = false;
+  maxImageSize: any;
 
   dateOption: any;
 
@@ -129,6 +133,8 @@ export class PostEditPage {
   async ionViewWillEnter() {
     this.initNetworkListener();
     await this.checkNetwork();
+
+    this.maxImageSize = Number(this.sessionService.getSiteConfigurations().image_max_size);
 
     this.filters = this.getFilters();
     this.post = await this.checkPost();
@@ -279,7 +285,19 @@ export class PostEditPage {
       number: 0,
     };
 
-    const types = ['upload', 'tags', 'location', 'checkbox', 'select', 'radio', 'date', 'datetime'];
+    const types = [
+      'upload',
+      'image',
+      'document',
+      'audio',
+      'tags',
+      'location',
+      'checkbox',
+      'select',
+      'radio',
+      'date',
+      'datetime',
+    ];
 
     return types.includes(field.input)
       ? defaultValues[field.input]
@@ -438,6 +456,9 @@ export class PostEditPage {
       | 'radio'
       | 'text'
       | 'upload'
+      | 'image'
+      | 'document'
+      | 'audio'
       | 'video'
       | 'textarea'
       | 'relation'
@@ -455,6 +476,9 @@ export class PostEditPage {
         datetime: this.handleDateTime.bind(this),
         upload: this.handleUpload.bind(this),
         relation: this.handleRelation.bind(this),
+        image: this.handleMedia.bind(this),
+        document: this.handleMedia.bind(this),
+        audio: this.handleMedia.bind(this),
       };
 
     const inputHandlersOptions: {
@@ -492,7 +516,7 @@ export class PostEditPage {
   }
 
   private async handleUpload(key: string, value: any) {
-    if (!value?.value) return;
+    if (!value[0].value) return;
     if (value.mediaSrc) {
       this.updateFormControl(key, {
         id: value.value,
@@ -501,10 +525,10 @@ export class PostEditPage {
       });
     } else {
       try {
-        const uploadObservable = this.mediaService.getById(value.value);
+        const uploadObservable = this.mediaService.getById(value[0].value);
         const response: any = await lastValueFrom(uploadObservable);
         this.updateFormControl(key, {
-          id: value.value,
+          id: value[0].value,
           caption: response.result.caption,
           photo: response.result.original_file_url,
         });
@@ -512,6 +536,29 @@ export class PostEditPage {
         this.form.patchValue({ [key]: null });
         throw new Error(`Error fetching file: ${error.message}`);
       }
+    }
+  }
+
+  private async handleMedia(key: string, value: any[]) {
+    if (value?.length === 0) return;
+    try {
+      const mediaFiles: MediaFile[] = [];
+      for (const mediaValue of value) {
+        const media = await lastValueFrom(this.mediaService.getById(mediaValue.value!));
+        const mediaFile: MediaFile = new MediaFile(media.result, media.result.original_file_url);
+        mediaFile.id = mediaValue.id;
+        mediaFile.value = media.result.id;
+        mediaFile.caption = media.result.caption;
+        mediaFile.status = MediaFileStatus.READY;
+        mediaFiles.push(mediaFile);
+      }
+
+      this.form.patchValue({
+        [key]: mediaFiles,
+      });
+    } catch (error: any) {
+      this.form.patchValue({ [key]: null });
+      throw new Error(`Error fetching files: ${error.message}`);
     }
   }
 
@@ -672,7 +719,8 @@ export class PostEditPage {
               }
               // TODO: Implement edit on new multimedia fields, but ignore for now.
             } else if (['image', 'audio', 'document'].includes(field.input)) {
-              value.value = [];
+              value.value =
+                this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
             } else {
               value.value = this.form.value[field.key] || null;
             }
