@@ -113,6 +113,37 @@
       "contact_support":"Kontakt na podporu",
       "contact_support_desc_1":"Přejděte na ",
       "contact_support_desc_2": "naše stránky podpory",
-      "contact_support_desc_3": "a požádejte o pomoc s Ushahidi."
+      "contact_support_desc_3": "a požádejte o pomoc s Ushahidi."   
+    },
+
+    "post": {
+      "modify": {
+        "max_size": "Max size: {{size}} MB"
+      },
+      "media": {
+        "add_image": "Add image",
+        "add_audio": "Add audio",
+        "add_document": "Add document",
+        "retry": "Retry",
+        "messages": {
+          "max_size" : "Your file is too large.",
+          "max_files" : "You have exceeded the maximum number of files.",
+          "required" : "Media is required.",
+          "invalid_type" : "Unsupported file format."
+        },
+        "status" : {
+          "uploading" : "Uploading...",
+          "upload_complete" : "Upload Complete!",
+          "upload_failed" : "Upload failed!"
+        }
+      }
+      
+    },
+
+    "notify": {
+      "default": {
+        "are_you_sure_you_want_to_delete_this": "Are you sure you want to delete this?",
+        "proceed_warning": "This action cannot be undone. Please proceed with caution."
+      }
     }
 }
