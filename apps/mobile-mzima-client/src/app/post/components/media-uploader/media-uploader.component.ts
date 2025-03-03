@@ -39,6 +39,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   @Input() public hasCaption?: boolean;
   @Input() public requiredError?: boolean;
   @Input() public media: 'image' | 'audio' | 'document';
+  @Input() public isConnection: boolean;
   // @Input() public progressCallback?: (progress: number) => {};
 
   id?: number;

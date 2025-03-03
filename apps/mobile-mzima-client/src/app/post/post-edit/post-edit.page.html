@@ -459,6 +459,7 @@
                 [hasCaption]="field.config.hasCaption"
                 [maxUploadSize]="field.config.maxUploadSize"
                 (change)="maxSizeError = false"
+                [isConnection]="isConnection"
                 [requiredError]="
                     form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
                   "
@@ -490,6 +491,7 @@
                 media="audio"
                 [maxUploadSize]="field.config.maxUploadSize"
                 (change)="maxSizeError = false"
+                [isConnection]="isConnection"
                 [requiredError]="
                     form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
                   "
@@ -520,6 +522,7 @@
                 [maxUploadSize]="field.config.maxUploadSize"
                 media="document"
                 (change)="maxSizeError = false"
+                [isConnection]="isConnection"
                 [requiredError]="
                     form.get(field.key)?.touched && form.get(field.key)?.hasError('mediaRequired')
                   "

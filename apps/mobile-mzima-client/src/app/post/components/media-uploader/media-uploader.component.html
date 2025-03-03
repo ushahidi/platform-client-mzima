@@ -73,11 +73,14 @@
         </div>
       </div>
     </div>
+    <ng-container *ngIf="!isConnection">
+      <app-offline-notification></app-offline-notification>
+    </ng-container>
     <div class="media-loader__controls">
       <app-button
         fill="solid"
         color="primary"
-        [disabled]="maxFiles !== -1 && this.mediaFiles.length < maxFiles"
+        [disabled]="!isConnection || (maxFiles !== -1 && this.mediaFiles.length < maxFiles)"
         class="media-loader__control"
         (buttonClick)="fileInput.click()"
         [ngSwitch]="mediaType"
