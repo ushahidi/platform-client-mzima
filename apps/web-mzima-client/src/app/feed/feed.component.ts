@@ -824,13 +824,14 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public changePostsStatus(status: string): void {
     if (status === PostStatus.Published) {
       const uncompletedPosts: PostResult[] = this.selectedPosts.filter((post: PostResult) => {
-        if (post.post_content) {
-          return !postHelpers.isAllRequiredCompleted(post);
-        } else {
-          return this.postsService.getById(post.id).subscribe((fetchedPost: PostResult) => {
-            return !postHelpers.isAllRequiredCompleted(fetchedPost);
-          });
-        }
+        this.postsService.getById(post.id).subscribe({
+          next: (fetchedPost: PostResult) => {
+            if (fetchedPost.post_content) {
+              return !postHelpers.isAllRequiredCompleted(fetchedPost);
+            }
+            return;
+          },
+        });
       });
 
       if (uncompletedPosts.length > 0) {
