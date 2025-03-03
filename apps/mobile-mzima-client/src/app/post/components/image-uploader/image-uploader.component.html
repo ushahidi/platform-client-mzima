@@ -11,7 +11,6 @@
         class="image-loader__btn"
         type="button"
         [color]="'primary'"
-        [disabled]="!isConnection"
         (buttonClick)="takePicture()"
         [ngClass]="{
           'image-loader__replace-btn': photo,
