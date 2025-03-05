@@ -12,6 +12,7 @@ import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import Overlay from 'ol/Overlay';
 import { mapHelper, searchFormHelper } from '@helpers';
+import TileWMS from 'ol/source/TileWMS';
 import XYZ from 'ol/source/XYZ';
 import LayerSwitcher from 'ol-layerswitcher';
 import { BaseLayerOptions, GroupLayerOptions } from 'ol-layerswitcher';
@@ -44,6 +45,8 @@ export class MapComponent extends MainViewComponent implements OnInit {
   surveyLayer!: VectorLayer;
   post: any;
   isPostLoading: boolean;
+  waterBodies: TileLayer[];
+  waterLayers: LayerGroup;
 
   constructor(
     protected override router: Router,
@@ -73,6 +76,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   ngOnInit(): void {
     this.mapConfig = this.sessionService.getMapConfigurations();
     this.initBaseLayers();
+    this.initWMSLayers();
     this.initMap();
     this.loadData();
   }
@@ -100,6 +104,26 @@ export class MapComponent extends MainViewComponent implements OnInit {
     } as GroupLayerOptions);
   }
 
+  initWMSLayers() {
+    const wmsWater = mapHelper.getWaterLayer();
+    this.waterBodies = wmsWater.map((wms: any) => {
+      const newLayer = new TileLayer({
+        source: new TileWMS({
+          url: wms.url,
+          params: wms.params,
+        }),
+      });
+      newLayer.setProperties({ title: wms.attribution });
+      return newLayer;
+    });
+
+    this.waterLayers = new LayerGroup({
+      title: 'Water bodies',
+      layers: this.waterBodies,
+      combine: false,
+    } as GroupLayerOptions);
+  }
+
   initMap() {
     const center = [this.mapConfig.default_view?.lon || 0, this.mapConfig.default_view?.lat || 0];
     const view = new View({
@@ -109,15 +133,14 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
     this.map = new Map({
       view: view,
-      layers: [this.baseMaps],
+      layers: [this.baseMaps, this.waterLayers],
       target: 'ol-map',
     });
 
     const layerSwitcher = new LayerSwitcher({
       reverse: true,
       groupSelectStyle: 'children',
-      startActive: true,
-      activationMode: 'click',
+      startActive: false,
       label: '',
       collapseLabel: '',
     });

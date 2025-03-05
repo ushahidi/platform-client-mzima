@@ -101,3 +101,50 @@ export const getMapLayers = () => {
     },
   };
 };
+
+interface WaterLayerParams {
+  LAYERS: string;
+  FORMAT: string;
+  TRANSPARENT: boolean;
+  TIME: string;
+  CRS: string;
+  exceptions: string;
+  styles: string;
+}
+
+interface WaterLayer {
+  attribution: string;
+  url: string;
+  params: WaterLayerParams;
+}
+
+export const getWaterLayer = (): WaterLayer[] => {
+  return [
+    {
+      attribution: 'Water Observations from space 2023',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0',
+      params: {
+        LAYERS: 'wofs_ls_summary_annual',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '2023-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'wofs_summary_annual_frequency',
+      },
+    },
+    {
+      attribution: 'Water Observations from space 2013',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0',
+      params: {
+        LAYERS: 'wofs_ls_summary_annual',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '2013-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'wofs_summary_annual_frequency',
+      },
+    },
+  ];
+};
