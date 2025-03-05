@@ -16,7 +16,7 @@ import { searchFormHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
-import { filter, forkJoin, Subscription } from 'rxjs';
+import { filter, forkJoin, Subscription, tap } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
@@ -822,40 +822,51 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public changePostsStatus(status: string): void {
-    if (status === PostStatus.Published) {
-      const uncompletedPosts: PostResult[] = this.selectedPosts.filter((post: PostResult) => {
-        this.postsService.getById(post.id).subscribe({
-          next: (fetchedPost: PostResult) => {
-            if (fetchedPost.post_content) {
-              return !postHelpers.isAllRequiredCompleted(fetchedPost);
-            }
-            return;
-          },
-        });
+    const updatePostStatusViaBulkAction = () => {
+      forkJoin(
+        this.selectedPosts.map((p: PostResult) => this.postsService.update(p.id, { status })),
+      ).subscribe({
+        complete: () => {
+          this.getPosts({ params: this.params });
+          this.statusControl.reset();
+          this.deselectAllPosts();
+        },
       });
+    };
 
-      if (uncompletedPosts.length > 0) {
-        this.showMessage(
-          this.translate.instant('notify.post.posts_can_t_be_published', {
-            titles: uncompletedPosts.map((p) => p.title).join(', '),
-          }),
-          'error',
-          5000,
-        );
-        this.statusControl.reset();
-        return;
-      }
+    if (status === PostStatus.Published) {
+      forkJoin(
+        this.selectedPosts.map((p: PostResult) =>
+          this.postsService.getById(p.id).pipe(tap((res) => res)),
+        ),
+      ).subscribe({
+        next: (p) => {
+          const uncompletedPosts = p.filter(
+            (fetchedPost) => !postHelpers.isAllRequiredCompleted(fetchedPost),
+          );
+
+          if (uncompletedPosts.length > 0) {
+            this.showMessage(
+              this.translate.instant('notify.post.posts_can_t_be_published', {
+                titles: uncompletedPosts.map((uncompletedPost) => uncompletedPost.title).join(', '),
+              }),
+              'error',
+              5000,
+            );
+            this.statusControl.reset();
+            return;
+          }
+          //-----------------------------
+          updatePostStatusViaBulkAction();
+          //-----------------------------
+        },
+      });
+      return;
     }
 
-    forkJoin(
-      this.selectedPosts.map((p: PostResult) => this.postsService.update(p.id, { status })),
-    ).subscribe({
-      complete: () => {
-        this.getPosts({ params: this.params });
-        this.statusControl.reset();
-        this.deselectAllPosts();
-      },
-    });
+    //-----------------------------
+    updatePostStatusViaBulkAction();
+    //-----------------------------
   }
 
   public selectAllPosts(): void {
