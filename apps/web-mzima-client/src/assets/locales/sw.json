@@ -1012,7 +1012,12 @@
         }
       },
       "input_empty_warn": "Pembejeo haiwezi kuwa tupu",
-      "max_size": "Ukubwa wa juu zaidi: MB {{size}}",
+      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "format": {
+        "image": "jpeg or png only",
+        "audio": "mp3, aac or ogg only",
+        "document": "PDF or Word only"
+      },
       "invalid_video_embed": "URL batili ya kupachika video",
       "errors": {
         "required" : "Uwanda wa {{label}} unahitajika *",

@@ -1012,7 +1012,12 @@
         }
       },
       "input_empty_warn": "Input cannot be empty",
-      "max_size": "Max size: {{size}} MB",
+      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "format": {
+        "image": "jpeg or png only",
+        "audio": "mp3, aac or ogg only",
+        "document": "PDF or Word only"
+      },
       "invalid_video_embed": "Invalid video embed url",
       "errors": {
         "required" : "{{label}} field is a required field *",

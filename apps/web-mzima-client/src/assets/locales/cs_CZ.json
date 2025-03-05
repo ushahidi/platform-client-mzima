@@ -1012,7 +1012,12 @@
         }
       },
       "input_empty_warn": "Vstup nemůže být prázdný",
-      "max_size": "Maximální velikost: {{size}} MB",
+      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "format": {
+        "image": "jpeg or png only",
+        "audio": "mp3, aac or ogg only",
+        "document": "PDF or Word only"
+      },
       "invalid_video_embed": "Neplatná adresa url pro vložení videa",
       "errors": {
         "required" : "Pole {{label}} je povinné pole *",
