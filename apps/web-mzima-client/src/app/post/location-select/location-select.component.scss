@@ -1,103 +1,28 @@
-.map-holder {
-  min-height: 240px;
-  position: relative;
-  margin-bottom: 16px;
+@import 'helpers';
 
-  &:before {
-    content: '';
-    display: block;
-    padding-top: 60%;
+#ol-map {
+  height: 468px;
+  @include breakpoint-max($mobile) {
+    height: 240px;
   }
-
-  .map {
-    top: 0;
-    left: 0;
-    z-index: 25;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  }
+  
 }
-
-.instructions {
-  display: block;
-  font-style: italic;
-  margin-bottom: 8px;
-}
-
-.btn-current-location {
-  bottom: 80px;
-  left: 10px;
-  width: 33px;
-  height: 33px;
-  z-index: 50;
-  position: absolute;
-  background-color: #fff;
-  padding: 2px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  cursor: pointer;
-
-  &_icon {
-    font-size: 24px;
-  }
-}
-
-.location-error {
-  color: var(--color-accent);
-
-  &::ng-deep {
-    .mat-form-field-outline-thick {
-      .mat-form-field-outline-end {
-        border-color: transparent;
-      }
-    }
-  }
-
-  & input {
-    border: 1px solid var(--color-accent);
-  }
-}
-
 ::ng-deep {
-  .leaflet-top.leaflet-left {
-    width: 100%;
-  }
-
-  .leaflet-touch .leaflet-control-geocoder {
-    top: 16px;
-    left: 16px;
-    padding: 7px;
-    right: 16px;
-    z-index: 50;
-    position: absolute;
-    border-radius: 4px;
-    box-shadow: 0 0 2px rgb(0 0 0 / 12%), 0 2px 2px rgb(0 0 0 / 24%);
-    margin: 0;
-    border: none;
-  }
-
-  .leaflet-control-geocoder-form {
-    width: calc(100% - 30px);
-
-    input {
-      width: 100%;
+  .ol-zoom {
+    top: 418px;
+    @include breakpoint-max($mobile) {
+      top: 190px;
     }
-  }
+}
+}
 
-  .leaflet-control-geocoder-alternatives {
-    width: 100%;
+#geocode-input,
+#geocode-button {
+  font-size: 16px;
+  margin: 0 2px 0 0;
+  padding: 4px 8px;
+}
 
-    li {
-      display: flex;
-      position: relative;
-      align-items: center;
-      justify-content: flex-start;
-      overflow: hidden;
-      padding: 5px 16px;
-      user-select: none;
-      cursor: pointer;
-      min-height: 48px;
-    }
-  }
+#geocode-input {
+  width: 300px;
 }

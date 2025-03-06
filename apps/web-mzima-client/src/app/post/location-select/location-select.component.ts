@@ -11,23 +11,21 @@ import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionService } from '@services';
-import {
-  control,
-  FitBoundsOptions,
-  LatLngBounds,
-  LatLngLiteral,
-  Map,
-  MapOptions,
-  marker,
-  Marker,
-  MarkerClusterGroupOptions,
-  tileLayer,
-} from 'leaflet';
-import 'leaflet.markercluster';
-import { pointIcon } from '../../core/helpers/map';
-import Geocoder from 'leaflet-control-geocoder';
-import { fromEvent, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import Map from 'ol/Map';
+import TileLayer from 'ol/layer/Tile';
+import XYZ from 'ol/source/XYZ';
+import View from 'ol/View';
+import { fromLonLat } from 'ol/proj';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+import Style from 'ol/style/Style';
+import { distinctUntilChanged, tap, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Point } from 'ol/geom';
+import Icon from 'ol/style/Icon';
+import 'leaflet.markercluster';
 
 @UntilDestroy()
 @Component({
@@ -36,7 +34,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./location-select.component.scss'],
 })
 export class LocationSelectComponent implements OnInit, AfterViewInit {
-  @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
   @Input() public location: any;
   @Input() public required: boolean;
@@ -44,6 +41,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Input() public type = 'default';
   @Input() public isEditPost: boolean = false;
   @Output() locationChange = new EventEmitter();
+  public searchTerm: string = '';
   public emptyFieldLat = false;
   public emptyFieldLng = false;
   public noSpecialCharactersLat = false;
@@ -52,121 +50,113 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   public mapLayers: any[] = [];
   public mapReady = false;
   public mapConfig: MapConfigInterface;
-  public markerClusterOptions: MarkerClusterGroupOptions = {
-    animate: true,
-    maxClusterRadius: 50,
-  };
-  public mapFitToBounds: LatLngBounds;
-  public fitBoundsOptions: FitBoundsOptions = {
-    animate: true,
-  };
-  public mapMarker: Marker;
-  public leafletOptions: MapOptions;
   public disabled = false;
-  public geocoderControl: any;
+  public locations: any[] = [];
+  public query$: Subject<any> = new Subject<any>();
+  private markerLayer: VectorLayer;
 
   constructor(
     private sessionService: SessionService,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-  ) {}
-
-  ngOnInit(): void {
-    this.mapConfig = this.getMapConfigurations();
-
-    if (!this.isEditPost && !this.location.lat) {
-      this.location.lat = this.mapConfig.default_view!.lat;
-      this.location.lng = this.mapConfig.default_view!.lon;
-    }
-
-    const currentLayer =
-      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
-
-    this.leafletOptions = {
-      scrollWheelZoom: true,
-      zoomControl: false,
-      worldCopyJump: true,
-      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
-      center: [
-        this.location?.lat || this.mapConfig.default_view!.lat,
-        this.location?.lng || this.mapConfig.default_view!.lon,
-      ],
-      zoom: this.mapConfig.default_view!.zoom || this.zoom,
-    };
-    this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
-
-    this.mapReady = true;
-  }
-
-  ngAfterViewInit() {
-    // change tracking for search when entering text in geocoder search input (and debounce to reduce geocoding requests sent)
-    const geocoderInputElement = this.geocoderControl.getContainer().querySelector('input');
-    geocoderInputElement.setAttribute('data-qa', 'location-search');
-    fromEvent(geocoderInputElement, 'input')
+  ) {
+    this.query$
       .pipe(
-        filter(Boolean),
-        debounceTime(600),
+        debounceTime(250),
         distinctUntilChanged(),
-        tap(() => {
-          this.geocoderControl.options.placeholder = geocoderInputElement.value;
-          this.geocoderControl._input.value = geocoderInputElement.value;
-          this.geocoderControl._geocode();
-        }),
+        tap(({ target: { value } }) => this.searchLocation(value)),
         untilDestroyed(this),
       )
       .subscribe();
   }
 
+  ngOnInit(): void {
+    this.mapConfig = this.sessionService.getMapConfigurations();
+    if (!this.isEditPost && !this.location.lat) {
+      this.location.lat = this.mapConfig.default_view!.lat;
+      this.location.lng = this.mapConfig.default_view!.lon;
+    }
+    const baseLayer = mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+    const currentLayer = new TileLayer({
+      visible: true,
+      source: new XYZ({
+        url: baseLayer.url,
+        maxZoom: 'maxZoom' in baseLayer.layerOptions ? baseLayer.layerOptions.maxZoom : undefined,
+      }),
+    });
+    const view = new View({
+      center: fromLonLat([this.location.lng, this.location.lat]),
+      zoom: this.mapConfig.default_view?.zoom || 2,
+    });
+
+    this.map = new Map({
+      view: view,
+      layers: [currentLayer],
+      target: 'ol-map',
+    });
+  }
+
+  ngAfterViewInit(): void {}
+
+  public searchLocation(query: string) {
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.locations = data.length > 0 ? data : [];
+      })
+      .catch((error) => {
+        console.error('Error fetching location data:', error);
+        this.locations = [];
+      });
+  }
+
+  public selectLocation(location: any) {
+    if (this.markerLayer) this.map.removeLayer(this.markerLayer);
+    this.location = { lat: location.lat, lng: location.lon };
+    const view = new View({
+      center: fromLonLat([location.lon, location.lat]),
+      zoom: this.mapConfig.default_view?.zoom || 10,
+    });
+    const marker = new Feature({
+      geometry: new Point(fromLonLat([location.lon, location.lat])),
+    });
+
+    this.markerLayer = new VectorLayer({
+      source: new VectorSource({
+        features: [marker],
+      }),
+      style: new Style({
+        image: new Icon({
+          anchor: [0.5, 1],
+          src: mapHelper.imageIcon('default'),
+        }),
+      }),
+    });
+    this.map.addLayer(this.markerLayer);
+    this.map.setView(view);
+    this.locations = [];
+    this.changeCoords();
+  }
   private getMapConfigurations(): MapConfigInterface {
     return this.sessionService.getMapConfigurations();
   }
 
-  public onMapReady(map: Map) {
-    // Initialize geocoder
-    this.geocoderControl = new Geocoder({
-      defaultMarkGeocode: false,
-      position: 'topleft',
-      collapsed: false,
-      placeholder: this.translate.instant('post.location.search_address'),
-      errorMessage: this.translate.instant('post.location.nothing_found'),
-    });
-
-    this.map = map;
-    control.zoom({ position: 'bottomleft' }).addTo(this.map);
-    this.map.panTo(this.location);
-    this.geocoderControl.addTo(this.map);
-
-    this.addMarker();
-
-    this.map.on('click', (e) => {
-      this.location = e.latlng.wrap();
-      this.addMarker();
-      this.cdr.detectChanges();
-    });
-
-    // Listen event markgeocode from geocoder
-    this.geocoderControl.on('markgeocode', (e: any) => {
-      this.location = e.geocode.center;
-      this.addMarker();
-      this.map.fitBounds(e.geocode.bbox);
-    });
-  }
+  public onMapReady(map: Map) {}
 
   private addMarker() {
-    this.checkErrors();
-    if (this.mapMarker) {
-      this.map.removeLayer(this.mapMarker);
-    }
-    this.mapMarker = marker(this.location, {
-      draggable: true,
-      icon: pointIcon(this.color, this.type === 'web' ? 'default' : this.type),
-    }).addTo(this.map);
-
-    this.mapMarker.on('dragend', (e) => {
-      this.location = e.target.getLatLng();
-      this.checkErrors();
-      this.cdr.detectChanges();
-    });
+    // this.checkErrors();
+    // if (this.mapMarker) {
+    //   this.map.removeLayer(this.mapMarker);
+    // }
+    // this.mapMarker = marker(this.location, {
+    //   draggable: true,
+    //   icon: pointIcon(this.color, this.type === 'web' ? 'default' : this.type),
+    // }).addTo(this.map);
+    // this.mapMarker.on('dragend', (e) => {
+    //   this.location = e.target.getLatLng();
+    //   this.checkErrors();
+    //   this.cdr.detectChanges();
+    // });
   }
 
   private changeCoords(error = false) {
@@ -186,15 +176,15 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   }
 
   public getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const {
-        coords: { latitude, longitude },
-      } = position;
-      this.location.lat = latitude;
-      this.location.lng = longitude;
-      this.addMarker();
-      this.map.setView([latitude, longitude], 12);
-    });
+    // navigator.geolocation.getCurrentPosition((position) => {
+    //   const {
+    //     coords: { latitude, longitude },
+    //   } = position;
+    //   this.location.lat = latitude;
+    //   this.location.lng = longitude;
+    //   this.addMarker();
+    //   this.map.setView([latitude, longitude], 12);
+    // });
   }
 
   public onFocusOut() {

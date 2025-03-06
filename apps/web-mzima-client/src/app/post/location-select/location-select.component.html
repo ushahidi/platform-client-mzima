@@ -1,4 +1,4 @@
-<div class="map-holder">
+<!-- <div class="map-holder">
   <div
     leaflet
     class="map"
@@ -12,11 +12,43 @@
   <button type="button" class="btn-current-location" (click)="getCurrentLocation()">
     <mat-icon class="btn-current-location_icon" svgIcon="current-location"></mat-icon>
   </button>
+</div> -->
+<div id="ol-map" class="map-container">
+  <div class="form-row search" [data-qa]="'location-search'">
+    <mat-form-field appearance="outline">
+      <input
+        id="search-input"  
+        matInput
+        (keyup)="query$.next($event)"
+        placeholder="Search for addresses, placenames, or coordinates..."
+      />
+      <mzima-client-button
+      matPrefix
+      fill="clear"
+      color="secondary"
+      [iconOnly]="true"
+      *ngIf="locations.length === 0"
+    >
+      <mat-icon icon svgIcon="search-small"></mat-icon>
+    </mzima-client-button>
+    <ul id="search-results" class="search-results">
+      <li *ngFor="let location of locations" (click)="selectLocation(location)">
+        {{ location.display_name }}
+      </li>
+    </ul>
+    </mat-form-field>
+  </div>
 </div>
+
+
 
 <span class="instructions">
   {{ 'post.location.you_can_search_or_click' | translate }}
 </span>
+
+
+
+
 <div *ngIf="location">
   <div class="form-row">
     <mat-label
