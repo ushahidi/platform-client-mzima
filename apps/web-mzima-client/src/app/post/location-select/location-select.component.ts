@@ -15,7 +15,7 @@ import Map from 'ol/Map';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import View from 'ol/View';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
@@ -95,6 +95,12 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       target: 'ol-map',
     });
     this.setMarker();
+    this.map.on('click', (evt) => {
+      const coordinate = evt.coordinate;
+      const geolocation = toLonLat(coordinate);
+      this.location = { lat: geolocation[1], lng: geolocation[0] };
+      this.setMarker([0, 0]);
+    });
   }
 
   ngAfterViewInit(): void {}
@@ -112,16 +118,17 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   }
 
   public selectLocation(location: any) {
-    if (this.markerLayer) this.map.removeLayer(this.markerLayer);
     this.location = { lat: location.lat, lng: location.lon };
-    this.setMarker();
+    this.setMarker(fromLonLat(this.location.lng, this.location.lat));
     this.locations = [];
     this.changeCoords();
   }
 
-  private setMarker() {
+  private setMarker(center?: any) {
+    if (this.markerLayer) this.map.removeLayer(this.markerLayer);
+    if (!center) center = [0, 0];
     const view = new View({
-      center: fromLonLat([this.location.lng, this.location.lat]),
+      center: center,
       zoom: this.mapConfig.default_view?.zoom || 10,
     });
     const marker = new Feature({
