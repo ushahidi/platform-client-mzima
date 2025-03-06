@@ -94,6 +94,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       layers: [currentLayer],
       target: 'ol-map',
     });
+    this.setMarker();
   }
 
   ngAfterViewInit(): void {}
@@ -113,12 +114,18 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   public selectLocation(location: any) {
     if (this.markerLayer) this.map.removeLayer(this.markerLayer);
     this.location = { lat: location.lat, lng: location.lon };
+    this.setMarker();
+    this.locations = [];
+    this.changeCoords();
+  }
+
+  private setMarker() {
     const view = new View({
-      center: fromLonLat([location.lon, location.lat]),
+      center: fromLonLat([this.location.lng, this.location.lat]),
       zoom: this.mapConfig.default_view?.zoom || 10,
     });
     const marker = new Feature({
-      geometry: new Point(fromLonLat([location.lon, location.lat])),
+      geometry: new Point(fromLonLat([this.location.lng, this.location.lat])),
     });
 
     this.markerLayer = new VectorLayer({
@@ -134,8 +141,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     });
     this.map.addLayer(this.markerLayer);
     this.map.setView(view);
-    this.locations = [];
-    this.changeCoords();
   }
   private getMapConfigurations(): MapConfigInterface {
     return this.sessionService.getMapConfigurations();
