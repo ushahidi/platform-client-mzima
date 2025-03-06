@@ -5,7 +5,13 @@
   @include breakpoint-max($mobile) {
     height: 240px;
   }
-  
+}
+
+.instructions {
+  display: block;
+  font-style: italic;
+  margin-bottom: 8px;
+  margin-top:8px;
 }
 ::ng-deep {
   .ol-zoom {
@@ -25,4 +31,26 @@
 
 #geocode-input {
   width: 300px;
+}
+.geocoder-list {
+  list-style: none;
+  margin-top: 0;
+  //background: var(--color-neutral-20);
+  border: 1px solid var(--color-neutral-60);
+  padding: 10px;
+  top: -5px;
+  display: block;
+  position: inherit;
+  border-radius: 5px;
+
+  &__item {
+    cursor: pointer;
+    &:not(:last-child) {
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-neutral-60);
+    }
+    &:not(:first-child) {
+      padding-top: 10px;
+    }
+  }
 }

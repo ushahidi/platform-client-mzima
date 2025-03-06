@@ -94,7 +94,9 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       layers: [currentLayer],
       target: 'ol-map',
     });
-    this.setMarker();
+    if (this.isEditPost) {
+      this.setMarker();
+    }
     this.map.on('click', (evt) => {
       const coordinate = evt.coordinate;
       const geolocation = toLonLat(coordinate);
@@ -119,7 +121,8 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
   public selectLocation(location: any) {
     this.location = { lat: location.lat, lng: location.lon };
-    this.setMarker(fromLonLat(this.location.lng, this.location.lat));
+    this.locations = [];
+    this.setMarker(fromLonLat([this.location.lng, this.location.lat]));
     this.locations = [];
     this.changeCoords();
   }
@@ -151,24 +154,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   }
   private getMapConfigurations(): MapConfigInterface {
     return this.sessionService.getMapConfigurations();
-  }
-
-  public onMapReady(map: Map) {}
-
-  private addMarker() {
-    // this.checkErrors();
-    // if (this.mapMarker) {
-    //   this.map.removeLayer(this.mapMarker);
-    // }
-    // this.mapMarker = marker(this.location, {
-    //   draggable: true,
-    //   icon: pointIcon(this.color, this.type === 'web' ? 'default' : this.type),
-    // }).addTo(this.map);
-    // this.mapMarker.on('dragend', (e) => {
-    //   this.location = e.target.getLatLng();
-    //   this.checkErrors();
-    //   this.cdr.detectChanges();
-    // });
   }
 
   private changeCoords(error = false) {
