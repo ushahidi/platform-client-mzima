@@ -1,18 +1,9 @@
-.map-holder {
-  max-height: 450px;
-  position: relative;
+@import 'helpers';
 
-  &:before {
-    content: '';
-    display: block;
-    padding-top: 66.6666%;
-  }
-}
-
-.map {
-  top: 0;
-  left: 0;
+#ol-map {
+  height: 450px;
   width: 100%;
-  height: 100%;
-  position: absolute;
+  @include breakpoint-max($mobile) {
+    height: 240px;
+  }
 }

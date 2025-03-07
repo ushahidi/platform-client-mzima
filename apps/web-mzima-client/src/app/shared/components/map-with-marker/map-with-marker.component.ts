@@ -1,16 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
-import {
-  control,
-  FitBoundsOptions,
-  LatLngBounds,
-  Map,
-  MapOptions,
-  tileLayer,
-  marker,
-} from 'leaflet';
-import { pointIcon } from '../../../core/helpers/map';
+import Map from 'ol/Map';
+import TileLayer from 'ol/layer/Tile';
+import XYZ from 'ol/source/XYZ';
+import View from 'ol/View';
+import { fromLonLat } from 'ol/proj';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Style from 'ol/style/Style';
+import Icon from 'ol/style/Icon';
 import { SessionService } from '../../../core/services/session.service';
 
 @Component({
@@ -23,46 +24,47 @@ export class MapWithMarkerComponent implements OnInit {
   @Input() public color = 'var(--color-neutral-100)';
   @Input() public type = 'default';
 
-  public mapReady = false;
   public mapConfig: MapConfigInterface;
-  public leafletOptions: MapOptions;
-  public mapFitToBounds: LatLngBounds;
-  public fitBoundsOptions: FitBoundsOptions = {
-    animate: true,
-  };
-  public mapLayers: any[] = [];
+  private map: Map;
+  private markerLayer: VectorLayer;
 
   constructor(private sessionService: SessionService) {}
-
   ngOnInit(): void {
     this.mapConfig = this.sessionService.getMapConfigurations();
+    const baseLayer = mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+    const currentLayer = new TileLayer({
+      visible: true,
+      source: new XYZ({
+        url: baseLayer.url,
+        maxZoom: 'maxZoom' in baseLayer.layerOptions ? baseLayer.layerOptions.maxZoom : undefined,
+      }),
+    });
+    const view = new View({
+      center: fromLonLat([this.marker.lon, this.marker.lat]),
+      zoom: this.mapConfig.default_view?.zoom || 2,
+    });
 
-    const currentLayer =
-      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+    this.map = new Map({
+      view: view,
+      layers: [currentLayer],
+      target: 'ol-map',
+    });
 
-    this.leafletOptions = {
-      scrollWheelZoom: true,
-      zoomControl: false,
-      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
-      center: [this.marker.lat, this.marker.lon],
-      zoom: this.mapConfig.default_view!.zoom,
-    };
+    const marker = new Feature({
+      geometry: new Point(fromLonLat([this.marker.lon, this.marker.lat])),
+    });
 
-    const mapMarker = marker(
-      {
-        lat: this.marker.lat,
-        lng: this.marker.lon,
-      },
-      {
-        icon: pointIcon(this.color, this.type === 'web' ? 'default' : this.type),
-      },
-    );
-    this.mapLayers.push(mapMarker);
-
-    this.mapReady = true;
-  }
-
-  public onMapReady(map: Map) {
-    control.zoom({ position: 'bottomleft' }).addTo(map);
+    this.markerLayer = new VectorLayer({
+      source: new VectorSource({
+        features: [marker],
+      }),
+      style: new Style({
+        image: new Icon({
+          anchor: [0.5, 1],
+          src: mapHelper.imageIcon(this.color),
+        }),
+      }),
+    });
+    this.map.addLayer(this.markerLayer);
   }
 }
