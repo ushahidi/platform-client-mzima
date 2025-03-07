@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -57,7 +56,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
   constructor(
     private sessionService: SessionService,
-    private cdr: ChangeDetectorRef,
     private translate: TranslateService,
   ) {
     this.query$
@@ -101,7 +99,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       const coordinate = evt.coordinate;
       const geolocation = toLonLat(coordinate);
       this.location = { lat: geolocation[1], lng: geolocation[0] };
-      this.setMarker([0, 0]);
+      this.setMarker();
     });
   }
 
@@ -122,18 +120,13 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   public selectLocation(location: any) {
     this.location = { lat: location.lat, lng: location.lon };
     this.locations = [];
-    this.setMarker(fromLonLat([this.location.lng, this.location.lat]));
+    this.setMarker();
     this.locations = [];
     this.changeCoords();
   }
 
-  private setMarker(center?: any) {
+  private setMarker() {
     if (this.markerLayer) this.map.removeLayer(this.markerLayer);
-    if (!center) center = [0, 0];
-    const view = new View({
-      center: center,
-      zoom: this.mapConfig.default_view?.zoom || 10,
-    });
     const marker = new Feature({
       geometry: new Point(fromLonLat([this.location.lng, this.location.lat])),
     });
@@ -150,15 +143,14 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       }),
     });
     this.map.addLayer(this.markerLayer);
-    this.map.setView(view);
-  }
+}
+
   private getMapConfigurations(): MapConfigInterface {
     return this.sessionService.getMapConfigurations();
   }
 
   private changeCoords(error = false) {
     this.locationChange.emit({ location: this.location, error });
-    this.cdr.detectChanges();
   }
 
   public checkErrors() {
@@ -170,18 +162,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     }
 
     this.changeCoords(this.emptyFieldLat || this.emptyFieldLng);
-  }
-
-  public getCurrentLocation() {
-    // navigator.geolocation.getCurrentPosition((position) => {
-    //   const {
-    //     coords: { latitude, longitude },
-    //   } = position;
-    //   this.location.lat = latitude;
-    //   this.location.lng = longitude;
-    //   this.addMarker();
-    //   this.map.setView([latitude, longitude], 12);
-    // });
   }
 
   public onFocusOut() {

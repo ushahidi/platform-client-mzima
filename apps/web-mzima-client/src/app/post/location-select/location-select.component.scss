@@ -13,14 +13,7 @@
   margin-bottom: 8px;
   margin-top:8px;
 }
-::ng-deep {
-  .ol-zoom {
-    top: 418px;
-    @include breakpoint-max($mobile) {
-      top: 190px;
-    }
-}
-}
+
 
 #geocode-input,
 #geocode-button {
@@ -35,7 +28,6 @@
 .geocoder-list {
   list-style: none;
   margin-top: 0;
-  //background: var(--color-neutral-20);
   border: 1px solid var(--color-neutral-60);
   padding: 10px;
   top: -5px;

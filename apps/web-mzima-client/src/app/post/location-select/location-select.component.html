@@ -1,49 +1,42 @@
 <div class="form-row search" [data-qa]="'location-search'">
-<mat-form-field appearance="outline">
-  <input
-    id="search-input"  
-    matInput
-    (keyup)="query$.next($event)"
-    placeholder="{{ 'post.location.search_address' | translate }}"
-    [data-qa]="'query-location'"
-/>
+  <mat-form-field appearance="outline">
+    <input
+      id="search-input"  
+      matInput
+      (keyup)="query$.next($event)"
+      placeholder="{{ 'post.location.search_address' | translate }}"
+      [data-qa]="'query-location'"
+  />
 
-<mzima-client-button 
-[iconOnly]="true" 
-fill="clear" 
-matSuffix 
-color="secondary">
-  <mat-icon icon svgIcon="search-small"></mat-icon>
-</mzima-client-button>
-</mat-form-field>
+  <mzima-client-button 
+  [iconOnly]="true" 
+  fill="clear" 
+  matSuffix 
+  color="secondary">
+    <mat-icon icon svgIcon="search-small"></mat-icon>
+  </mzima-client-button>
+  </mat-form-field>
 
-<ul
-class="geocoder-list"
-*ngIf="locations && locations.length > 0"
-[data-qa]="'geocoder-list'"
->
-<li
-  class="geocoder-list__item"
-  *ngFor="let location of locations"
-  (click)="selectLocation(location)"
-  [data-qa]="'geocoder-list-item'"
->
-  {{ location.display_name }}
-</li>
-</ul>
+  <ul
+  class="geocoder-list"
+  *ngIf="locations && locations.length > 0"
+  [data-qa]="'geocoder-list'"
+  >
+  <li
+    class="geocoder-list__item"
+    *ngFor="let location of locations"
+    (click)="selectLocation(location)"
+    [data-qa]="'geocoder-list-item'"
+  >
+    {{ location.display_name }}
+  </li>
+  </ul>
 </div>  
 <div id="ol-map" class="map-container"></div>
-
-
-
-
 
 <span class="instructions">
   {{ 'post.location.you_can_search_or_click' | translate }}
 </span>
-
-
-
 
 <div *ngIf="location">
   <div class="form-row">
