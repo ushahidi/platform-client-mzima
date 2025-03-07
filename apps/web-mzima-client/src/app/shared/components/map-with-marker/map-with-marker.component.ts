@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
 import Map from 'ol/Map';
@@ -13,13 +13,14 @@ import VectorSource from 'ol/source/Vector';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import { SessionService } from '../../../core/services/session.service';
-
+import { UntilDestroy } from '@ngneat/until-destroy';
+@UntilDestroy()
 @Component({
   selector: 'app-map-with-marker',
   templateUrl: './map-with-marker.component.html',
   styleUrls: ['./map-with-marker.component.scss'],
 })
-export class MapWithMarkerComponent implements OnInit {
+export class MapWithMarkerComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() public marker: { lat: number; lon: number };
   @Input() public color = 'var(--color-neutral-100)';
   @Input() public type = 'default';
@@ -29,7 +30,9 @@ export class MapWithMarkerComponent implements OnInit {
   private markerLayer: VectorLayer;
 
   constructor(private sessionService: SessionService) {}
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  ngAfterViewInit() {
+
     this.mapConfig = this.sessionService.getMapConfigurations();
     const baseLayer = mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
     const currentLayer = new TileLayer({
@@ -66,5 +69,8 @@ export class MapWithMarkerComponent implements OnInit {
       }),
     });
     this.map.addLayer(this.markerLayer);
+  }
+  ngOnDestroy(): void {
+    this.map.dispose();
   }
 }
