@@ -148,3 +148,165 @@ export const getWaterLayer = (): WaterLayer[] => {
     },
   ];
 };
+
+interface RainfallLayer {
+  attribution: string;
+  url: string;
+  params: {
+    LAYERS: string;
+    FORMAT: string;
+    TRANSPARENT: boolean;
+    TIME: string;
+    CRS: string;
+    exceptions: string;
+    styles: string;
+  };
+}
+
+export const getRainfallLayer = (): RainfallLayer[] => {
+  return [
+    {
+      attribution: 'Rainfall january 1981',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '1981-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 1986',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '1986-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 1991',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '1991-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 1996',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '1996-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 2001',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '2001-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 2006',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '2006-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 2011',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '2011-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 2016',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '2016-12-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 2021 ',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '2021-12-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 2024 ',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '2024-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+    {
+      attribution: 'Rainfall january 2025 ',
+      url: 'https://ows.digitalearth.africa/wms?version=1.3.0?',
+      params: {
+        LAYERS: 'rainfall_chirps_monthly',
+        FORMAT: 'image/png',
+        TRANSPARENT: true,
+        TIME: '2025-01-01',
+        CRS: 'EPSG:3857',
+        exceptions: 'XML',
+        styles: 'rainfall_monthly',
+      },
+    },
+  ];
+};

@@ -47,6 +47,8 @@ export class MapComponent extends MainViewComponent implements OnInit {
   isPostLoading: boolean;
   waterBodies: TileLayer[];
   waterLayers: LayerGroup;
+  rainfallLayer: LayerGroup;
+  rainfall: TileLayer[];
 
   constructor(
     protected override router: Router,
@@ -122,6 +124,23 @@ export class MapComponent extends MainViewComponent implements OnInit {
       layers: this.waterBodies,
       combine: false,
     } as GroupLayerOptions);
+
+    const wmsRainfall = mapHelper.getRainfallLayer();
+    this.rainfall = wmsRainfall.map((wms: any) => {
+      const newLayer = new TileLayer({
+        source: new TileWMS({
+          url: wms.url,
+          params: wms.params,
+        }),
+      });
+      newLayer.setProperties({ title: wms.attribution });
+      return newLayer;
+    });
+    this.rainfallLayer = new LayerGroup({
+      title: 'Rainfall',
+      layers: this.rainfall,
+      combine: false,
+    } as GroupLayerOptions);
   }
 
   initMap() {
@@ -133,7 +152,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
     this.map = new Map({
       view: view,
-      layers: [this.baseMaps, this.waterLayers],
+      layers: [this.baseMaps, this.waterLayers, this.rainfallLayer],
       target: 'ol-map',
     });
 
