@@ -16,6 +16,8 @@
   {"name":"Indonesian","code":"id","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Italian","code":"it","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Japanese","code":"ja","nplurals":1,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Kurdish","code":"ku","nplurals":2,"pluralequation":"language.pluralequation","rtl":true},
+  {"name":"Kurdish (Iraq)","code":"ku-IQ","nplurals":2,"pluralequation":"language.pluralequation","rtl":true},
   {"name":"Persian (Iran)","code":"fa-IR","nplurals":2,"pluralequation":"language.pluralequation","rtl":true},
   {"name":"Portuguese (Brazil)","code":"pt-BR","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Russian","code":"ru","nplurals":4,"pluralequation":"language.pluralequation","rtl":false},
