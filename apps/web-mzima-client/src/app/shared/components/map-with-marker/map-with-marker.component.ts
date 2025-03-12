@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Input, OnDestroy, AfterViewInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
 import Map from 'ol/Map';
@@ -20,7 +20,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   templateUrl: './map-with-marker.component.html',
   styleUrls: ['./map-with-marker.component.scss'],
 })
-export class MapWithMarkerComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MapWithMarkerComponent implements OnDestroy, AfterViewInit {
   @Input() public marker: { lat: number; lon: number };
   @Input() public color = 'var(--color-neutral-100)';
   @Input() public type = 'default';
@@ -30,45 +30,49 @@ export class MapWithMarkerComponent implements OnInit, OnDestroy, AfterViewInit 
   private markerLayer: VectorLayer;
 
   constructor(private sessionService: SessionService) {}
-  ngOnInit(): void {}
+
   ngAfterViewInit() {
-
     this.mapConfig = this.sessionService.getMapConfigurations();
-    const baseLayer = mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
-    const currentLayer = new TileLayer({
-      visible: true,
-      source: new XYZ({
-        url: baseLayer.url,
-        maxZoom: 'maxZoom' in baseLayer.layerOptions ? baseLayer.layerOptions.maxZoom : undefined,
-      }),
-    });
-    const view = new View({
-      center: fromLonLat([this.marker.lon, this.marker.lat]),
-      zoom: this.mapConfig.default_view?.zoom || 2,
-    });
+    const baseLayers = mapHelper.getOpenLayersMapConfig().filter((layer) => layer.visible);
+    const visibleLayer =
+      baseLayers.find((layer) => layer.code === this.mapConfig.default_view?.baselayer) ||
+      baseLayers.find((layer) => layer.code === 'streets');
 
-    this.map = new Map({
-      view: view,
-      layers: [currentLayer],
-      target: 'ol-map',
-    });
-
-    const marker = new Feature({
-      geometry: new Point(fromLonLat([this.marker.lon, this.marker.lat])),
-    });
-
-    this.markerLayer = new VectorLayer({
-      source: new VectorSource({
-        features: [marker],
-      }),
-      style: new Style({
-        image: new Icon({
-          anchor: [0.5, 1],
-          src: mapHelper.imageIcon(this.color),
+    if (visibleLayer) {
+      const currentLayer = new TileLayer({
+        visible: true,
+        source: new XYZ({
+          url: visibleLayer.url,
         }),
-      }),
-    });
-    this.map.addLayer(this.markerLayer);
+      });
+      const view = new View({
+        center: fromLonLat([this.marker.lon, this.marker.lat]),
+        zoom: this.mapConfig.default_view?.zoom || 2,
+      });
+
+      this.map = new Map({
+        view: view,
+        layers: [currentLayer],
+        target: 'ol-map',
+      });
+
+      const marker = new Feature({
+        geometry: new Point(fromLonLat([this.marker.lon, this.marker.lat])),
+      });
+
+      this.markerLayer = new VectorLayer({
+        source: new VectorSource({
+          features: [marker],
+        }),
+        style: new Style({
+          image: new Icon({
+            anchor: [0.5, 1],
+            src: mapHelper.imageIcon(this.color),
+          }),
+        }),
+      });
+      this.map.addLayer(this.markerLayer);
+    }
   }
   ngOnDestroy(): void {
     this.map.dispose();
