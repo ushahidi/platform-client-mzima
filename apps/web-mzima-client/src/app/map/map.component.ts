@@ -176,7 +176,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
     const defaultFilters = searchFormHelper.DEFAULT_FILTERS_LOGGED_OUT;
     this.getPostsGeoJson(1, defaultFilters);
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getPostsGeoJson(pageNumber: number = 1, filter?: any) {
     this.postsService
       .getGeojson(filter)
