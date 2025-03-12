@@ -64,34 +64,40 @@ export class LocationSelectComponent implements OnInit {
       this.location.lat = this.mapConfig.default_view!.lat;
       this.location.lng = this.mapConfig.default_view!.lon;
     }
-    const baseLayer = mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
-    const currentLayer = new TileLayer({
-      visible: true,
-      source: new XYZ({
-        url: baseLayer.url,
-        maxZoom: 'maxZoom' in baseLayer.layerOptions ? baseLayer.layerOptions.maxZoom : undefined,
-      }),
-    });
-    const view = new View({
-      center: fromLonLat([this.location.lng, this.location.lat]),
-      zoom: this.mapConfig.default_view?.zoom || 2,
-    });
 
-    this.map = new Map({
-      view: view,
-      layers: [currentLayer],
-      target: 'ol-map',
-    });
-    if (this.isEditPost) {
-      this.setMarker();
+    const baseLayers = mapHelper.getOpenLayersMapConfig().filter((layer) => layer.visible);
+    const visibleLayer =
+      baseLayers.find((layer) => layer.code === this.mapConfig.default_view?.baselayer) ||
+      baseLayers.find((layer) => layer.code === 'streets');
+
+    if (visibleLayer) {
+      this.map = new Map({
+        view: new View({
+          center: fromLonLat([this.location.lng, this.location.lat]),
+          zoom: this.mapConfig.default_view?.zoom || 2,
+        }),
+        layers: [
+          new TileLayer({
+            visible: true,
+            source: new XYZ({
+              url: visibleLayer.url,
+            }),
+          }),
+        ],
+        target: 'ol-map',
+      });
+
+      if (this.isEditPost) {
+        this.setMarker();
+      }
+
+      this.map.on('click', (evt) => {
+        const [lng, lat] = toLonLat(evt.coordinate);
+        this.location = { lat, lng };
+        this.setMarker();
+        this.changeCoords();
+      });
     }
-    this.map.on('click', (evt) => {
-      const coordinate = evt.coordinate;
-      const geolocation = toLonLat(coordinate);
-      this.location = { lat: geolocation[1], lng: geolocation[0] };
-      this.setMarker();
-      this.changeCoords();
-    });
   }
 
   public searchLocation(query: string) {
