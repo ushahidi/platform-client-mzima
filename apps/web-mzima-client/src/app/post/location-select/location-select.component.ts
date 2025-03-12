@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,7 +25,7 @@ import 'leaflet.markercluster';
   templateUrl: './location-select.component.html',
   styleUrls: ['./location-select.component.scss'],
 })
-export class LocationSelectComponent implements OnInit, AfterViewInit {
+export class LocationSelectComponent implements OnInit {
   @Input() public zoom: number;
   @Input() public location: any;
   @Input() public required: boolean;
@@ -54,10 +47,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   public query$: Subject<any> = new Subject<any>();
   private markerLayer: VectorLayer;
 
-  constructor(
-    private sessionService: SessionService,
-    private translate: TranslateService,
-  ) {
+  constructor(private sessionService: SessionService, private translate: TranslateService) {
     this.query$
       .pipe(
         debounceTime(250),
@@ -100,10 +90,9 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       const geolocation = toLonLat(coordinate);
       this.location = { lat: geolocation[1], lng: geolocation[0] };
       this.setMarker();
+      this.changeCoords();
     });
   }
-
-  ngAfterViewInit(): void {}
 
   public searchLocation(query: string) {
     fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
@@ -143,7 +132,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       }),
     });
     this.map.addLayer(this.markerLayer);
-}
+  }
 
   private getMapConfigurations(): MapConfigInterface {
     return this.sessionService.getMapConfigurations();
