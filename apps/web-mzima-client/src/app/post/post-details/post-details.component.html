@@ -98,7 +98,7 @@
                 <app-map-with-marker
                   class="map"
                   [marker]="field.value.value"
-                  [color]="color || 'var(--color-neutral-100)'"
+                  [color]="post.color || 'var(--color-neutral-100)'"
                   [type]="post.source?.toLowerCase() || 'default'"
                   tabindex="-1"
                   data-qa="postLocationMap"

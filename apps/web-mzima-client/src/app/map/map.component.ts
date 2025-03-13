@@ -85,25 +85,26 @@ export class MapComponent extends MainViewComponent implements OnInit {
   }
 
   initBaseLayers() {
-    const baseLayers = mapHelper
-      .getOpenLayersMapConfig()
-      .filter((layer) => layer.visible)
-      .map(
-        (layer) =>
-          new TileLayer({
-            title: layer.name,
-            type: 'base',
-            visible: this.mapConfig.default_view?.baselayer === layer.code,
-            source: new XYZ({
-              url: layer.url,
-              maxZoom: 'maxZoom' in layer.layerOptions ? layer.layerOptions.maxZoom : undefined,
-            }),
-          } as BaseLayerOptions),
-      );
+    const baseLayers = mapHelper.getOpenLayersMapConfig().filter((layer) => layer.visible);
+    const visibleLayer =
+      baseLayers.find((layer) => layer.code === this.mapConfig.default_view?.baselayer)?.code ||
+      'streets';
+    const selectableLayers = baseLayers.map(
+      (layer) =>
+        new TileLayer({
+          title: layer.name,
+          type: 'base',
+          visible: visibleLayer === layer.code,
+          source: new XYZ({
+            url: layer.url,
+            maxZoom: 'maxZoom' in layer.layerOptions ? layer.layerOptions.maxZoom : undefined,
+          }),
+        } as BaseLayerOptions),
+    );
 
     this.baseMaps = new LayerGroup({
       title: 'Base Maps',
-      layers: baseLayers,
+      layers: selectableLayers,
     } as GroupLayerOptions);
     this.layers.push(this.baseMaps);
   }
