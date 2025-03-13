@@ -20,7 +20,7 @@
         (selectionChange)="setCurrentProvider($event.value)"
         [data-qa]="'select-provider'"
       >
-        <ng-container *ngFor="let provider of providersData">
+        <ng-container *ngFor="let provider of providers.available">
           <mat-option
             [value]="provider.id"
             *ngIf="!isProviderEnabled(provider)"

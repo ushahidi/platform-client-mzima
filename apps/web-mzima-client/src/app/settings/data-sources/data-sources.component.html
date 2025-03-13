@@ -10,15 +10,32 @@
   </mzima-client-button>
 </div>
 <ng-container *ngIf="providersData?.length; else showLoader">
-  <div *ngFor="let provider of providersData" [data-qa]="'providers-list'">
-    <a
-      matRipple
-      class="data-source-item"
-      [routerLink]="['update', provider.id]"
-      [data-qa]="provider.id"
-    >
-      {{ provider.name }}
-    </a>
+  <h3 class="data-source-heading">Available</h3>
+  <div *ngFor="let provider of providers.available" [data-qa]="'providers-list'">
+    <ng-container *ngIf="provider.available">
+      <a
+        matRipple
+        class="data-source-item"
+        [routerLink]="['update', provider.id]"
+        [data-qa]="provider.id"
+      >
+        {{ provider.name }}
+      </a>
+    </ng-container>
+  </div>
+
+  <h3 class="data-source-heading">Unavailable</h3>
+  <div *ngFor="let provider of providers.unavailable" [data-qa]="'providers-list'">
+    <ng-container *ngIf="!provider.available">
+      <a
+        matRipple
+        class="data-source-item"
+        [routerLink]="['update', provider.id]"
+        [data-qa]="provider.id"
+      >
+        {{ provider.name }}
+      </a>
+    </ng-container>
   </div>
 </ng-container>
 

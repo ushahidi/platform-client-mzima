@@ -69,6 +69,21 @@ export class ConfigService {
       )
       .pipe(
         map((data) => {
+          //-------------------------------------------------
+          // Simulating adding available prop from backend
+          //-------------------------------------------------
+          const availableDataSources = (dataSource: any) => {
+            const available = data.results.filter(
+              (result: any) =>
+                result['provider-name'] === 'africastalking' ||
+                result['provider-name'] === 'mteja' ||
+                result['provider-name'] === 'httpsms' ||
+                result['provider-name'] === 'infobip' ||
+                result['provider-name'] === 'sislog',
+            );
+            return available.filter((test: any) => test['provider-name'] === dataSource.id)[0];
+          };
+          //-------------------------------------------------
           return dataSources
             .filter(
               (dataSource: any) =>
@@ -78,6 +93,7 @@ export class ConfigService {
             .map((dataSource: any) => {
               return {
                 ...dataSource,
+                available: !!availableDataSources(dataSource),
                 enabled: data.results.find(
                   (result: any) => dataSource.id === result['provider-name'],
                 ).enabled,

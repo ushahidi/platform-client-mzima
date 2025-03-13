@@ -14,7 +14,10 @@ export class DataSourcesComponent implements OnInit {
   public isDesktop$: Observable<boolean>;
   public isAllProvidersAdded: boolean;
   public providersData: any;
-
+  public providers: {
+    available: any[];
+    unavailable: any[];
+  };
   constructor(
     private configService: ConfigService,
     private dataSourcesService: DataSourcesService,
@@ -40,6 +43,12 @@ export class DataSourcesComponent implements OnInit {
           this.isAllProvidersAdded = !!this.providersData.find(
             (provider: any) => !provider.enabled,
           );
+          //-----------------------------------------------
+          this.providers = {
+            available: this.providersData.filter((provider: any) => provider.available),
+            unavailable: this.providersData.filter((provider: any) => !provider.available),
+          };
+          //-----------------------------------------------
         },
       });
   }
