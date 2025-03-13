@@ -26,7 +26,7 @@ import _ from 'lodash';
 export class DataSourceItemComponent extends BaseComponent implements AfterContentChecked, OnInit {
   public provider: any;
   public providers: {
-    available: any[];
+    supported: any[];
   };
   public surveyList: any[];
   public form: FormGroup;
@@ -124,7 +124,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
         });
         this.cloneProviders = _.cloneDeep(this.providersData);
         this.providers = {
-          available: this.providersData.filter((provider: any) => provider.available),
+          supported: this.providersData.filter((provider: any) => provider.supported),
         };
         // this.availableProviders = this.getAvailableProviders(this.providersData);
 

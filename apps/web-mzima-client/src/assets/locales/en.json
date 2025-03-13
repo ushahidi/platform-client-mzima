@@ -1418,6 +1418,10 @@
       "provider_name": "{{providerName}} Data Source?",
       "do_you_really_want_to_disconnect": "Do you really want to disconnect your provider?",
       "add_source": "Add source",
+      "providers": {
+        "supported": "Supported",
+        "unsupported": "Unsupported"
+      },
       "edit": "Edit {{provider}} Data Source",
       "add_data_source": "Add Data Source",
       "associate_with_form": "Import to survey",
