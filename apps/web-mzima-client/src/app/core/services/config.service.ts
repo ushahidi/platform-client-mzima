@@ -91,6 +91,13 @@ export class ConfigService {
                 -1,
             )
             .map((dataSource: any) => {
+              //-------------------------------------------------------------
+              // Simulating change of "retired" datasource names from backend
+              //-------------------------------------------------------------
+              if (dataSource.name === 'FrontlineSMS')
+                dataSource.name = 'FrontlineSMS (shutdown & leaving soon)';
+              if (dataSource.name === 'SMSSync') dataSource.name = 'SMSSync (No longer maintained)';
+              //-------------------------------------------------
               return {
                 ...dataSource,
                 supported: !!supportedDataSources(dataSource),

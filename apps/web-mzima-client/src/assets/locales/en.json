@@ -1420,7 +1420,7 @@
       "add_source": "Add source",
       "providers": {
         "supported": "Supported",
-        "unsupported": "Unsupported"
+        "unsupported": "Unsupported Data Sources"
       },
       "edit": "Edit {{provider}} Data Source",
       "add_data_source": "Add Data Source",
