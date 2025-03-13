@@ -1,13 +1,1 @@
-<div class="map-holder">
-  <div
-    leaflet
-    class="map"
-    tabindex="-1"
-    *ngIf="mapReady"
-    [leafletLayers]="mapLayers"
-    [leafletOptions]="leafletOptions"
-    [leafletFitBounds]="mapFitToBounds"
-    (leafletMapReady)="onMapReady($event)"
-    [leafletFitBoundsOptions]="fitBoundsOptions"
-  ></div>
-</div>
+<div class="map-holder"><div id="ol-map" class="map-container"></div></div>
