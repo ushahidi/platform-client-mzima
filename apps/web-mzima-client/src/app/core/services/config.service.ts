@@ -70,10 +70,10 @@ export class ConfigService {
       .pipe(
         map((data) => {
           //-------------------------------------------------
-          // Simulating adding available prop from backend
+          // Simulating adding supported prop from backend
           //-------------------------------------------------
-          const availableDataSources = (dataSource: any) => {
-            const available = data.results.filter(
+          const supportedDataSources = (dataSource: any) => {
+            const supported = data.results.filter(
               (result: any) =>
                 result['provider-name'] === 'africastalking' ||
                 result['provider-name'] === 'mteja' ||
@@ -81,7 +81,7 @@ export class ConfigService {
                 result['provider-name'] === 'infobip' ||
                 result['provider-name'] === 'sislog',
             );
-            return available.filter((test: any) => test['provider-name'] === dataSource.id)[0];
+            return supported.filter((test: any) => test['provider-name'] === dataSource.id)[0];
           };
           //-------------------------------------------------
           return dataSources
@@ -93,7 +93,7 @@ export class ConfigService {
             .map((dataSource: any) => {
               return {
                 ...dataSource,
-                available: !!availableDataSources(dataSource),
+                supported: !!supportedDataSources(dataSource),
                 enabled: data.results.find(
                   (result: any) => dataSource.id === result['provider-name'],
                 ).enabled,

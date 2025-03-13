@@ -10,9 +10,9 @@
   </mzima-client-button>
 </div>
 <ng-container *ngIf="providersData?.length; else showLoader">
-  <h3 class="data-source-heading">Available</h3>
-  <div *ngFor="let provider of providers.available" [data-qa]="'providers-list'">
-    <ng-container *ngIf="provider.available">
+  <h3 class="data-source-heading">{{ 'settings.data_sources.providers.supported' | translate }}</h3>
+  <div *ngFor="let provider of providers.supported" [data-qa]="'providers-list'">
+    <ng-container *ngIf="provider.supported">
       <a
         matRipple
         class="data-source-item"
@@ -24,9 +24,11 @@
     </ng-container>
   </div>
 
-  <h3 class="data-source-heading">Unavailable</h3>
-  <div *ngFor="let provider of providers.unavailable" [data-qa]="'providers-list'">
-    <ng-container *ngIf="!provider.available">
+  <h3 class="data-source-heading">
+    {{ 'settings.data_sources.providers.unsupported' | translate }}
+  </h3>
+  <div *ngFor="let provider of providers.unsupported" [data-qa]="'providers-list'">
+    <ng-container *ngIf="!provider.supported">
       <a
         matRipple
         class="data-source-item"

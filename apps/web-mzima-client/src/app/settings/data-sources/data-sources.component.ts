@@ -15,8 +15,8 @@ export class DataSourcesComponent implements OnInit {
   public isAllProvidersAdded: boolean;
   public providersData: any;
   public providers: {
-    available: any[];
-    unavailable: any[];
+    supported: any[];
+    unsupported: any[];
   };
   constructor(
     private configService: ConfigService,
@@ -45,8 +45,8 @@ export class DataSourcesComponent implements OnInit {
           );
           //-----------------------------------------------
           this.providers = {
-            available: this.providersData.filter((provider: any) => provider.available),
-            unavailable: this.providersData.filter((provider: any) => !provider.available),
+            supported: this.providersData.filter((provider: any) => provider.supported),
+            unsupported: this.providersData.filter((provider: any) => !provider.supported),
           };
           //-----------------------------------------------
         },
