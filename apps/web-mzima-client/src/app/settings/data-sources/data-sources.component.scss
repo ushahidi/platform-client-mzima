@@ -3,6 +3,10 @@
 .data-source {
   &-heading {
     margin-top: 40px;
+
+    &__smaller {
+      font-size: 17px;
+    }
   }
 
   &-item {
