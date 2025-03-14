@@ -98,6 +98,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
           source: new XYZ({
             url: layer.url,
             maxZoom: 'maxZoom' in layer.layerOptions ? layer.layerOptions.maxZoom : undefined,
+            attributions: layer.layerOptions.attribution,
           }),
         } as BaseLayerOptions),
     );
@@ -116,9 +117,10 @@ export class MapComponent extends MainViewComponent implements OnInit {
         source: new TileWMS({
           url: wms.url,
           params: wms.params,
+          attributions: wms.attribution,
         }),
       });
-      newLayer.setProperties({ title: wms.attribution });
+      newLayer.setProperties({ title: wms.name });
       return newLayer;
     });
 
@@ -135,9 +137,10 @@ export class MapComponent extends MainViewComponent implements OnInit {
         source: new TileWMS({
           url: wms.url,
           params: wms.params,
+          attributions: wms.attribution,
         }),
       });
-      newLayer.setProperties({ title: wms.attribution });
+      newLayer.setProperties({ title: wms.name });
       return newLayer;
     });
     this.rainfallLayer = new LayerGroup({
