@@ -111,44 +111,30 @@ export class MapComponent extends MainViewComponent implements OnInit {
   }
 
   initWMSLayers() {
-    const wmsWater = mapHelper.getWaterLayer();
-    this.waterBodies = wmsWater.map((wms: any) => {
-      const newLayer = new TileLayer({
-        source: new TileWMS({
-          url: wms.url,
-          params: wms.params,
-          attributions: wms.attribution,
-        }),
+    const createWMSLayerGroup = (title: string, wmsLayers: any[]) => {
+      const layers = wmsLayers.map((wms: any) => {
+        const newLayer = new TileLayer({
+          source: new TileWMS({
+            url: wms.url,
+            params: wms.params,
+            attributions: wms.attribution,
+          }),
+        });
+        newLayer.setProperties({ title: wms.name });
+        return newLayer;
       });
-      newLayer.setProperties({ title: wms.name });
-      return newLayer;
-    });
 
-    this.waterLayers = new LayerGroup({
-      title: 'Water bodies',
-      layers: this.waterBodies,
-      combine: false,
-    } as GroupLayerOptions);
-    this.layers.push(this.waterLayers);
+      return new LayerGroup({
+        title,
+        layers,
+        combine: false,
+      } as GroupLayerOptions);
+    };
 
-    const wmsRainfall = mapHelper.getRainfallLayer();
-    this.rainfall = wmsRainfall.map((wms: any) => {
-      const newLayer = new TileLayer({
-        source: new TileWMS({
-          url: wms.url,
-          params: wms.params,
-          attributions: wms.attribution,
-        }),
-      });
-      newLayer.setProperties({ title: wms.name });
-      return newLayer;
-    });
-    this.rainfallLayer = new LayerGroup({
-      title: 'Rainfall',
-      layers: this.rainfall,
-      combine: false,
-    } as GroupLayerOptions);
-    this.layers.push(this.rainfallLayer);
+    this.waterLayers = createWMSLayerGroup('Water bodies', mapHelper.getWaterLayer());
+    this.rainfallLayer = createWMSLayerGroup('Rainfall', mapHelper.getRainfallLayer());
+
+    this.layers.push(this.waterLayers, this.rainfallLayer);
   }
 
   initMap() {
