@@ -3,15 +3,13 @@ import { mapHelper } from '@helpers';
 import { MapConfigInterface, MapViewInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SessionService } from '@services';
-// import { control, DragEndEvent, Layer, LeafletMouseEvent, Marker } from 'leaflet';
-import Geocoder from 'leaflet-control-geocoder';
 import { distinctUntilChanged, debounceTime, Subject, tap } from 'rxjs';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import XYZ from 'ol/source/XYZ';
 import VectorSource from 'ol/source/Vector';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import Style from 'ol/style/Style';
@@ -87,6 +85,11 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
         target: 'ol-map',
       });
     }
+    this.addMarker();
+    this.map.on('click', (evt: any) => {
+      const [lng, lat] = toLonLat(evt.coordinate);
+      this.setCoordinates(lat, lng);
+    });
   }
 
   addMarker() {
@@ -134,10 +137,6 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
     this.changeDetector.detectChanges();
   }
 
-  private mapClick(e: any) {
-    const coordinates = e.latlng.wrap();
-    this.setCoordinates(coordinates.lat, coordinates.lng);
-  }
 
   private handleDragEnd(e: any) {
     const coordinates = e.target.getLatLng().wrap();
