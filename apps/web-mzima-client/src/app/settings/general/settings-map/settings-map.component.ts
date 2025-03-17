@@ -1,22 +1,23 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface, MapViewInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SessionService } from '@services';
-import {
-  control,
-  DragEndEvent,
-  Layer,
-  LeafletMouseEvent,
-  Map,
-  Marker,
-  marker,
-  TileLayer,
-  tileLayer,
-} from 'leaflet';
+// import { control, DragEndEvent, Layer, LeafletMouseEvent, Marker } from 'leaflet';
 import Geocoder from 'leaflet-control-geocoder';
-import { debounceTime, Subject } from 'rxjs';
+import { distinctUntilChanged, debounceTime, Subject, tap } from 'rxjs';
+import { Map, View } from 'ol';
+import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import XYZ from 'ol/source/XYZ';
+import VectorSource from 'ol/source/Vector';
+import { fromLonLat } from 'ol/proj';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import Style from 'ol/style/Style';
+import Icon from 'ol/style/Icon';
 import { pointIcon } from '../../../core/helpers/map';
+// import { Bounds } from 'ol/extent';
 
 @UntilDestroy()
 @Component({
@@ -24,18 +25,19 @@ import { pointIcon } from '../../../core/helpers/map';
   templateUrl: './settings-map.component.html',
   styleUrls: ['./settings-map.component.scss'],
 })
-export class SettingsMapComponent implements OnInit {
+export class SettingsMapComponent implements OnInit, AfterViewInit {
   @Input() minObfuscation = 0;
   @Input() maxObfuscation = 9;
   leafletOptions: any;
-  map: Map;
-  mapMarker: Marker;
-  mapLayers: Layer[] = [];
+
   mapConfig: MapConfigInterface;
   mapReady = false;
+  markerLayer: any;
+  map: any;
+  view: View;
   maxZoom = 22; // affects the arrow on number input field for "Default zoom level"
   minZoom = 1; // affects the arrow on number input field for "Default zoom level"
-  baseLayers = Object.values(mapHelper.getMapLayers().baselayers);
+  baseLayers = mapHelper.getOpenLayersMapConfig().filter((layer) => layer.visible);
 
   public geocoderControl: any;
   public queryLocation: string = '';
@@ -44,121 +46,123 @@ export class SettingsMapComponent implements OnInit {
   public isShowGeocodingResults = false;
   locationPrecisionEnabled: any;
   currentPrecision = 9;
+  public query$: Subject<any> = new Subject<any>();
 
-  constructor(private sessionService: SessionService, private changeDetector: ChangeDetectorRef) {}
+  constructor(private sessionService: SessionService, private changeDetector: ChangeDetectorRef) {
+    this.query$
+      .pipe(
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap(({ target: { value } }) => this.searchLocation(value)),
+        untilDestroyed(this),
+      )
+      .subscribe();
+  }
 
   ngOnInit(): void {
-    this.searchSubject.pipe(debounceTime(600), untilDestroyed(this)).subscribe((query) => {
-      this.performSearch(query);
-    });
-
     this.mapConfig = this.sessionService.getMapConfigurations();
-    this.currentPrecision = this.getPrecision();
+  }
 
-    this.locationPrecisionEnabled =
-      !!this.sessionService.getFeatureConfigurations()['anonymise-reporters']?.enabled;
+  ngAfterViewInit(): void {
+    const visibleLayer =
+      this.baseLayers.find((layer) => layer.code === this.mapConfig.default_view?.baselayer) ||
+      this.baseLayers.find((layer) => layer.code === 'streets');
 
-    this.leafletOptions = {
-      scrollWheelZoom: true,
-      zoomControl: false,
-      layers: [],
-      center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
-      zoom: this.mapConfig.default_view!.zoom,
-    };
-    this.mapReady = true;
-    this.addTileLayerToMap(this.mapConfig.default_view!.baselayer);
+    if (visibleLayer) {
+      this.view = new View({
+        center: fromLonLat([this.mapConfig.default_view!.lon, this.mapConfig.default_view!.lat]),
+        zoom: this.mapConfig.default_view?.zoom || 2,
+      });
+
+      this.map = new Map({
+        view: this.view,
+        layers: [
+          new TileLayer({
+            visible: true,
+            source: new XYZ({
+              url: visibleLayer.url,
+            }),
+          }),
+        ],
+        target: 'ol-map',
+      });
+    }
   }
 
   addMarker() {
-    if (this.mapMarker) this.map.removeLayer(this.mapMarker);
-
-    this.mapMarker = marker(this.map.getCenter(), {
-      draggable: true,
-      icon: pointIcon(this.mapConfig.default_view!.color),
-    }).addTo(this.map);
-
-    this.mapMarker.on('dragend', (e) => {
-      this.handleDragEnd(e);
+    if (this.markerLayer) this.map.removeLayer(this.markerLayer);
+    const marker = new Feature({
+      geometry: new Point(
+        fromLonLat([this.mapConfig.default_view!.lon, this.mapConfig.default_view!.lat]),
+      ),
     });
+    this.markerLayer = new VectorLayer({
+      source: new VectorSource({
+        features: [marker],
+      }),
+      style: new Style({
+        image: new Icon({
+          anchor: [0.5, 1],
+          src: mapHelper.imageIcon('default'),
+        }),
+      }),
+    });
+    this.map.addLayer(this.markerLayer);
   }
 
   addTileLayerToMap(code: MapViewInterface['baselayer']) {
-    const currentLayer = mapHelper.getMapLayers().baselayers[code];
-    this.mapLayers = this.mapLayers.filter((layer) => !(layer instanceof TileLayer));
-    this.mapLayers.push(tileLayer(currentLayer.url, currentLayer.layerOptions));
+    // const currentLayer = mapHelper.getMapLayers().baselayers[code];
+    // this.mapLayers = this.mapLayers.filter((layer) => !(layer instanceof TileLayer));
+    // this.mapLayers.push(tileLayer(currentLayer.url, currentLayer.layerOptions));
   }
 
   layerChange(newLayer: MapViewInterface['baselayer']) {
     this.addTileLayerToMap(newLayer);
   }
 
-  onMapReady(map: Map) {
-    // Initialize geocoder
-    this.geocoderControl = new Geocoder({
-      defaultMarkGeocode: false,
-      position: 'topleft',
-      collapsed: false,
-    });
-
-    this.map = map;
-    control.zoom({ position: 'bottomleft' }).addTo(this.map);
-    this.addMarker();
-
-    this.geocoderControl.addTo(this.map);
-
-    this.map.on('click', (e) => {
-      this.mapClick(e);
-    });
-
-    this.map.on('zoomend', () => {
-      this.mapConfig.default_view!.zoom = map.getZoom();
-      this.changeDetector.detectChanges();
-    });
-
-    this.geocoderControl.on('finishgeocode', (e: any) => {
-      this.geocodingResults = e.results;
-    });
-  }
 
   private updateMapPreview() {
     // Center the map at our current default.
     // Set the zoom level to our default zoom.
-    this.map.setView(
-      [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
-      this.mapConfig.default_view!.zoom,
-    );
+    // this.map.setView(
+    //   [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
+    //   this.mapConfig.default_view!.zoom,
+    // );
 
     // Update our draggable marker to the default.
-    this.mapMarker.setLatLng([this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon]);
+    // this.mapMarker.setLatLng([this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon]);
     this.changeDetector.detectChanges();
   }
 
-  private mapClick(e: LeafletMouseEvent) {
+  private mapClick(e: any) {
     const coordinates = e.latlng.wrap();
     this.setCoordinates(coordinates.lat, coordinates.lng);
   }
 
-  private handleDragEnd(e: DragEndEvent) {
+  private handleDragEnd(e: any) {
     const coordinates = e.target.getLatLng().wrap();
     this.setCoordinates(coordinates.lat, coordinates.lng);
   }
 
-  public searchLocation() {
-    this.isShowGeocodingResults = true;
-    this.searchSubject.next(this.queryLocation);
-  }
-
-  private performSearch(query: string) {
-    this.geocoderControl.options.placeholder = query;
-    this.geocoderControl._input.value = query;
-    this.geocoderControl._geocode();
+  public searchLocation(query: string) {
+    this.searchSubject.next(query);
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.geocodingResults = data.length > 0 ? data : [];
+        this.isShowGeocodingResults = true;
+      })
+      .catch((error) => {
+        console.error('Error fetching location data:', error);
+        this.geocodingResults = [];
+      });
   }
 
   public selectLocation(item: any) {
     this.queryLocation = item.name;
-    const coordinates = item.center;
-    this.map.fitBounds(item.bbox);
-    this.setCoordinates(coordinates.lat, coordinates.lng);
+    this.view.setCenter(fromLonLat([item.lon, item.lat]));
+    this.view.setZoom(10);
+    this.setCoordinates(item.lat, item.lon);
     this.geocodingResults = [];
     this.searchSubject.next('');
   }
@@ -171,9 +175,9 @@ export class SettingsMapComponent implements OnInit {
   }
 
   public onZoomChange(): void {
-    if (this.map) {
-      this.map.setZoom(this.mapConfig.default_view!.zoom);
-    }
+    // if (this.map) {
+    //   this.map.setZoom(this.mapConfig.default_view!.zoom);
+    // }
   }
 
   public updatePrecision() {

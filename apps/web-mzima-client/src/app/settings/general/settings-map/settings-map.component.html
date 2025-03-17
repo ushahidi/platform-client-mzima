@@ -1,12 +1,11 @@
+
 <ng-container *ngIf="mapConfig">
   <div class="form-row">
     <mat-label>{{ 'survey.location' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
-        [(ngModel)]="queryLocation"
-        (ngModelChange)="searchLocation()"
-        (focusout)="searchLocation()"
+        (keyup)="query$.next($event)"
         placeholder="{{ 'settings.general_settings.placeholder.pick_location' | translate }}"
         [data-qa]="'query-location'"
       />
@@ -26,22 +25,14 @@
         (click)="selectLocation(result)"
         [data-qa]="'geocoder-list-item'"
       >
-        {{ result.name }}
+        {{ result.display_name }}
       </li>
     </ul>
   </div>
-
   <div class="form-row map-holder">
-    <div
-      id="settings-map"
-      class="map"
-      *ngIf="mapReady"
-      leaflet
-      [leafletOptions]="leafletOptions"
-      [leafletLayers]="mapLayers"
-      (leafletMapReady)="onMapReady($event)"
-    ></div>
-  </div>
+
+  <div id="ol-map" class="map-container"></div>
+</div>  
 
   <div class="inputs">
     <div class="form-row">
@@ -132,4 +123,5 @@
       </mat-checkbox>
     </div>
   </div>
+
 </ng-container>
