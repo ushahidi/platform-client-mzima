@@ -10,7 +10,9 @@
   </mzima-client-button>
 </div>
 <ng-container *ngIf="providersData?.length; else showLoader">
-  <h3 class="data-source-heading">{{ 'settings.data_sources.providers.supported' | translate }}</h3>
+  <h3 *ngIf="providers.supported.length" class="data-source-heading">
+    {{ 'settings.data_sources.providers.supported' | translate }}
+  </h3>
   <div *ngFor="let provider of providers.supported" [data-qa]="'providers-list'">
     <ng-container *ngIf="provider.supported">
       <a
@@ -24,7 +26,7 @@
     </ng-container>
   </div>
 
-  <h3 class="data-source-heading data-source-heading__smaller">
+  <h3 *ngIf="providers.unsupported.length" class="data-source-heading data-source-heading__smaller">
     {{ 'settings.data_sources.providers.unsupported' | translate }}
   </h3>
   <div *ngFor="let provider of providers.unsupported" [data-qa]="'providers-list'">
