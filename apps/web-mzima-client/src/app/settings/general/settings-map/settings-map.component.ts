@@ -31,6 +31,7 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
   mapConfig: MapConfigInterface;
   mapReady = false;
   markerLayer: any;
+  currentLayer: TileLayer<XYZ>;
   map: any;
   view: View;
   maxZoom = 22; // affects the arrow on number input field for "Default zoom level"
@@ -71,20 +72,23 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
         center: fromLonLat([this.mapConfig.default_view!.lon, this.mapConfig.default_view!.lat]),
         zoom: this.mapConfig.default_view?.zoom || 2,
       });
+      this.currentLayer = new TileLayer({
+        visible: true,
+        source: new XYZ({
+          url: visibleLayer.url,
+        }),
+      });
 
       this.map = new Map({
         view: this.view,
-        layers: [
-          new TileLayer({
-            visible: true,
-            source: new XYZ({
-              url: visibleLayer.url,
-            }),
-          }),
-        ],
+        layers: [this.currentLayer],
         target: 'ol-map',
       });
     }
+    this.view.on('change:resolution', () => {
+      this.mapConfig.default_view!.zoom = Number(this.view.getZoom());
+    });
+  
     this.addMarker();
     this.map.on('click', (evt: any) => {
       const [lng, lat] = toLonLat(evt.coordinate);
@@ -100,6 +104,7 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
       ),
     });
     this.markerLayer = new VectorLayer({
+      zIndex: 1000,
       source: new VectorSource({
         features: [marker],
       }),
@@ -114,9 +119,17 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
   }
 
   addTileLayerToMap(code: MapViewInterface['baselayer']) {
-    // const currentLayer = mapHelper.getMapLayers().baselayers[code];
-    // this.mapLayers = this.mapLayers.filter((layer) => !(layer instanceof TileLayer));
-    // this.mapLayers.push(tileLayer(currentLayer.url, currentLayer.layerOptions));
+    const newBase = mapHelper.getOpenLayersMapConfig().find((layer) => layer.code === code);
+    const newLayer = new TileLayer({
+      visible: true,
+      zIndex: 0,
+      source: new XYZ({
+        url: newBase!.url,
+      }),
+    });
+    this.map.removeLayer(this.currentLayer);
+    this.currentLayer = newLayer;
+    this.map.addLayer(this.currentLayer);
   }
 
   layerChange(newLayer: MapViewInterface['baselayer']) {
