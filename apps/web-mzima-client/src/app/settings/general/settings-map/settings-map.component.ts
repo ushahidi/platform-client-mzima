@@ -14,8 +14,6 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
-import { pointIcon } from '../../../core/helpers/map';
-// import { Bounds } from 'ol/extent';
 
 @UntilDestroy()
 @Component({
@@ -60,6 +58,9 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.mapConfig = this.sessionService.getMapConfigurations();
+    this.currentPrecision = this.getPrecision();
+    this.locationPrecisionEnabled =
+      !!this.sessionService.getFeatureConfigurations()['anonymise-reporters']?.enabled;
   }
 
   ngAfterViewInit(): void {
@@ -87,8 +88,9 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
     }
     this.view.on('change:resolution', () => {
       this.mapConfig.default_view!.zoom = Number(this.view.getZoom());
+      this.changeDetector.detectChanges();
     });
-  
+
     this.addMarker();
     this.map.on('click', (evt: any) => {
       const [lng, lat] = toLonLat(evt.coordinate);
@@ -140,13 +142,11 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
   private updateMapPreview() {
     // Center the map at our current default.
     // Set the zoom level to our default zoom.
-    // this.map.setView(
-    //   [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
-    //   this.mapConfig.default_view!.zoom,
-    // );
+    this.view.setCenter(
+      fromLonLat([this.mapConfig.default_view!.lon, this.mapConfig.default_view!.lat]),
+    );
 
-    // Update our draggable marker to the default.
-    // this.mapMarker.setLatLng([this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon]);
+    this.view.setZoom(this.mapConfig.default_view!.zoom);
     this.changeDetector.detectChanges();
   }
 
@@ -187,9 +187,9 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
   }
 
   public onZoomChange(): void {
-    // if (this.map) {
-    //   this.map.setZoom(this.mapConfig.default_view!.zoom);
-    // }
+    if (this.view) {
+      this.view.setZoom(this.mapConfig.default_view!.zoom);
+    }
   }
 
   public updatePrecision() {
