@@ -27,10 +27,9 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
   leafletOptions: any;
 
   mapConfig: MapConfigInterface;
-  mapReady = false;
-  markerLayer: any;
+  markerLayer: VectorLayer;
   currentLayer: TileLayer<XYZ>;
-  map: any;
+  map: Map;
   view: View;
   maxZoom = 22; // affects the arrow on number input field for "Default zoom level"
   minZoom = 1; // affects the arrow on number input field for "Default zoom level"
@@ -86,16 +85,17 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
         target: 'ol-map',
       });
     }
+    this.map.on('click', (evt: any) => {
+      const [lng, lat] = toLonLat(evt.coordinate);
+      this.setCoordinates(lat, lng);
+    });
+
     this.view.on('change:resolution', () => {
       this.mapConfig.default_view!.zoom = Number(this.view.getZoom());
       this.changeDetector.detectChanges();
     });
 
     this.addMarker();
-    this.map.on('click', (evt: any) => {
-      const [lng, lat] = toLonLat(evt.coordinate);
-      this.setCoordinates(lat, lng);
-    });
   }
 
   addMarker() {
@@ -138,7 +138,6 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
     this.addTileLayerToMap(newLayer);
   }
 
-
   private updateMapPreview() {
     // Center the map at our current default.
     // Set the zoom level to our default zoom.
@@ -148,12 +147,6 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
 
     this.view.setZoom(this.mapConfig.default_view!.zoom);
     this.changeDetector.detectChanges();
-  }
-
-
-  private handleDragEnd(e: any) {
-    const coordinates = e.target.getLatLng().wrap();
-    this.setCoordinates(coordinates.lat, coordinates.lng);
   }
 
   public searchLocation(query: string) {
