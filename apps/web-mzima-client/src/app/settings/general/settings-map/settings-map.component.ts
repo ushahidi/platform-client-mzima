@@ -14,8 +14,6 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
-import { pointIcon } from '../../../core/helpers/map';
-// import { Bounds } from 'ol/extent';
 
 @UntilDestroy()
 @Component({
@@ -29,9 +27,9 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
   leafletOptions: any;
 
   mapConfig: MapConfigInterface;
-  mapReady = false;
-  markerLayer: any;
-  map: any;
+  markerLayer: VectorLayer;
+  currentLayer: TileLayer<XYZ>;
+  map: Map;
   view: View;
   maxZoom = 22; // affects the arrow on number input field for "Default zoom level"
   minZoom = 1; // affects the arrow on number input field for "Default zoom level"
@@ -59,6 +57,9 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.mapConfig = this.sessionService.getMapConfigurations();
+    this.currentPrecision = this.getPrecision();
+    this.locationPrecisionEnabled =
+      !!this.sessionService.getFeatureConfigurations()['anonymise-reporters']?.enabled;
   }
 
   ngAfterViewInit(): void {
@@ -84,11 +85,17 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
         target: 'ol-map',
       });
     }
-    this.addMarker();
     this.map.on('click', (evt: any) => {
       const [lng, lat] = toLonLat(evt.coordinate);
       this.setCoordinates(lat, lng);
     });
+
+    this.view.on('change:resolution', () => {
+      this.mapConfig.default_view!.zoom = Number(this.view.getZoom());
+      this.changeDetector.detectChanges();
+    });
+
+    this.addMarker();
   }
 
   addMarker() {
@@ -131,24 +138,15 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
     this.addTileLayerToMap(newLayer);
   }
 
-
   private updateMapPreview() {
     // Center the map at our current default.
     // Set the zoom level to our default zoom.
-    // this.map.setView(
-    //   [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
-    //   this.mapConfig.default_view!.zoom,
-    // );
+    this.view.setCenter(
+      fromLonLat([this.mapConfig.default_view!.lon, this.mapConfig.default_view!.lat]),
+    );
 
-    // Update our draggable marker to the default.
-    // this.mapMarker.setLatLng([this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon]);
+    this.view.setZoom(this.mapConfig.default_view!.zoom);
     this.changeDetector.detectChanges();
-  }
-
-
-  private handleDragEnd(e: any) {
-    const coordinates = e.target.getLatLng().wrap();
-    this.setCoordinates(coordinates.lat, coordinates.lng);
   }
 
   public searchLocation(query: string) {
@@ -182,9 +180,9 @@ export class SettingsMapComponent implements OnInit, AfterViewInit {
   }
 
   public onZoomChange(): void {
-    // if (this.map) {
-    //   this.map.setZoom(this.mapConfig.default_view!.zoom);
-    // }
+    if (this.view) {
+      this.view.setZoom(this.mapConfig.default_view!.zoom);
+    }
   }
 
   public updatePrecision() {
