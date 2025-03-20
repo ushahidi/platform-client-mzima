@@ -1420,7 +1420,8 @@
       "add_source": "Add source",
       "providers": {
         "supported": "Supported",
-        "unsupported": "Unsupported Data Sources"
+        "unsupported": "Unsupported Data Sources",
+        "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
       },
       "edit": "Edit {{provider}} Data Source",
       "add_data_source": "Add Data Source",
