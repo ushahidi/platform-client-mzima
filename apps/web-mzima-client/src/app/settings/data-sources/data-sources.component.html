@@ -10,6 +10,17 @@
   </mzima-client-button>
 </div>
 <ng-container *ngIf="providersData?.length; else showLoader">
+  <ng-container *ngIf="!providers.supported.length">
+    <div class="info-container data-source-heading">
+      <div>
+        <mat-icon icon svgIcon="info-circle" class="info-icon info-icon-warning"></mat-icon>
+      </div>
+      <p class="info-text">
+        {{ 'settings.data_sources.providers.info_add_new_datasource' | translate }}
+      </p>
+    </div>
+  </ng-container>
+
   <h3 *ngIf="providers.supported.length" class="data-source-heading">
     {{ 'settings.data_sources.providers.supported' | translate }}
   </h3>
