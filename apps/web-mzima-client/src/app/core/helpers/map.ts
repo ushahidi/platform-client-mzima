@@ -101,3 +101,79 @@ export const getMapLayers = () => {
     },
   };
 };
+
+interface WaterLayerParams {
+  LAYERS: string;
+  FORMAT: string;
+  TRANSPARENT: boolean;
+  TIME: string;
+  CRS: string;
+  exceptions: string;
+  styles: string;
+}
+
+interface WaterLayer {
+  name: string;
+  attribution: string;
+  url: string;
+  params: WaterLayerParams;
+}
+
+export const getWaterLayer = (): WaterLayer[] => {
+  const createWaterLayer = (name: string, time: string): WaterLayer => ({
+    name,
+    url: 'https://ows.digitalearth.africa/wms?version=1.3.0',
+    attribution:
+      '<br><br><strong>Water Observations from Space (WOfS)</strong> is a service that uses satellite images to provide historical surface water observations across the African continent. WOfS enables users to understand the location and movement of inland and coastal water over time. It shows where water is usually present; where it is seldom observed; and where inundation of the surface has been observed by satellite. The product used is accessible through <a href="https://ows.digitalearth.africa/" target="_blank">OGC Web Service</a>. For more information, see the <a href="https://docs.digitalearthafrica.org/en/latest/data_specs/Landsat_WOfS_specs.html" target="_blank">Digital Earth Africa User Guide.</a>',
+    params: {
+      LAYERS: 'wofs_ls_summary_annual',
+      FORMAT: 'image/png',
+      TRANSPARENT: true,
+      TIME: time,
+      CRS: 'EPSG:3857',
+      exceptions: 'XML',
+      styles: 'wofs_summary_annual_frequency',
+    },
+  });
+
+  return [
+    createWaterLayer('Water Observations from space 2023', '2023-01-01'),
+    createWaterLayer('Water Observations from space 2013', '2013-01-01'),
+  ];
+};
+
+interface RainfallLayer {
+  name: string;
+  attribution: string;
+  url: string;
+  params: {
+    LAYERS: string;
+    FORMAT: string;
+    TRANSPARENT: boolean;
+    TIME: string;
+    CRS: string;
+    exceptions: string;
+    styles: string;
+  };
+}
+
+export const getRainfallLayer = (): RainfallLayer[] => {
+  const createRainfallLayer = (name: string, time: string): RainfallLayer => ({
+    name,
+    url: 'https://ows.digitalearth.africa/wms?version=1.3.0',
+    attribution:
+      '<br><br><strong>CHIRPS</strong> is a <strong>USGS and Climate Hazards Centre</strong> initiative with funding from <strong>USAID, NASA, and NOAA</strong>. Find out more on the <a href="https://www.chc.ucsb.edu/data/chirps." target="_blank">CHIRPS website</a>',
+    params: {
+      LAYERS: 'rainfall_chirps_monthly',
+      FORMAT: 'image/png',
+      TRANSPARENT: true,
+      TIME: time,
+      CRS: 'EPSG:3857',
+      exceptions: 'XML',
+      styles: 'rainfall_monthly',
+    },
+  });
+
+  const years = [1981, 1986, 1991, 1996, 2001, 2006, 2011, 2016, 2021, 2024, 2025];
+  return years.map((year) => createRainfallLayer(`Rainfall January ${year}`, `${year}-01-01`));
+};
