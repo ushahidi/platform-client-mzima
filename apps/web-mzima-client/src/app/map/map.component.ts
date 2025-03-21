@@ -12,6 +12,7 @@ import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import Overlay from 'ol/Overlay';
 import { mapHelper, searchFormHelper } from '@helpers';
+import TileWMS from 'ol/source/TileWMS';
 import XYZ from 'ol/source/XYZ';
 import LayerSwitcher from 'ol-layerswitcher';
 import { BaseLayerOptions, GroupLayerOptions } from 'ol-layerswitcher';
@@ -44,6 +45,11 @@ export class MapComponent extends MainViewComponent implements OnInit {
   surveyLayer!: VectorLayer;
   post: any;
   isPostLoading: boolean;
+  waterBodies: TileLayer[];
+  layers: LayerGroup[] = [];
+  waterLayers: LayerGroup;
+  rainfallLayer: LayerGroup;
+  rainfall: TileLayer[];
 
   constructor(
     protected override router: Router,
@@ -73,6 +79,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   ngOnInit(): void {
     this.mapConfig = this.sessionService.getMapConfigurations();
     this.initBaseLayers();
+    this.initWMSLayers();
     this.initMap();
     this.loadData();
   }
@@ -91,6 +98,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
           source: new XYZ({
             url: layer.url,
             maxZoom: 'maxZoom' in layer.layerOptions ? layer.layerOptions.maxZoom : undefined,
+            attributions: layer.layerOptions.attribution,
           }),
         } as BaseLayerOptions),
     );
@@ -99,6 +107,34 @@ export class MapComponent extends MainViewComponent implements OnInit {
       title: 'Base Maps',
       layers: selectableLayers,
     } as GroupLayerOptions);
+    this.layers.push(this.baseMaps);
+  }
+
+  initWMSLayers() {
+    const createWMSLayerGroup = (title: string, wmsLayers: any[]) => {
+      const layers = wmsLayers.map((wms: any) => {
+        const newLayer = new TileLayer({
+          source: new TileWMS({
+            url: wms.url,
+            params: wms.params,
+            attributions: wms.attribution,
+          }),
+        });
+        newLayer.setProperties({ title: wms.name });
+        return newLayer;
+      });
+
+      return new LayerGroup({
+        title,
+        layers,
+        combine: false,
+      } as GroupLayerOptions);
+    };
+
+    this.waterLayers = createWMSLayerGroup('Water bodies', mapHelper.getWaterLayer());
+    this.rainfallLayer = createWMSLayerGroup('Rainfall', mapHelper.getRainfallLayer());
+
+    this.layers.push(this.waterLayers, this.rainfallLayer);
   }
 
   initMap() {
@@ -110,15 +146,14 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
     this.map = new Map({
       view: view,
-      layers: [this.baseMaps],
+      layers: this.layers,
       target: 'ol-map',
     });
 
     const layerSwitcher = new LayerSwitcher({
       reverse: true,
       groupSelectStyle: 'children',
-      startActive: true,
-      activationMode: 'click',
+      startActive: false,
       label: '',
       collapseLabel: '',
     });
