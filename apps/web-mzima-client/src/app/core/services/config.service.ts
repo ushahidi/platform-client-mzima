@@ -4,6 +4,7 @@ import { SessionConfigInterface } from '@models';
 import { lastValueFrom, map, Observable, tap } from 'rxjs';
 import { SessionService } from './session.service';
 import { EnvService } from './env.service';
+import _ from 'lodash';
 
 @Injectable({
   providedIn: 'root',
@@ -98,9 +99,56 @@ export class ConfigService {
                 dataSource.name = 'FrontlineSMS (shutdown & leaving soon)';
               if (dataSource.name === 'SMSSync') dataSource.name = 'SMSSync (No longer maintained)';
               //-------------------------------------------------
+              // Simulating adding configured prop from backend
+              //-------------------------------------------------
+              const isConfigured = () => {
+                const providerList = data.results.find(
+                  (result: any) => dataSource.id === result['provider-name'],
+                );
+                const isDefaultParamsOrNot = ({ provider }: { provider: any }) => {
+                  const isAnArray = Array.isArray(provider.params);
+                  const isParamsArrayAndEmpty = isAnArray && !provider.params.length;
+
+                  let configured = !isParamsArrayAndEmpty;
+
+                  if (provider['provider-name'] === 'email') {
+                    const unconfiguredValues = {
+                      incoming_last_uid: '0',
+                      incoming_password: '',
+                      incoming_port: '',
+                      incoming_security: '',
+                      incoming_server: '',
+                      incoming_type: '',
+                      incoming_unread_only: 'Unread',
+                      incoming_username: '',
+                    };
+
+                    configured = !_.isEqual(unconfiguredValues, provider.params);
+                  }
+
+                  if (provider['provider-name'] === 'smssync') {
+                    const unconfiguredValues = {
+                      id: 'smssync',
+                      intro_step1: null,
+                      intro_step2: null,
+                      secret: 'SECRET',
+                    };
+                    configured = isParamsArrayAndEmpty
+                      ? isParamsArrayAndEmpty
+                      : !_.isEqual(unconfiguredValues, provider.params);
+                  }
+
+                  return configured;
+                };
+
+                const configured = isDefaultParamsOrNot({ provider: providerList });
+                return configured;
+              };
+              //-------------------------------------------------
               return {
                 ...dataSource,
                 supported: !!supportedDataSources(dataSource),
+                configured: isConfigured(),
                 enabled: data.results.find(
                   (result: any) => dataSource.id === result['provider-name'],
                 ).enabled,

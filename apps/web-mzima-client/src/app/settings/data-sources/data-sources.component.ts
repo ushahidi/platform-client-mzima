@@ -36,19 +36,24 @@ export class DataSourcesComponent implements OnInit {
       .pipe(switchMap((dataSources) => this.configService.getProvidersData(dataSources)))
       .subscribe({
         next: (providers) => {
+          //--------------------------------------------------------
+          // Only show supported or unsupported providers, that are
+          // enabled (to accept incoming data), and also configured.
+          //--------------------------------------------------------
           this.providersData = arrayHelpers.sortArray(
-            providers.filter((provider: any) => provider.enabled),
+            providers.filter((provider: any) => provider.enabled && provider.configured),
             'name',
           );
-          this.isAllProvidersAdded = !!this.providersData.find(
-            (provider: any) => !provider.enabled,
-          );
-          //-----------------------------------------------
           this.providers = {
             supported: this.providersData.filter((provider: any) => provider.supported),
             unsupported: this.providersData.filter((provider: any) => !provider.supported),
           };
-          //-----------------------------------------------
+          //--------------------------------------------------------
+          // Logic for showing or hiding the add source button
+          //--------------------------------------------------------
+          this.isAllProvidersAdded = !!this.providersData.find(
+            (provider: any) => !(provider.enabled && provider.configured),
+          );
         },
       });
   }
