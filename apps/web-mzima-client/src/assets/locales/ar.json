@@ -1418,6 +1418,11 @@
       "provider_name": "{{providerName}} مصدر البيانات؟",
       "do_you_really_want_to_disconnect": "هل تريد حقا فصل مزود الخدمة الخاص بك؟",
       "add_source": "إضافة مصدر",
+      "providers": {
+        "supported": "Supported",
+        "unsupported": "Unsupported Data Sources",
+        "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
+      },
       "edit": "Edit {{provider}} Data Source",
       "add_data_source": "Add Data Source",
       "associate_with_form": "تصدير إلى استبيان",
