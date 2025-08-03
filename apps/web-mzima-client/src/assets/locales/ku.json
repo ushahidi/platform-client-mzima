@@ -441,8 +441,8 @@
     "checkbox_desc": "ڕێگە بە بەکارهێنەر دەدات یەکێک یان زیاتر لە کۆمەڵە هەڵبژاردنەکانی پێشوەخت پێناسەکراو هەڵبژێرێت.",
     "relation_desc": "دروستکردنی پەیوەندییەک لە نێوان ڕاپرسی جیاوازەکان",
     "upload_desc": "وێنەیەک یان (زیاتر) باربکە.",
-    "audio_desc": "Upload one or more audio file(s)",
-    "document_desc": "Upload one or more document file(s)",
+    "audio_desc": "دەنگێک یان (زیاتر) باربکە.",
+    "document_desc": "فایلێک یان (زیاتر) باربکە.",
     "video_desc": "ڕێگە دەدات ڤیدیۆکانی یوتیوب یان ڤیمیۆ لە پۆستەکەدا بنچینە بکرێن",
     "maximum_upload_size" : "زۆرترین قەبارەی بارکردن",
     "small_upload_size" : "بچووک",
@@ -1419,7 +1419,7 @@
       "do_you_really_want_to_disconnect": "ئایا بەڕاستی دەتەوێت پەیوەندی دابینکارەکەت بپچڕێنی؟",
       "add_source": "زیادکردنی سەرچاوە",
       "providers": {
-        "supported": "Supported",
+        "supported": "پالپشتکراوە",
         "unsupported": "Unsupported Data Sources",
         "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
       },
