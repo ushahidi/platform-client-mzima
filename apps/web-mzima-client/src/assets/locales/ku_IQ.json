@@ -1420,8 +1420,8 @@
       "add_source": "زیادکردنی سەرچاوە",
       "providers": {
         "supported": "پالپشتکراوە",
-        "unsupported": "Unsupported Data Sources",
-        "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
+        "unsupported": "پاڵپشتی ئەم داتایە ناکراوە",
+        "info_add_new_datasource": "کلیک بکە لەسەر \" زیاد کردنی سەرچاو\" بۆ دەستکاریکردنی سەرچآوەداتا لەیەکێک لە سەرچاوە پاڵپشتکراوەکان"
       },
       "edit": "بژارکردنی سەرچاوەی داتای {{provider}}",
       "add_data_source": "زیادکردنی سەرچاوەی داتا",
