@@ -442,7 +442,7 @@
     "relation_desc": "دروستکردنی پەیوەندییەک لە نێوان لێکۆڵینەوە جیاوازەکان",
     "upload_desc": "وێنەیەک یان زیاتر باربکە.",
     "audio_desc": "دەنگێک یان (زیاتر) باربکە.",
-    "document_desc": "Upload one or more document file(s)",
+    "document_desc": "فایلێک یان (زیاتر) باربکە.",
     "video_desc": "ڕێگە دەدات ڤیدیۆکانی یوتیوب یان ڤیمیۆ لە پۆستەکەدا بنچینە بکرێن",
     "maximum_upload_size" : "زۆرترین قەبارەی بارکردن",
     "small_upload_size" : "بچووک",
