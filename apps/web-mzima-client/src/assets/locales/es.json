@@ -587,7 +587,7 @@
       "mobile": "Móvil",
       "email": "Dirección de correo-e",
       "sms": "SMS",
-      "twitter": "Twitter",
+      "twitter": "X",
       "ussd": "USSD",
       "whatsapp": "WhatsApp"
     },
@@ -1053,7 +1053,7 @@
       "associated_messages": "Ver mensajes asociados a esta publicación",
       "show_only_incoming": "Mostrar solo {{provider}} que aún no tiene asignada ninguna encuesta",
       "imported_by": "{{messages}} importados por este desarrollo",
-      "Twitter": "Twitter",
+      "Twitter": "X",
       "Email": "e-mail",
       "SMS": "SMS",
       "previous_page": "<< Previous page",
