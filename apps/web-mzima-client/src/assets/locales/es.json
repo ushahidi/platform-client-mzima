@@ -1366,8 +1366,8 @@
       "placeholder": {
         "pick_location": "Elegir ubicación..."
       },
-      "satellite": "Satellite",
-      "streets": "Streets",
+      "satellite": "Satélite",
+      "streets": "Calles",
       "humanitarian": "Humanitarian"
       
     },
