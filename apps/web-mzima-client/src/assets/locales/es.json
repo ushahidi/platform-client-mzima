@@ -2069,7 +2069,7 @@
       "destroy_confirm": "¿Está seguro de querer borrar esta encuesta?",
       "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
       "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
-      "discard_changes": "Discard changes",
+      "discard_changes": "Desechar cambios",
       "save_changes": "Save Changes",
       "back_to_editing": "Back to editing",
       "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
