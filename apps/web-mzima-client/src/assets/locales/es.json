@@ -483,7 +483,7 @@
     "choose_survey_field": "Elija lo que debería asignarse a cada campo de encuesta",
     "choose_survey_field_desc": "Cada uno de los campos de la encuesta se enumeran a continuación. Elija los datos de la  {{datasource_type}} que desea utilizar para rellenar cada uno de esos campos.",
     "who_can_contribute_to_task": "Quién puede contribuir en los campos de esta función",
-    "view_detail": "Detail",
+    "view_detail": "Detalle",
     "no_options_for_this_field": "No hay opciones para este campo",
     "add_options_first": "Agregar opciones primero",
     "delete": {
