@@ -1177,7 +1177,7 @@
   "webhook": {
     "add_webhook": "Añadir Webhook",
     "edit_webhook": "Editar rol",
-    "create_webhook": "Create webhook",
+    "create_webhook": "Crear webhook",
     "update_webhook": "Update webhook",
     "uuid": "WebHook UUID",
     "name": "Nombre",
