@@ -300,8 +300,8 @@
     "status": "Estado",
     "statuses": "Estados",
     "all_time": "Todo el tiempo",
-    "last_week": "Last week",
-    "last_month": "Last month",
+    "last_week": "Última semana",
+    "last_month": "Último mes",
     "last_year": "Last year"
   },
   "form": {
