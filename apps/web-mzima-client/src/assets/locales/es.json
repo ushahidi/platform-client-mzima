@@ -710,7 +710,7 @@
     "saved_filters": "Filtros guardados",
     "saved_filter": "Filtro guardado",
     "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
-    "save_new_filter": "Save new filter",
+    "save_new_filter": "Guardar nuevo filtro",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "¿Está seguro de que desea eliminar este filtro guardado?"
   },
