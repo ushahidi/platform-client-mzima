@@ -402,7 +402,7 @@
     "title": "Título",
     "field_allowed_relation_survey": "Encuestas permitidas",
     "collect_image_caption": "Incluir campo de leyenda de imagen",
-    "collect_media_caption": "Include caption field",
+    "collect_media_caption": "Incluir campo de leyenda",
     "disable_caption_field_explanation": "Esto deshabilitará y ocultará todos los apartados existentes para este campo, pero puede volver a habilitarlos en cualquier momento.",
     "description": "Descripción",
     "task_description": "Descripción de tareas",
