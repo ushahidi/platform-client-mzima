@@ -128,7 +128,7 @@
         "messages": {
           "max_size" : "Su fichero es demasiado grande.",
           "max_files" : "Ha excedido el número máximo de ficheros.",
-          "required" : "Media is required.",
+          "required" : "Fichero multimedia requerido.",
           "invalid_type" : "Unsupported file format."
         },
         "status" : {
