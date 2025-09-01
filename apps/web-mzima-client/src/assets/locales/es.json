@@ -442,7 +442,7 @@
     "relation_desc": "Crea una relación entre diferentes encuestas",
     "upload_desc": "Subir uno o más fichero(s) de imagen",
     "audio_desc": "Subir uno o más fichero(s) de audio",
-    "document_desc": "Upload one or more document file(s)",
+    "document_desc": "Subir uno o más documento(s)",
     "video_desc": "Permite incrustar vídeos de Youtube o Vimeo en la publicación",
     "maximum_upload_size" : "Maximum Upload Size",
     "small_upload_size" : "Small",
