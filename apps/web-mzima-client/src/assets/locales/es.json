@@ -750,7 +750,7 @@
   "modal": {
     "button": {
       "close": "Cerrar",
-      "done": "Done"
+      "done": "Hecho"
     },
     "donation": {
       "thank_you_for_your_donation_start": "La monetización web está habilitada en este sitio web. Gracias por su donación. Has donado",
@@ -2033,7 +2033,7 @@
       "add_to_collection": "La publicación ha sido añadida a {{collection}}",
       "removed_from_collection": "La publicación ha sido eliminada de {{collection}}",
       "bulk_add_to_collection": "{{count}} reportes han sido a&ntilde;adidos a {{collection}}",
-      "done": "Done"
+      "done": "Hecho"
     },
     "savedsearch": {
       "delete_savedsearch_success": "Búsqueda guardada borrada con éxito.",
