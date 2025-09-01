@@ -933,7 +933,7 @@
     "complete_draft": "Completado (Borrador)",
     "complete_published": "Completado (Publicado)",
     "structure": "Estructura",
-    "source": "via {{source}}",
+    "source": "vía {{source}}",
     "visible_to_public": "Esta publicación es visible para el público",
     "visible_to_you": "Esta publicación es visible sólo para usted y admins",
     "visible_to_roles": "Esta publicación es visible para {{roles}}",
