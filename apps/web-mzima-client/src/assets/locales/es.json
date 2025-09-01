@@ -331,7 +331,7 @@
     "edit_post_type": "Editar encuestas: {{form}}",
     "edit_post_types": "Editar encuestas",
     "field_add_option": "Añadir",
-    "field_add_other": "Add other",
+    "field_add_other": "Añadir otro",
     "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
     "field_default": "Campo por defecto",
     "field_key": "Clave del campo",
