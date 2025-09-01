@@ -1012,7 +1012,7 @@
         }
       },
       "input_empty_warn": "La entrada no puede estar vacía",
-      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "max_size": "Tamaño Máx.: {{size}} MB Formato: {{format}}",
       "format": {
         "image": "jpeg or png only",
         "audio": "mp3, aac or ogg only",
