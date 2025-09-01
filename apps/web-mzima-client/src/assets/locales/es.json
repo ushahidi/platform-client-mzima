@@ -1108,7 +1108,7 @@
       "replace_image": "Reemplazar imagen",
       "error_in_upload": "Su imagen es demasiado grande (el tamaño máximo es de 1 MB) o tiene el formato incorrecto (los formatos permitidos son gif, png, jpg y jpeg), por favor compruebe e inténtelo de nuevo!",
       "messages": {
-        "max_size" : "Your file is too large.",
+        "max_size" : "Su fichero es demasiado grande.",
         "max_files" : "You have exceeded the maximum number of files.",
         "required" : "Media is required.",
         "invalid_type" : "Unsupported file type."
