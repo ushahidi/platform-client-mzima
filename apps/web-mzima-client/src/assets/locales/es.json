@@ -375,7 +375,7 @@
     "select_color": "Seleccionar Color",
     "choose_survey": "Elegir encuesta",
     "marked_for_internal": {
-      "header": "Internal Use Only",
+      "header": "Solo Uso Interno",
       "body": "This task is marked for internal use only. It is not seen by users when they create a post."
     },
     "task_is_marked_as": {
