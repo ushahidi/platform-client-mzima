@@ -2186,7 +2186,7 @@
     "survey_select_default": "Seleccione idioma predeterminado para esta encuesta",
     "category_select_default": "Selecciona un idioma predeterminado para esta categoría",
     "error_translation_exists": "No puedes seleccionar este idioma pues ya tiene una traducción para él.",
-    "edit_placeholder": "Write your translation here",
+    "edit_placeholder": "Escriba su traducción aquí",
     "add_translation": "Add your translation below:",
     "survey_name_required": "Translation for survey-name is required",
     "field_add_translation": "Fields (click to add translation):",
