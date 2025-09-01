@@ -1011,7 +1011,7 @@
           "add_link": "Añadir enlace"
         }
       },
-      "input_empty_warn": "Input cannot be empty",
+      "input_empty_warn": "La entrada no puede estar vacía",
       "max_size": "Max size: {{size}} MB  Format: {{format}}",
       "format": {
         "image": "jpeg or png only",
