@@ -82,7 +82,7 @@
       "emtpy_field_error": "Este campo no puede estar vacío",
       "info" : {
         "auth_not_online" : "¡Lo sentimos! No está conectado... por favor compruebe su conexión a Internet",
-        "post_submitted_online" : "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
+        "post_submitted_online" : "Gracias por enviar su mensaje. Está siendo revisado y pronto aparecerá en la plataforma.",
         "post_submitted_offline" : "Thank you for your post. A message will be sent when the connection is restored.",
         "posts_not_uploaded" : "<b>¡{{num_posts}} Publicaciones no Subidas!</b><br/>No se subieron las publicaciones debido a una mala conexión a Internet o porque Ud. estaba desconectado. Se subirán automáticamente tan pronto se conecte a Internet",
         "posts_uploading" : "<b>Subiendo {{num_posts}} Publicaciones</b><br/>Ahora mismo estamos subiendo sus publicaciones",
