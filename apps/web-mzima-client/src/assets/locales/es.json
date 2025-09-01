@@ -781,7 +781,7 @@
     "data_source": "Fuente de Datos",
     "data_import": "Importar datos",
     "data_export": "Exportar datos",
-    "deployment_not_found": "Deployment Not Found",
+    "deployment_not_found": "Despliegue No Encontrado",
     "deselect": "Deseleccionar",
     "edit_profile": "Editar perfil",
     "edit_post_type": "Editar encuesta",
