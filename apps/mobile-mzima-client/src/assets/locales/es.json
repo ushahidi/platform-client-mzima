@@ -132,7 +132,7 @@
           "invalid_type" : "Unsupported file format."
         },
         "status" : {
-          "uploading" : "Uploading...",
+          "uploading" : "Subiendo...",
           "upload_complete" : "Upload Complete!",
           "upload_failed" : "Upload failed!"
         }
