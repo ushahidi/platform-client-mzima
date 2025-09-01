@@ -1110,7 +1110,7 @@
       "messages": {
         "max_size" : "Su fichero es demasiado grande.",
         "max_files" : "You have exceeded the maximum number of files.",
-        "required" : "Media is required.",
+        "required" : "Se necesita medio.",
         "invalid_type" : "Unsupported file type."
       },
       "status" : {
