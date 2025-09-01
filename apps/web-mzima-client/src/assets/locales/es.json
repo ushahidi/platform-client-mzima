@@ -1869,7 +1869,7 @@
       "destroy_success": "Cuenta eliminada satisfactoriamente"
     },
     "default": {
-      "data_has_not_been_saved": "The data has not been saved!",
+      "data_has_not_been_saved": "¡No se han guardado los datos!",
       "discard_changes": "Discard changes?",
       "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "Esta acción no puede deshacerse. Por favor, proceda con cautela.",
