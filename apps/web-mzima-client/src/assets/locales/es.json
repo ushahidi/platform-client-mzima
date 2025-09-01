@@ -584,7 +584,7 @@
   "global_filter": {
     "sources": {
       "web": "Web",
-      "mobile": "Mobile",
+      "mobile": "Móvil",
       "email": "Dirección de correo-e",
       "sms": "SMS",
       "twitter": "Twitter",
