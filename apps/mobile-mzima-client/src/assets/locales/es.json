@@ -124,7 +124,7 @@
         "add_image": "Añadir imagen",
         "add_audio": "Añadir audio",
         "add_document": "Añadir documento",
-        "retry": "Retry",
+        "retry": "Reintentar",
         "messages": {
           "max_size" : "Your file is too large.",
           "max_files" : "You have exceeded the maximum number of files.",
