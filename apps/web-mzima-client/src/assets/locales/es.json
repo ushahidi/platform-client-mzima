@@ -1014,7 +1014,7 @@
       "input_empty_warn": "La entrada no puede estar vacía",
       "max_size": "Tamaño Máx.: {{size}} MB Formato: {{format}}",
       "format": {
-        "image": "jpeg or png only",
+        "image": "solo jpeg o png",
         "audio": "mp3, aac or ogg only",
         "document": "PDF or Word only"
       },
