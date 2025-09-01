@@ -1178,7 +1178,7 @@
     "add_webhook": "Añadir Webhook",
     "edit_webhook": "Editar rol",
     "create_webhook": "Crear webhook",
-    "update_webhook": "Update webhook",
+    "update_webhook": "Actualizar webhook",
     "uuid": "WebHook UUID",
     "name": "Nombre",
     "shared_secret": "Secreto compartido",
