@@ -1118,7 +1118,7 @@
         "upload_complete" : "¡Subida Completa!",
         "upload_failed" : "¡Subida fallida!"
       },
-      "special_char": "This field contains special characters"
+      "special_char": "Este campo contiene caracteres especiales"
     },
     "video": {
       "enter_a_url": "Ingrese la URL de un video de Youtube o Vimeo"
