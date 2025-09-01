@@ -1749,7 +1749,7 @@
     "role_display": "Rol: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "Añadir usuario",
-    "create_user": "Create user",
+    "create_user": "Crear usuario",
     "update_user": "Update user",
     "edit_user": "Editar usuario",
     "update_password": "Actualizar contraseña",
