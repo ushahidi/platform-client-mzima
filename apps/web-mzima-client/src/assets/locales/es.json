@@ -727,7 +727,7 @@
     "cumulative": "Mostrar el total acumulativo",
     "cumulative_post_count": "Total de publicaciones",
     "custom": "Rango de fechas personalizado",
-    "custom_display": "{{start || 'Beginning'}} to {{end || 'Now'}}",
+    "custom_display": "{{start || 'Beginning'}} a {{end || 'Now'}}",
     "group_by_placeholder": "Gráfico",
     "new_post_count": "Nuevas publicaciones",
     "none": "No",
@@ -743,7 +743,7 @@
     "button": {
       "dismiss": "Desechar",
       "upgrade": "Actualizar ahora",
-      "default": "Ok",
+      "default": "OK",
       "cancel": "Cancelar"
     }
   },
@@ -1913,7 +1913,7 @@
       "save_success": "Ajustes de mapa guardados"
     },
     "generic": {
-      "okay": "Ok",
+      "okay": "OK",
       "alerts": "Alertas",
       "confirm": "Confirmaci&oacute;n",
       "save": "Guardar"
