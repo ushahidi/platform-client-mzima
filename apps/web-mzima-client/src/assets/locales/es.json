@@ -1115,7 +1115,7 @@
       },
       "status" : {
         "uploading" : "Subiendo...",
-        "upload_complete" : "Upload Complete!",
+        "upload_complete" : "¡Subida Completa!",
         "upload_failed" : "Upload failed!"
       },
       "special_char": "This field contains special characters"
