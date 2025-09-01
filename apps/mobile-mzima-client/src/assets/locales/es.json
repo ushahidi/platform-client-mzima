@@ -129,7 +129,7 @@
           "max_size" : "Su fichero es demasiado grande.",
           "max_files" : "Ha excedido el número máximo de ficheros.",
           "required" : "Fichero multimedia requerido.",
-          "invalid_type" : "Unsupported file format."
+          "invalid_type" : "Formato de fichero no soportado."
         },
         "status" : {
           "uploading" : "Subiendo...",
