@@ -2190,7 +2190,7 @@
     "add_translation": "Añada debajo su traducción:",
     "survey_name_required": "Translation for survey-name is required",
     "field_add_translation": "Fields (click to add translation):",
-    "add_translation_lang": "Add translation",
+    "add_translation_lang": "Añadir traducción",
     "translate_field_name": "Translate field name",
     "translate_field_desc": "Translate field description",
     "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
