@@ -127,7 +127,7 @@
         "retry": "Reintentar",
         "messages": {
           "max_size" : "Su fichero es demasiado grande.",
-          "max_files" : "You have exceeded the maximum number of files.",
+          "max_files" : "Ha excedido el número máximo de ficheros.",
           "required" : "Media is required.",
           "invalid_type" : "Unsupported file format."
         },
