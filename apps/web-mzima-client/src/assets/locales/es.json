@@ -1750,7 +1750,7 @@
     "contact": "{{type}}: {{contact}}",
     "add_user": "Añadir usuario",
     "create_user": "Crear usuario",
-    "update_user": "Update user",
+    "update_user": "Actualizar usuario",
     "edit_user": "Editar usuario",
     "update_password": "Actualizar contraseña",
     "change_role": "Cambiar Rol",
