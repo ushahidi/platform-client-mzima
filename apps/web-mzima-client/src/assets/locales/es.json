@@ -1016,7 +1016,7 @@
       "format": {
         "image": "solo jpeg o png",
         "audio": "solo mp3, aac u ogg",
-        "document": "PDF or Word only"
+        "document": "solo PDF o Word"
       },
       "invalid_video_embed": "Invalid video embed url",
       "errors": {
