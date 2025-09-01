@@ -2174,7 +2174,7 @@
   },
   "translations": {
     "available_languages": "Available translations (select to see post):",
-    "translate_post": "Translate post",
+    "translate_post": "Traducir publicación",
     "translate_post_to": "Translate post to {{language}}",
     "languages": "Idiomas",
     "language": "Idioma",
