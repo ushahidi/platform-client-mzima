@@ -122,8 +122,8 @@
       },
       "media": {
         "add_image": "Añadir imagen",
-        "add_audio": "Add audio",
-        "add_document": "Add document",
+        "add_audio": "Añadir audio",
+        "add_document": "Añadir documento",
         "retry": "Retry",
         "messages": {
           "max_size" : "Your file is too large.",
