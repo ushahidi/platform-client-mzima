@@ -1840,7 +1840,7 @@
       "account_settings": "Configuraciones de la cuenta",
       "notifications_settings": "Configuracion de notificaciones",
       "delete_contact": {
-        "title": "Delete your",
+        "title": "Borrar su",
         "title_subject": {
           "email": "Email",
           "phone": "Tel&eacute;fono"
