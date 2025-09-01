@@ -134,7 +134,7 @@
         "status" : {
           "uploading" : "Subiendo...",
           "upload_complete" : "¡Subida Completada!",
-          "upload_failed" : "Upload failed!"
+          "upload_failed" : "¡Subida fallida!"
         }
       }
       
