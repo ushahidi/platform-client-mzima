@@ -1156,7 +1156,7 @@
     "are_you_sure_you_want_to_delete_role": "¿Está seguro de que desea eliminar el rol {{roleName}}?",
     "add_role": "Añadir rol",
     "create_role": "Crear rol",
-    "update_role": "Update role",
+    "update_role": "Actualizar rol",
     "edit_role": "Editar rol",
     "name": "Nombre",
     "description": "Descripción",
