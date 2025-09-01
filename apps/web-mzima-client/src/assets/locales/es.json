@@ -1788,7 +1788,7 @@
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Las contraseñas no coinciden",
     "enter_new_password": "Introduzca su nueva contraseña",
-    "password_change_success": "Your password was successfully changed",
+    "password_change_success": "Se ha cambiado su contraseña con éxito",
     "password_change_success_info": "Now you can login with new credentials",
     "check_email": "Check your email",
     "name_will_be_a_display_name": "El nombre que introduzca será un nombre para mostrar.",
