@@ -588,7 +588,7 @@
       "email": "Dirección de correo-e",
       "sms": "SMS",
       "twitter": "X",
-      "ussd": "USSD",
+      "ussd": "$",
       "whatsapp": "WhatsApp"
     },
     "filter": "Filtro",
