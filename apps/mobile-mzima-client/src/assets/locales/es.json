@@ -83,7 +83,7 @@
       "info" : {
         "auth_not_online" : "¡Lo sentimos! No está conectado... por favor compruebe su conexión a Internet",
         "post_submitted_online" : "Gracias por enviar su mensaje. Está siendo revisado y pronto aparecerá en la plataforma.",
-        "post_submitted_offline" : "Thank you for your post. A message will be sent when the connection is restored.",
+        "post_submitted_offline" : "Gracias por su publicación. Se enviará un mensaje cuando se restablezca la conexión.",
         "posts_not_uploaded" : "<b>¡{{num_posts}} Publicaciones no Subidas!</b><br/>No se subieron las publicaciones debido a una mala conexión a Internet o porque Ud. estaba desconectado. Se subirán automáticamente tan pronto se conecte a Internet",
         "posts_uploading" : "<b>Subiendo {{num_posts}} Publicaciones</b><br/>Ahora mismo estamos subiendo sus publicaciones",
         "posts_uploaded" : "<b>¡{{num_posts}} Publicaciones Subidas Exitosamente!</b><br/>Sus publicaciones se subieron con éxito. Las puede ver en \"Mis Publicaciones\""
