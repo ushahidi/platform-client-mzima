@@ -1018,7 +1018,7 @@
         "audio": "solo mp3, aac u ogg",
         "document": "solo PDF o Word"
       },
-      "invalid_video_embed": "Invalid video embed url",
+      "invalid_video_embed": "url de embebido del vídeo No Válida",
       "errors": {
         "required" : "{{label}} field is a required field *",
         "too_short": "{{label}} field is too short, use at least 2 characters",
