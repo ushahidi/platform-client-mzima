@@ -321,7 +321,7 @@
     "default_date_placeholder": "Fecha por defecto",
     "default_date_hint": "If no date is added, the current time of posting would be added by default. The user can still update the {{ field_name }} after post submission.",
     "default_default_placeholder": "Valor por defecto",
-    "default_location_placeholder": "Nairobi, Kenya",
+    "default_location_placeholder": "Nairobi, Kenia",
     "delete_post_type": "Borrar esta encuesta",
     "deleted_form": "Encuesta borrada",
     "deleted_form_stage": "Tarea borrada",
