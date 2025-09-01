@@ -1734,7 +1734,7 @@
     "uploading_data": "Cargando datos...",
     "uploading_data_desc": "La carga de datos en su cuenta de Intercambio de Datos Humanitarios (HDX) está en curso...<br /><br />Puede navegar fuera de esta página mientras esta carga sucede, pero por favor no cierre el navegador.",
     "uploading_data_err": "Vaya.... Algo salió mal cuando subiste tus datos, por favor revisa los campos requeridos y tu clave API e inténtalo de nuevo.",
-    "data_export_err":"Failed to export",
+    "data_export_err":"La exportación falló",
     "no_fields_selected": "No ha seleccionado ningún campo ni asignado ninguna etiqueta o atributo hxl. Seleccione al menos un campo y asigne al menos una etiqueta para poder exportar a CSV o cargarla en una cuenta de Intercambio de datos humanitarios (HDX).",
     "validation": {
       "title": "Se necesita un título",
