@@ -142,7 +142,7 @@
 
     "notify": {
       "default": {
-        "are_you_sure_you_want_to_delete_this": "Are you sure you want to delete this?",
+        "are_you_sure_you_want_to_delete_this": "¿Está seguro de querer borrar esto?",
         "proceed_warning": "This action cannot be undone. Please proceed with caution."
       }
     }
