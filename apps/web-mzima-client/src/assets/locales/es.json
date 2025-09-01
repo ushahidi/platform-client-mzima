@@ -1111,7 +1111,7 @@
         "max_size" : "Su fichero es demasiado grande.",
         "max_files" : "You have exceeded the maximum number of files.",
         "required" : "Se necesita medio.",
-        "invalid_type" : "Unsupported file type."
+        "invalid_type" : "Tipo de fichero no soportado."
       },
       "status" : {
         "uploading" : "Uploading...",
