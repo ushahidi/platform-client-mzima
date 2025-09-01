@@ -441,7 +441,7 @@
     "checkbox_desc": "Permite al usuario elegir una o más opciones de una lista predefinida.",
     "relation_desc": "Crea una relación entre diferentes encuestas",
     "upload_desc": "Subir uno o más fichero(s) de imagen",
-    "audio_desc": "Upload one or more audio file(s)",
+    "audio_desc": "Subir uno o más fichero(s) de audio",
     "document_desc": "Upload one or more document file(s)",
     "video_desc": "Permite incrustar vídeos de Youtube o Vimeo en la publicación",
     "maximum_upload_size" : "Maximum Upload Size",
