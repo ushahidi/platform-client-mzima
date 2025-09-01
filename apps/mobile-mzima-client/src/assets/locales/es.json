@@ -121,7 +121,7 @@
         "max_size": "Tamaño máx.: {{size}} MB"
       },
       "media": {
-        "add_image": "Add image",
+        "add_image": "Añadir imagen",
         "add_audio": "Add audio",
         "add_document": "Add document",
         "retry": "Retry",
