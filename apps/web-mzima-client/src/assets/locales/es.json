@@ -1015,7 +1015,7 @@
       "max_size": "Tamaño Máx.: {{size}} MB Formato: {{format}}",
       "format": {
         "image": "solo jpeg o png",
-        "audio": "mp3, aac or ogg only",
+        "audio": "solo mp3, aac u ogg",
         "document": "PDF or Word only"
       },
       "invalid_video_embed": "Invalid video embed url",
