@@ -133,7 +133,7 @@
         },
         "status" : {
           "uploading" : "Subiendo...",
-          "upload_complete" : "Upload Complete!",
+          "upload_complete" : "¡Subida Completada!",
           "upload_failed" : "Upload failed!"
         }
       }
