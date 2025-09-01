@@ -76,7 +76,7 @@
       "edit": "Editar",
       "toc_text":"<p>Estos Términos de Servicio (los \"Términos\") y nuestra Política de Privacidad se aplican a y gobiernan su uso de cualquier web propiedad o gestionada por Ushahidi Inc. (“Ushahidi”) que publican un enlace a estos estos Términos (tales como webs, los \"Sitios\"), los servicios de Ushahidi accesibles a través de los Sitios (incluyendo cualquier servidores o plataformas en la nube) y las aplicaciones de Ushahidi para dispositivos móviles (las \"Apps\").</p><p>Para faclitar la lectura de estos Términos, los Sitios, nuestros servicios, plataformas y Apps se denominan colectivamente los \"Servicios\". Por favor tenga en cuenta que estos Términos no cubren cualquiera de nuestros productos que descargue bajo una licencia de código abierto. Además, estos Términos pueden no aplicarse si ha accedido a un acuerdo separado con Ushahidi que rija su relación con nosotros, tales como un acuerdo empresarial negociado por separado.</p><h2>Aceptación de los Términos</h2><p>estos Términos, no use los Servicios. Si accede o usa los Servicios en nombre de una empresa (tal como su empleador) u otra entidad legal, Ud. representa y garantiza que tiene la autoridad para vincular esa compañía u otra entidad legal a estos Términos.</p><p>En eso caso, \"Uds.\" y \"sus\" se referirán a esa compañía u otra entidad legal.</p>",
       "skip": "Saltar",
-      "loading":"Fetching Surveys...",
+      "loading":"Obteniendo Encuestas...",
       "loading_post":"Cargando publicación",
       "select_survey": "Select a survey",
       "emtpy_field_error": "Este campo no puede estar vacío",
