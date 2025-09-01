@@ -2179,7 +2179,7 @@
     "languages": "Idiomas",
     "language": "Idioma",
     "default": "predeterminado",
-    "default_language": "Original language",
+    "default_language": "Idioma original",
     "text_in_original": "Text in original language:",
     "translation_default": "(default)",
     "translate_field": "Campo traducido",
