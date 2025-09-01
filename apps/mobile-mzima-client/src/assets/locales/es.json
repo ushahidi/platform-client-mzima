@@ -78,7 +78,7 @@
       "skip": "Saltar",
       "loading":"Obteniendo Encuestas...",
       "loading_post":"Cargando publicación",
-      "select_survey": "Select a survey",
+      "select_survey": "Elija una encuesta",
       "emtpy_field_error": "Este campo no puede estar vacío",
       "info" : {
         "auth_not_online" : "¡Lo sentimos! No está conectado... por favor compruebe su conexión a Internet",
