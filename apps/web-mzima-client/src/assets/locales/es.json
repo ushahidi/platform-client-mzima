@@ -1103,7 +1103,7 @@
       "add_photo": "Añadir foto",
       "add_audio": "Añadir audio",
       "add_document": "Añadir documento",
-      "retry" : "Retry",
+      "retry" : "Reintentar",
       "delete_photo": "Borrar foto",
       "replace_image": "Reemplazar imagen",
       "error_in_upload": "Su imagen es demasiado grande (el tamaño máximo es de 1 MB) o tiene el formato incorrecto (los formatos permitidos son gif, png, jpg y jpeg), por favor compruebe e inténtelo de nuevo!",
