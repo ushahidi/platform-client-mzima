@@ -17,7 +17,7 @@
     },
     "activity": {
       "title": "Actividad",
-      "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
+      "content": "<p>Compruebe la actividad de su despliegue en el tiempo y por volumen. Pase el ratón sobre cada línea o barra para remarcarla y ver los detalles.</p>"
     },
     "collections": {
       "title": "Colecciones",
