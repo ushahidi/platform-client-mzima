@@ -453,7 +453,7 @@
     "task_visible_when_published": "Esta función será visible cunado se edite la publicación.",
     "show_field_description": "Añadir descripción del campo (opcional):",
     "add_field": "Añadir campo de tipo {{fieldType | lowercase}}",
-    "edit_field": "Edit {{fieldType | lowercase}} field",
+    "edit_field": "Editar campo {{fieldType | lowercase}}",
     "build": "Construir",
     "configure": "Configurar",
     "require_section": "Es necesario completar esta función antes de que una publicación sea visible al público",
