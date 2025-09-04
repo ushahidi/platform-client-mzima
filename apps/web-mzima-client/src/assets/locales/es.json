@@ -60,7 +60,7 @@
     "add_all_fields": "Agregar todos los campos",
     "insert_text_here": "Insertar texto aquí...",
     "deployment_not_found" : {
-      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
+      "text" : "Lo sentimos, ese despliegue no existe. ¿Le gustaría crear un nuevo despliegue?",
       "button_exit" : "Salir",
       "button_create_deployment" : "Crear Despliegue"
     },
