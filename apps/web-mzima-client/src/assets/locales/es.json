@@ -380,7 +380,7 @@
     },
     "task_is_marked_as": {
       "not_completed": "¿Tarea Completada? - Use el interruptor de abajo",
-      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+      "completed": "¡Ha marcado la Tarea \"{{taskName}}\" como Completada!"
     },
     "delete_task": "Borrar tarea",
     "duplicate_survey": "Duplicar",
