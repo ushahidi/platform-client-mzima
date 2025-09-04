@@ -379,7 +379,7 @@
       "body": "This task is marked for internal use only. It is not seen by users when they create a post."
     },
     "task_is_marked_as": {
-      "not_completed": "Task Complete? - Use toggle below",
+      "not_completed": "¿Tarea Completada? - Use el interruptor de abajo",
       "completed": "You have marked \"{{taskName}}\" Task as Completed!"
     },
     "delete_task": "Borrar tarea",
