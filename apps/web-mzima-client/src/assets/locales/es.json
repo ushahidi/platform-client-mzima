@@ -291,7 +291,7 @@
     "no_crowdsourced": "No tiene ningún dato de encuesta colaborativa para mostrar.",
     "targeted_activity": "Actividad de encuesta seleccionada",
     "crowdsourced_activity": "Actividad de encuesta de colaborativa",
-    "tooltip_template": "This is the single point tooltip template",
+    "tooltip_template": "Esta la plantilla de la descripción emergente para punto simple",
     "select_range": "Elija rango",
     "select_filter": "Elija filtro",
     "show_all_posts": "Mostrar todas las publicaciones",
