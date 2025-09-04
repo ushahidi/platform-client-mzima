@@ -73,7 +73,7 @@
     "disable_monetization": "Deshabilitar Monetización",
     "enable_monetization": "Habilitar Monetización",
     "enable_monetization_error": "Rellene los campos requeridos de arriba antes de habilitar la monetización.",
-    "enable_monetization_info": "Monetization is currently disabled.",
+    "enable_monetization_info": "La monetización está deshabilitada actualmente.",
     "intercom": {
       "intercom": "Interfono",
       "description": "Contacte con el personal de Ushahidi para asistencia por mensajería instantánea"
