@@ -477,7 +477,7 @@
     "response_private_desc": "Solo las personas con permiso para editar respuestas pueden ver las respuestas de este campo",
     "require_task_desc": "Es necesario completar esta función antes de que una publicación sea visible al público",
     "survey_permissions": "Permisos de las encuestas",
-    "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
+    "only_edit": "Solo personas con permiso para editar respuestas podrán ver las respuestas a este campo.",
     "who_can_add": "Quién puede agregar a esta encuesta",
     "survey_field": "Campo de encuesta",
     "choose_survey_field": "Elija lo que debería asignarse a cada campo de encuesta",
