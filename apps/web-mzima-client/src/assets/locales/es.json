@@ -862,7 +862,7 @@
     "share_on_facebook": "Compartir en Facebook"
   },
   "post": {
-    "loading_posts": "Loading posts in {{ mode }} mode...",
+    "loading_posts": "Cargando publicaciones en modo {{ mode }}...",
     "post_count": "{{count}} entradas",
     "see_more_plural": "Ver {{newPostCount}} publicaciones nuevas",
     "see_more_singular": "Ver {{newPostCount}} publicación nueva",
