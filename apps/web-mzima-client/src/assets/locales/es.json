@@ -678,7 +678,7 @@
     "unmapped_one": "{{ notShownPostsCount }} publicación",
     "unmapped_many": "{{ notShownPostsCount }} publicaciones",
     "unmapped_end": "no se muestran aquí porque no incluyen información de ubicación.",
-    "unmapped_none": "No posts without location information.",
+    "unmapped_none": "Ninguna publicación sin información de localización.",
     "more": "Más",
     "keyword": "Palabra Clave",
     "start_date": "Fecha de inicio",
