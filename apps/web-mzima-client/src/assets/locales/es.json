@@ -332,7 +332,7 @@
     "edit_post_types": "Editar encuestas",
     "field_add_option": "Añadir",
     "field_add_other": "Añadir otro",
-    "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
+    "field_add_other_desc": "Permite introducir una opción personalizada que no esté listada entre las opciones proporcionadas.",
     "field_default": "Campo por defecto",
     "field_key": "Clave del campo",
     "field_type": "Tipo de campo",
