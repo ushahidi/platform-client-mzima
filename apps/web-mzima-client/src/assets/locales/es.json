@@ -9,7 +9,7 @@
     },
     "filtering": {
       "title": "Filtrando",
-      "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+      "content": "<p>Puede filtrar sus resultados por su Estado, Categorías, Rango de Fechas y Localización. También puede guardar sus filtros, de modo que pueda volver a ellos rápidamente.</p><p>Para reducir de un modo rápido y eficiente el volumen de datos, use la barra de la izquierda para seleccionar Encuestas y fuentes de Datos específicas.</p>"
     },
     "sorting": {
       "title": "Ordenación",
