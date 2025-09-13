@@ -514,7 +514,7 @@
     "fields": {
       "fields_title": "Campos",
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *.",
+        "required": "Faltan campos requeridos, marcados con un *.",
         "special_characters": "{{name}} campo contiene caracteres especiales"
       }
     },
@@ -1064,7 +1064,7 @@
     "valid": {
       "no_changes": "Usted no ha realizado ningún cambio",
       "invalid_state": "Este mensaje tiene condición de no válido en este momento. Necesita completar todas las tareas obligatorias antes de que pueda volver a publicar este mensaje. Puede completar las tareas necesarias o marcar su mensaje con otra condición, como ¨en revisión¨.",
-      "validation_fail": "Required fields are missing, these fields are marked with an *.",
+      "validation_fail": "Faltan campos requeridos, marcados con un *.",
       "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
       "title": {
         "required": "Un t&iacute;tulo es obligatorio",
