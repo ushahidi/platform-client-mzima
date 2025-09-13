@@ -376,7 +376,7 @@
     "choose_survey": "Elegir encuesta",
     "marked_for_internal": {
       "header": "Solo Uso Interno",
-      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+      "body": "Esta tarea está marcada sólo para uso interno. No se ve por los usuarios cuando crean una publicación."
     },
     "task_is_marked_as": {
       "not_completed": "¿Tarea Completada? - Use el interruptor de abajo",
