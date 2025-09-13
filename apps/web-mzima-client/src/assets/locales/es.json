@@ -319,7 +319,7 @@
     "currently_disabled": "Esta encuesta est&aacute; deshabilitada actualmente.",
     "custom_structure": "Estructura personalizada",
     "default_date_placeholder": "Fecha por defecto",
-    "default_date_hint": "If no date is added, the current time of posting would be added by default. The user can still update the {{ field_name }} after post submission.",
+    "default_date_hint": "Si no se añade la fecha, se añadirá por defecto el momento de publicación. El usuario pueda aún actualizar el {{ field_name }} después de enviar la publicación.",
     "default_default_placeholder": "Valor por defecto",
     "default_location_placeholder": "Nairobi, Kenia",
     "delete_post_type": "Borrar esta encuesta",
