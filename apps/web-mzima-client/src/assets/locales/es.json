@@ -2180,7 +2180,7 @@
     "language": "Idioma",
     "default": "predeterminado",
     "default_language": "Idioma original",
-    "text_in_original": "Text in original language:",
+    "text_in_original": "Texto en idioma original:",
     "translation_default": "(default)",
     "translate_field": "Campo traducido",
     "survey_select_default": "Seleccione idioma predeterminado para esta encuesta",
