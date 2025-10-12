@@ -1423,7 +1423,7 @@
         "unsupported": "Fuentes de Datos No S",
         "info_add_new_datasource": "Haga click en el botón \"añadir fuente\" para configurar una fuente de datos desde nuestras bases de datos soportadas"
       },
-      "edit": "Edit {{provider}} Data Source",
+      "edit": "Editar {{provider}} de Fuente de Data Source",
       "add_data_source": "Añadir Fuente de Datos",
       "associate_with_form": "Importar a la encuesta",
       "associate_with_form_desc": "Todos los datos provenientes de {{provider}} se utilizarán para crear respuestas a la encuesta que usted elija.",
