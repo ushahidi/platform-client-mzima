@@ -1191,7 +1191,7 @@
     "delete_webhook": "Borrar este WebHook",
     "delete_webhook_desc": "<strong>Si borra este webhook</strong>, se perderán todos los eventos de webhook asociados. Proceda con cautela.",
     "dialog": {
-      "delete_warn_title": "{{ name }} webhook will be deleted!",
+      "delete_warn_title": "¡Se borrará el webhoo {{ name }}!",
       "delete_warn_message": "<p>Esta acción no se puede deshacer.</p><p>¿Estás seguro?</p>"
     }
   },
