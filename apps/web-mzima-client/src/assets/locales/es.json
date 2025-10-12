@@ -1845,7 +1845,7 @@
           "email": "Email",
           "phone": "Tel&eacute;fono"
         },
-        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "instructions": "Borrar implica que desde ahora no podrá recibir notificaciones en su número de teléfono. Pero puede cambiar las notificaciones a un méto",
         "button": {
           "delete": "Borrar",
           "cancel": "Cancelar"
