@@ -891,7 +891,7 @@
     "no_search_results": "Su búsqueda no devolvió ninguna publicación",
     "no_search_results_location": "Su búsqueda no coincide con publicaciones que tengan ubicación",
     "no_posts_match_search": "Ninguna publicación coincide con su búsqueda. Por favor cambie su búsqueda para ver las publicaciones ",
-    "no_posts_match_search_plus_filter": "No posts match your keyword search + filters. Please change or clear keyword search and/or filters to see matching posts.",
+    "no_posts_match_search_plus_filter": "Ninguna publicación coincide con su búsqueda + filtros . Por favor cambie o borre su búsqueda y/o filtros para ver las publicaciones que cumplan los criterios.",
     "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
     "no_posts_yet": "¡Aún no hay publicaciones!",
     "no_posts_yet_location": "¡Aún no hay publicaciones con ubicación!",
