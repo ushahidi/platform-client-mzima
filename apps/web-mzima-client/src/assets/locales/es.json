@@ -1065,7 +1065,7 @@
       "no_changes": "Usted no ha realizado ningún cambio",
       "invalid_state": "Este mensaje tiene condición de no válido en este momento. Necesita completar todas las tareas obligatorias antes de que pueda volver a publicar este mensaje. Puede completar las tareas necesarias o marcar su mensaje con otra condición, como ¨en revisión¨.",
       "validation_fail": "Faltan campos requeridos, marcados con un *.",
-      "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
+      "validation_fail_other": "Hubo un error validando los datos. Los campos que no pasen la validación mostrará",
       "title": {
         "required": "Un t&iacute;tulo es obligatorio",
         "minlength": "El t&iacute;tulo es demasiado corto",
