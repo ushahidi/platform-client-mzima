@@ -1899,7 +1899,7 @@
       "no_mappings": "Ning&uacute;n campo tiene mapeos asignados - al menos un campo debe ser mapeado para continuar",
       "csv_import_cancel": "Importaci&oacute;n de CSV cancelada",
       "csv_import_cancel_confirm": "¿Está seguro de que desea cancelar la importación?",
-      "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again.",
+      "csv_import_error": "Algunos datos de su fichero CSV no se ajustan al formato del campo mapeado en la encuesta . Por favor revise los datos y vuelva a intentarlo.",
       "csv_import_success": "The data from your CSV file was successfully imported!"
     },
     "general_settings": {
