@@ -2197,7 +2197,7 @@
     "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
     "post_title_required": "La traducción para el tí de la encuesta es obligatoria",
     "add_a_language": "Añadir un idioma",
-    "error_no_default": "You need to specify a default language before adding a new translation.",
+    "error_no_default": "Debe especificar un idioma por defecto antes de añadir una nueva traducción.",
     "select_language": "Seleccione un idioma para añadir traducció",
     "select_translate_edit": "Seleccione un idioma para traducir o editar:",
     "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment.",
