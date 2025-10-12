@@ -1871,7 +1871,7 @@
     "default": {
       "data_has_not_been_saved": "¡No se han guardado los datos!",
       "discard_changes": "¿Desechar cambios?",
-      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
+      "survey_has_not_been_saved": "Se perderán los cambios si no gua",
       "proceed_warning": "Esta acción no puede deshacerse. Por favor, proceda con cautela.",
       "save_success": "Recurso guardado",
       "save_error": "No se puede guardar el recurso, por favor, int&eacute;ntelo de nuevo",
