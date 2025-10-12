@@ -1109,7 +1109,7 @@
       "error_in_upload": "Su imagen es demasiado grande (el tamaño máximo es de 1 MB) o tiene el formato incorrecto (los formatos permitidos son gif, png, jpg y jpeg), por favor compruebe e inténtelo de nuevo!",
       "messages": {
         "max_size" : "Su fichero es demasiado grande.",
-        "max_files" : "You have exceeded the maximum number of files.",
+        "max_files" : "Ha excedido el número máximo de ficheros.",
         "required" : "Se necesita medio.",
         "invalid_type" : "Tipo de fichero no soportado."
       },
