@@ -1693,7 +1693,7 @@
     "hxl_title": "Asigne sus etiquetas y atributos HXL, seleccione campos y exporte o cargue",
     "hxl_desc": "Selecciona campos específicos de una encuesta, asigna una etiqueta por campo y luego elija asignar múltiples atributos. Obtenga una vista previa de su etiqueta y atributos en la vista previa de etiquetas. ",
     "hxl_instructions_1": "A continuación, puedes optar por exportar los campos etiquetados a un archivo CSV o cargarlos en un archivo CSV.",
-    "hxl_instructions_2": "Humanitarian Data Exchange (HDX)",
+    "hxl_instructions_2": "Intercambio de Datos Humanitarios (HDX, en inglé)",
     "hxl_instructions_3": "la cuenta ha sido configurada",
     "hxl_instructions_4": "Configurar la API HDX",
     "hxl_instructions_5": "(buscar en el menú de opciones)",
