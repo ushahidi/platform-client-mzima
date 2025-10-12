@@ -1147,7 +1147,7 @@
         "empty_lng": "La longitud es un campo vacío",
         "decimal_lat": "Número decimal de latitud solamente",
         "decimal_lng": "Número decimal de longitud solamente",
-        "special_lng": "El campo de  Longitud contiene caracteres especiales",
+        "special_lng": "El campo Longitud contiene caracteres especiales",
         "special_lat": "Field latitude contains special characters"
       }
     }
