@@ -2117,7 +2117,7 @@
     "update_map": "Actualizar mapa",
     "no_matching_locations": "Sin ubicaciones coincidentes",
     "invalid_lat": "El valor dado no es una latitud válida",
-    "invalid_lon": "The value given is not a valid longitude."
+    "invalid_lon": "El valor dado no es una longitud válida."
   },
   "notification": {
     "title": "Notificaciones",
