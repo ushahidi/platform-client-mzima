@@ -2072,7 +2072,7 @@
       "discard_changes": "Desechar cambios",
       "save_changes": "Guardar Cambios",
       "back_to_editing": "Volver a edició",
-      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
+      "invalid_characters": "Por favor quite los caracteres no válidos (p. ej. +, $, ^, =)",
       "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
     "confirm_modal": {
