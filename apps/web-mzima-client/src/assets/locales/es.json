@@ -1020,7 +1020,7 @@
       },
       "invalid_video_embed": "url de embebido del vídeo No Válida",
       "errors": {
-        "required" : "{{label}} field is a required field *",
+        "required" : "E campo {{label}} es un campo obligatorio *",
         "too_short": "{{label}} field is too short, use at least 2 characters",
         "invvalid_pattern": "{{label}} field is invalid",
         "special_char": "{{label}} field contains special characters"
