@@ -2188,7 +2188,7 @@
     "error_translation_exists": "No puedes seleccionar este idioma pues ya tiene una traducción para él.",
     "edit_placeholder": "Escriba su traducción aquí",
     "add_translation": "Añada debajo su traducción:",
-    "survey_name_required": "La  traducción  para el nombre de la encuesta es obligatoria",
+    "survey_name_required": "La traducción  para el nombre de la encuesta es obligatoria",
     "field_add_translation": "Campos (click para añadir traducción):",
     "add_translation_lang": "Añadir traducción",
     "translate_field_name": "Traducir nombre de campo",
