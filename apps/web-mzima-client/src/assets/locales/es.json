@@ -1357,7 +1357,7 @@
       "plans": "Planes",
       "plan_desc": "Su actual plan de despliegue es <strong>{{current_plan}}</strong>.",
       "donation": "Donación",
-      "donation_desc": "Create and manage the donations people can make towards your organisation."
+      "donation_desc": "Cree y gestione las donaciones que la gente puede hacer a su organizació"
     },
     "general_settings": {
       "generate_api_key": "Generar clave API",
