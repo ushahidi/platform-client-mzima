@@ -2175,7 +2175,7 @@
   "translations": {
     "available_languages": "Traducciones disponibles (elija para ver publicación):",
     "translate_post": "Traducir publicación",
-    "translate_post_to": "Translate post to {{language}}",
+    "translate_post_to": "Traducir publicación a {{language}}",
     "languages": "Idiomas",
     "language": "Idioma",
     "default": "predeterminado",
