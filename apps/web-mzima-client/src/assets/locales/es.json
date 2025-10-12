@@ -1618,7 +1618,7 @@
     "see_imported_posts": "Vea publicaciones importadas",
     "import_another_csv": "Importar otro archivo CSV",
     "import_complete": "Su importación se ha completado",
-    "import_error": "An error has occurred importing your CSV file.",
+    "import_error": "Ha ocurrido un error importando su fichero CSV",
     "complete_info": "Los datos de su hoja de cálculo CSV, <em>{{filename}</em>, se importó correctamente.",
     "get_polling_info": "Obtener información de sondeo",
     "import_another": "Importar otro archivo CSV",
