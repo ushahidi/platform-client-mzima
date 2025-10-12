@@ -1421,7 +1421,7 @@
       "providers": {
         "supported": "Soportado",
         "unsupported": "Fuentes de Datos No S",
-        "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
+        "info_add_new_datasource": "Haga click en el botón \"añadir fuente\" para configurar una fuente de datos desde nuestras bases de datos soportadas"
       },
       "edit": "Edit {{provider}} Data Source",
       "add_data_source": "Añadir Fuente de Datos",
