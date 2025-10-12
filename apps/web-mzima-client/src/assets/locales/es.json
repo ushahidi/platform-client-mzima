@@ -1785,7 +1785,7 @@
     "forgot_instructions": "¡No hay problema! Envíe su email y compruebe su bandeja de entrada para un enlace de reseteo",
     "token": "Token de reseteo de contraseña",
     "password_hint": "La contraseña debería tener al menos 8 caracteres, con una minúscula, una mayúscula, un número y un símbolo",
-    "password_length": "Password must be at least 8 characters long",
+    "password_length": "La contraseña debe tener al menos 8 caracteres",
     "password_match": "Las contraseñas no coinciden",
     "enter_new_password": "Introduzca su nueva contraseña",
     "password_change_success": "Se ha cambiado su contraseña con éxito",
