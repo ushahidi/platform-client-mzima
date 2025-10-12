@@ -978,7 +978,7 @@
       "locked_tooltip": "La publicación está siendo editada por alguien más. Por favor inténtelo má"
 
     },
-    "post_not_authorized": "You are not authorized to perform this action on this post.",
+    "post_not_authorized": "No tiene autorización para realizar esta acción en esta publicació",
     "modify": {
       "intro": "Seleccionar survey:",
       "no_task_values": "En este momento no existen valores guardados para esta tarea.",
