@@ -1022,7 +1022,7 @@
       "errors": {
         "required" : "E campo {{label}} es un campo obligatorio *",
         "too_short": "El campo {{label}} es muy corto, use al menos",
-        "invvalid_pattern": "{{label}} field is invalid",
+        "invvalid_pattern": "Campo {{label}} no vá",
         "special_char": "{{label}} field contains special characters"
       }
     },
