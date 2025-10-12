@@ -1900,7 +1900,7 @@
       "csv_import_cancel": "Importaci&oacute;n de CSV cancelada",
       "csv_import_cancel_confirm": "¿Está seguro de que desea cancelar la importación?",
       "csv_import_error": "Algunos datos de su fichero CSV no se ajustan al formato del campo mapeado en la encuesta . Por favor revise los datos y vuelva a intentarlo.",
-      "csv_import_success": "The data from your CSV file was successfully imported!"
+      "csv_import_success": "¡Se ha importado con éxito los datos desde su fichero CSV!"
     },
     "general_settings": {
       "save_success": "Ajustes generales guardados"
