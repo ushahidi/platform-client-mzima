@@ -2173,7 +2173,7 @@
     "i_agree": "Acepto la <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Política de privacidad</a> de Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Términos y Condiciones</a>."
   },
   "translations": {
-    "available_languages": "Available translations (select to see post):",
+    "available_languages": "Traducciones disponibles (elija para ver publicación):",
     "translate_post": "Traducir publicación",
     "translate_post_to": "Translate post to {{language}}",
     "languages": "Idiomas",
