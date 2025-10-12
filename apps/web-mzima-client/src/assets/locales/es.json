@@ -1795,7 +1795,7 @@
     "valid": {
       "fields": {
         "email must be unique": "Ya existe un usuario con este correo electrónico",
-        "email must be valid": "Email must be a valid email address"
+        "email must be valid": "El email debe ser una dirección válida de correo electró"
       },
       "name": {
         "required": "Mostrar el nombre es obligatorio",
