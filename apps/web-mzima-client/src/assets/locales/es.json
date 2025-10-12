@@ -2064,7 +2064,7 @@
       "upload_complete": "Carga completa. Ahora debería ver sus datos etiquetados en su cuenta HDX."
     },
     "survey": {
-      "bulk_destroy_confirm": "Are you sure you want to delete these {{count}} surveys?",
+      "bulk_destroy_confirm": "¿Está seguro de que quiere borrar estas {{count}} surveys?",
       "bulk_destroy_confirm_desc": "Deleting these {{count}} selected surveys will also delete all collected posts and all associated data in the surveys. This step cannot be reversed.",
       "destroy_confirm": "¿Está seguro de querer borrar esta encuesta?",
       "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
