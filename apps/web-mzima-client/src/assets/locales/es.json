@@ -1264,7 +1264,7 @@
     "delete_category_desc": "<strong>Si borra esta categoría</strong>, ya no estará asociada a ninguna publicación. Proceda con cautela.",
     "show_categories": "Mostrar categorías disponibles",
     "child_permissions": "Los permisos para esta categoría se gestionan mediante la categoría matriz.",
-    "which_categories": "Which categories should be available?",
+    "which_categories": "¿Qué categorías deberían estar disponibles?",
     "select_all": "Seleccionar todo",
     "choose_roles": "Seleccionar roles",
     "create_tag": "Crear categoría",
