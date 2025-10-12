@@ -1583,7 +1583,7 @@
     "site_private": "Hacer este despliegue privado",
     "site_private_desc": "Habilitar esta opción hace que sus Encuestas y sus datos solo sean accesibles para usuarios registrados con los privilegios correctos, que deben iniciar sesión para acceder",
     "site_disable_registration": "¿Deshabilitar registro de usuario?",
-    "site_disable_registration_desc": "Checking this disables the registration feature. Admins will have to manually add users.",
+    "site_disable_registration_desc": "Marcando esto deshabilita la funcionalidad de registro. Los administradores tendrán que añadir usuarios man",
     "select_image": "Seleccionar imagen",
     "saved_settings": "Ajustes de despliegue guardados!",
     "saved_map_settings": "¡Ajustes de mapa guardados!",
