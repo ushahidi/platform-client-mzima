@@ -2073,7 +2073,7 @@
       "save_changes": "Guardar Cambios",
       "back_to_editing": "Volver a edició",
       "invalid_characters": "Por favor quite los caracteres no válidos (p. ej. +, $, ^, =)",
-      "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
+      "translations_missing": "Debe añadir traducciones para todos los nombres, y asegurarse de que las casillas de selección múltiple y las de opción única no tienen duplicados. Compruebe que ha traducido los nombres de la encuesta para todos los idiomas añadidos y que las casillas de selección múltiple y las de opción única son únicas (dentro de cada idioma)."
     },
     "confirm_modal": {
       "add_post_success": {
