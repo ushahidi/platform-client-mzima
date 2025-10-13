@@ -2194,7 +2194,7 @@
     "translate_field_name": "Traducir nombre de campo",
     "translate_field_desc": "Traducir descripción del campo",
     "category_translations_link": "Por favor tenga en cuenta que para añadir traducciones a los nombres de categorías vaya a <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Ajustes de Categoría</a>",
-    "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+    "parent_child_lang": "Por favor tenga en cuenta que el idioma por defecto seleccionado para esta categoría hija es diferente de la de su padre",
     "post_title_required": "La traducción para el tí de la encuesta es obligatoria",
     "add_a_language": "Añadir un idioma",
     "error_no_default": "Debe especificar un idioma por defecto antes de añadir una nueva traducción.",
