@@ -2068,7 +2068,7 @@
       "bulk_destroy_confirm_desc": "Borrando estas {{count}} encuestas seleccionadas también borrará todas las publicaciones recogidas y todos los datos asociados a las encuestas. Esta acción no se puede revertir.",
       "destroy_confirm": "¿Está seguro de querer borrar esta encuesta?",
       "destroy_confirm_desc": "Borrando esta encuesta también borrará todas las publicaciones recogidas y todos los datos asociados a la encuesta. Esta acción no se puede revertir.",
-      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
+      "destroy_confirm_desc_end": "Puede <a href=\"settings/data-import\">descargar e importar</a> todos sus datos antes de borrar.",
       "discard_changes": "Desechar cambios",
       "save_changes": "Guardar Cambios",
       "back_to_editing": "Volver a edició",
