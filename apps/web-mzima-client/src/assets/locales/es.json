@@ -2067,7 +2067,7 @@
       "bulk_destroy_confirm": "¿Está seguro de que quiere borrar estas {{count}} surveys?",
       "bulk_destroy_confirm_desc": "Borrando estas {{count}} encuestas seleccionadas también borrará todas las publicaciones recogidas y todos los datos asociados a las encuestas. Esta acción no se puede revertir.",
       "destroy_confirm": "¿Está seguro de querer borrar esta encuesta?",
-      "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
+      "destroy_confirm_desc": "Borrando esta encuesta también borrará todas las publicaciones recogidas y todos los datos asociados a la encuesta. Esta acción no se puede revertir.",
       "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
       "discard_changes": "Desechar cambios",
       "save_changes": "Guardar Cambios",
