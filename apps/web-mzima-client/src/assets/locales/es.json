@@ -2200,7 +2200,7 @@
     "error_no_default": "Debe especificar un idioma por defecto antes de añadir una nueva traducción.",
     "select_language": "Seleccione un idioma para añadir traducció",
     "select_translate_edit": "Seleccione un idioma para traducir o editar:",
-    "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment.",
+    "default_lang_info": "Este es el idioma que se usará si no hay traducciones disponibles para el idioma que el usuario ha seleccionado para su despliegue.",
     "translated_to": "Traducido a {{language}}",
     "viewing_translated":"Está viendo una versión traducida de esta publicación.",
     "view_original":"Ver publicación original",
