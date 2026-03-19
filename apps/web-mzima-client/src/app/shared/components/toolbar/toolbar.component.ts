@@ -1,3 +1,4 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
@@ -7,11 +8,12 @@ import {
   AuthService,
   BreadcrumbService,
   BreakpointService,
+  EnvService,
   EventBusService,
   EventType,
   SessionService,
 } from '@services';
-import { filter } from 'rxjs';
+import { filter, timer } from 'rxjs';
 import { BaseComponent } from '../../../base.component';
 import { NavToolbarService } from '../../helpers/navtoolbar.service';
 
@@ -35,6 +37,9 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
   public isSettingsPage = false;
   public isToastMessageVisible = false;
   public currentApiVersion = '';
+  public unreadCount = 0;
+  private unreadRefreshedAt = Math.floor(Date.now() / 1000);
+  private lastPageTitle?: string;
 
   constructor(
     protected override sessionService: SessionService,
@@ -45,6 +50,8 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
     private location: Location,
     private navToolbarService: NavToolbarService,
     private authService: AuthService,
+    private httpClient: HttpClient,
+    private env: EnvService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -59,7 +66,15 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
     });
 
     this.breadcrumbService.breadcrumbs$.pipe(untilDestroyed(this)).subscribe({
-      next: (res) => (this.pageTitle = res[res.length - 1]?.instance),
+      next: (res) => {
+        const nextTitle = res[res.length - 1]?.instance;
+        if (this.shouldResetUnreadTimestamp(this.pageTitle, nextTitle)) {
+          this.resetUnreadTimestamp();
+          this.fetchUnreadCount();
+        }
+        this.pageTitle = nextTitle;
+        this.lastPageTitle = nextTitle;
+      },
     });
 
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
@@ -71,6 +86,7 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserData();
+    this.startUnreadPolling();
   }
 
   loadData(): void {
@@ -100,5 +116,62 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
 
   public back(): void {
     this.location.back();
+  }
+
+  public refreshPage(): void {
+    window.location.reload();
+  }
+
+  private startUnreadPolling(): void {
+    this.resetUnreadTimestamp();
+
+    timer(0, 60000)
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.fetchUnreadCount();
+      });
+  }
+
+  private fetchUnreadCount(): void {
+    const params = new HttpParams().set('refreshed_at', this.unreadRefreshedAt.toString());
+
+    this.httpClient
+      .get<any>(`${this.env.environment.backend_url + this.env.environment.api_v5}posts/unread`, {
+        params,
+      })
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (response) => {
+          const count = this.extractUnreadCount(response);
+          this.unreadCount = Number.isFinite(count) ? count : 0;
+        },
+        error: () => {
+          this.unreadCount = 0;
+        },
+      });
+  }
+
+  private extractUnreadCount(response: any): number {
+    if (typeof response === 'number') return response;
+    if (!response || typeof response !== 'object') return 0;
+
+    const directCount = response.count ?? response.unread;
+    if (Number.isFinite(Number(directCount))) return Number(directCount);
+
+    const nestedCount = response.result?.count ?? response.result?.unread;
+    return Number.isFinite(Number(nestedCount)) ? Number(nestedCount) : 0;
+  }
+
+  private resetUnreadTimestamp(): void {
+    this.unreadRefreshedAt = Math.floor(Date.now() / 1000);
+  }
+
+  private shouldResetUnreadTimestamp(previous?: string, next?: string): boolean {
+    if (!previous || !next || previous === next) return false;
+    return this.isViewBreadcrumb(previous) && this.isViewBreadcrumb(next);
+  }
+
+  private isViewBreadcrumb(value: string): boolean {
+    return value === 'nav.map' || value === 'nav.feed';
   }
 }
