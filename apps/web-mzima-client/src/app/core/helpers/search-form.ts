@@ -99,6 +99,22 @@ export const sortingOptions = [
     },
   },
   {
+    orderBy: 'Event Date',
+    order: 'global_filter.sort.order.desc',
+    value: {
+      orderby: 'event_date',
+      order: 'desc',
+    },
+  },
+  {
+    orderBy: 'Event Date',
+    order: 'global_filter.sort.order.asc',
+    value: {
+      orderby: 'event_date',
+      order: 'asc',
+    },
+  },
+  {
     orderBy: 'global_filter.sort.orderby.updated',
     order: 'global_filter.sort.order.desc',
     value: {
