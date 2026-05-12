@@ -1,33 +1,68 @@
 {
+  "onboarding": {
+    "greeting": "Hello {{username}}!",
+    "intro": "<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>",
+    "ready": "You're ready!",
+    "data_collection": {
+      "title": "Data collection",
+      "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
+    },
+    "filtering": {
+      "title": "Filtering",
+      "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+    },
+    "sorting": {
+      "title": "Sorting",
+      "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
+    },
+    "activity": {
+      "title": "Attività",
+      "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
+    },
+    "collections": {
+      "title": "Raccolte",
+      "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
+    },
+    "settings": {
+      "title": "Impostazioni",
+      "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
+    },
+    "final_step": {
+      "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
+      "desc_2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
+      "help": "Aiuto e Supporto"
+    }
+  },
   "app": {
     "contact_email_address": "Indirizzo e-mail di contatto:",
     "powered_by_ushahidi": "Offerto da Ushahidi.",
     "support": "Supporto Ushahidi ",
     "by": "di",
+    "confirm": "Confirm",
     "submit": "Invia",
-    "anonymous": "Anonymous",
+    "anonymous": "Anonimo",
     "submitting": "Submitting",
     "submit_another": "Invia e aggiungi un altro",
     "submit_response": "Submit a survey response",
     "can_see_this": "può vedere questo / possono vedere questo",
-    "collection": "Collection",
+    "collection": "Raccolta",
     "collections": "Raccolte",
     "create_collection": "Crea raccolta",
     "add_collection": "Aggiungi collezione",
-    "export_to_csv": "Export filtered data",
+    "export_to_csv": "Esporta dati filtrati",
     "create_new": "Crea nuovo",
-    "create_new_survey": "Create new survey",
+    "create_new_survey": "Crea nuovo sondaggio",
     "created_by": "Creato da {{author}}",
-    "date_created": "Date created",
-    "date_updated": "Date updated",
+    "date_created": "Data di creazione",
+    "date_updated": "Data di aggiornamento",
     "choose_photo": "Scegli foto",
     "choose": "Scegli…",
     "add_all_fields": "Aggiungi tutti i campi",
     "insert_text_here": "Inserisci il testo qui...",
     "deployment_not_found" : {
       "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
-      "button_exit" : "Exit",
-      "button_create_deployment" : "Create Deployment"
+      "button_exit" : "Uscita",
+      "button_create_deployment" : "Crea Distribuzione"
     },
     "documentation": {
       "title": "Documentazione",
@@ -41,7 +76,7 @@
     "enable_monetization_info": "La monetizzazione è attualmente disabilitata.",
     "intercom": {
       "intercom": "Intercom",
-      "description": "Contact Ushahidi staff for chat support"
+      "description": "Contatta lo staff Ushahidi per supporto via chat"
     },
     "onboarding": {
       "title": "Onboarding",
@@ -59,21 +94,22 @@
     "forbidden": "Spiacenti, non sei autorizzato a farlo.",
     "forbidden-login": "Inserisci i tuoi dati di accesso per accedere alla distribuzione.",
     "contact_with_admin": "Oppure contatta l'amministratore ",
-    "404": "That URL doesn't exist",
+    "404": "L'URL non esiste",
     "page-not-found": "Pagina non trovata",
     "get_notifications": "Ricevi notifiche",
     "turn_off_notifications": "Disattiva notifiche",
     "load_more": "Load more",
-    "loading": "Loading",
-    "loading_saved_searches": "Loading saved searches",
+    "loading": "Caricamento",
+    "loading_saved_searches": "Caricamento ricerche salvate",
     "more": "Altro",
     "cancel": "Cancella",
     "save": "Salva",
+    "date_shows_up_here": "Date shows up here",
     "save_and_close": "Salva e Chiudi",
     "update": "Aggiorna",
     "update_and_close": "Aggiorna &amp; chiudi",
     "add_and_close": "Salva e Chiudi",
-    "updating": "Updating",
+    "updating": "Aggiornamento",
     "saving": "Salvataggio in corso",
     "settings": "Impostazioni",
     "share": "Condividi",
@@ -92,56 +128,57 @@
     "edit_role": "Modifica ruolo",
     "add_role": "Aggiungi ruolo",
     "webhooks": "Webhooks",
-    "edit_webhook": "Edit Webhook",
-    "add_webhook": "Add Webhook",
+    "edit_webhook": "Modifica Webhook",
+    "add_webhook": "Add Webhook ",
     "categories": "Categorie",
     "edit_category": "Modifica categoria",
     "add_category": "Aggiungi categoria",
-    "categories_count": "{{count}} categories",
+    "categories_count": "{{count}} categorie",
     "plans": "Piani",
     "delete": "Elimina",
     "description": "Descrizione",
     "color": "Colore",
     "search_users": "Cerca utenti",
     "searching": "Searching",
-    "show_hide": "Show/Hide",
+    "show_hide": "Mostra/Nascondi",
     "fields": "Campi",
-    "no_results": "No results found.",
+    "no_results": "Nessun risultato trovato.",
     "current_results": "Risultati attuali:",
-    "filter_by": "Filter by...",
-    "sort_filter": "Sort & filter",
-    "apply_filters": "Apply",
+    "filter_by": "Filtra per...",
+    "sort_filter": "Ordina & filtra",
+    "apply_filters": "Applica",
     "close_and_view": "Chiudi e visualizza i risultati",
     "show_more_less": "Mostra di più/di meno",
     "filters": "Filtri",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Filtra per indagine",
     "configure": "Configura",
     "post": "Segnalazione",
     "name": "Nome",
     "key": "Parola chiave",
     "survey_web_address": "Your survey's web address",
-    "default_value": "Default value (optional):",
+    "default_value": "Valore di default (opzionale):",
     "select_one": "Select One",
-    "sort_and_filter": "Sort & filter",
-    "saved_search": "Saved Search",
+    "sort_and_filter": "Ordina & filtra",
+    "saved_search": "Ricerche Salvate",
     "tasks": "Compiti",
     "return_to_all_posts": "Torna a tutte le segnalazioni",
     "this_deplyment_is_private": "Questa causa è privata",
     "private_deployment": "Causa privata",
     "mark_as": "Contrassegna come",
-    "who_can_see_this_category": "Who can see this category?",
+    "who_can_see_this_category": "Chi può vedere questa categoria?",
     "this_category_is_child_to": "This category is a child to <strong>{{parent}}</strong>",
     "nothing": "Nothing",
-    "who_can_see_this": "Who can see this?",
-    "add": "Add",
+    "who_can_see_this": "Chi può vedere questo?",
+    "add": "Aggiungi",
     "add_new_category": "+ Add new category",
-    "sort_by": "Sort By ...",
+    "sort_by": "Ordina per ...",
     "newest_first": "Newest first",
     "oldest_first": "Oldest first",
-    "language": "Language",
-    "select_language": "Select language",
-    "add_new_post": "Add new post",
-    "previous": "Previous",
+    "language": "Lingua",
+    "select_language": "Seleziona lingua",
+    "add_new_post": "Aggiungi nuovo post",
+    "previous": "Precedente",
     "duplicate": "Duplica",
     "yes_delete": "Sì, cancella",
     "no_go_back": "No, torna indietro",
@@ -150,6 +187,7 @@
     "you_are_not_authorized": "Non sei autorizzato",
     "lost_internet_connection": "Connessione Internet persa",
     "tweet_is_unavailable": "Questo tweet non è disponibile",
+    "tweet_failed_to_load": "Tweet failed to load",
     "file_uploader": "Caricatore di file",
     "preview_image": "Anteprima immagine",
     "privacy_policy": "Privacy Policy",
@@ -164,8 +202,38 @@
     "we_ve_updated_deployments_to_version_5": "Le distribuzioni sono state aggiornate alla versione 5. Gli utenti potrebbero non avere accesso alla distribuzione a breve. ",
     "for_more_details_on_deployment_update": "Per ulteriori dettagli sull'aggiornamento della distribuzione, visitare Guida e supporto tecnico (dovrebbe essere un collegamento) o inviare un'e-mail a:",
     "open_chat": "Apri la chat",
-    "end_post": "End of Posts"
+    "end_post": "Fine dei Post",
+    "read_more": "Leggi di più"
   },
+  "date": {
+    "aLongTimeAgo": "a long time ago",
+    "justNow": "just now",
+    "aMomentAgo": "a moment ago",
+    "second": {
+      "singular": "{{time}} second ago",
+      "plural": "{{time}} seconds ago"
+    },
+    "minute": {
+      "singular": "{{time}} minute ago",
+      "plural": "{{time}} minutes ago"
+    },
+    "hour": {
+      "singular": "{{time}} hour ago",
+      "plural": "{{time}} hours ago"
+    },
+    "day": {
+      "singular": "{{time}} day ago",
+      "plural": "{{time}} days ago"
+    },
+    "month": {
+      "singular": "{{time}} month ago",
+      "plural": "{{time}} months ago"
+    },
+    "year": {
+      "singular": "{{time}} year ago",
+      "plural": "{{time}} years ago"
+    }
+},
   "cookies": {
     "we_use_cookies": "Salve! Utilizziamo i cookie per migliorare la tua esperienza.",
     "cookies_privacy": "Se vuoi saperne di più o revocare il tuo consenso, consulta la nostra <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Informativa sulla privacy</a>.",
@@ -217,13 +285,24 @@
     "all_sources": "All Data Souces",
     "web_mobile": "Web and Mobile",
     "email": "email",
-    "sms": "sms",
+    "sms": "SMS",
     "twitter": "twitter",
     "all_crowdsourced": "All Crowdsourced Surveys",
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
     "crowdsourced_activity": "Crowdsourced Survey Activity",
-    "tooltip_template": "This is the single point tooltip template"
+    "tooltip_template": "This is the single point tooltip template",
+    "select_range": "Select range",
+    "select_filter": "Select filter",
+    "show_all_posts": "Show all posts",
+    "categories": "Categorie",
+    "survey": "Indagine",
+    "status": "Stato",
+    "statuses": "Statuses",
+    "all_time": "Sempre",
+    "last_week": "Last week",
+    "last_month": "Last month",
+    "last_year": "Last year"
   },
   "form": {
     "add_field": "Aggiungi campo",
@@ -252,7 +331,7 @@
     "edit_post_type": "Modifica indagine: {{form}}",
     "edit_post_types": "Modifica indagine",
     "field_add_option": "Aggiungi",
-    "field_add_other": "Add other",
+    "field_add_other": "Aggiungi altri",
     "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
     "field_default": "Campo Predefinito",
     "field_key": "Campo chiave",
@@ -260,7 +339,7 @@
     "field_name": "Nome campo",
     "field_options": "Opzioni campo",
     "field_key_placeholder": "campo chiave",
-    "field_name_placeholder": "Name this field",
+    "field_name_placeholder": "Nomina questo campo",
     "field_option_placeholder": "Opzione 1",
     "field_required": "Questo campo è obbligatorio",
     "form_name": "Nome",
@@ -295,7 +374,14 @@
     "no_fields": "Nessun campo",
     "select_color": "Seleziona il colore",
     "choose_survey": "Scegli l'indagine",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "Delete task",
     "duplicate_survey": "Duplicate",
     "main_info": "Informazioni principali",
@@ -306,14 +392,17 @@
     "special_characters_option": "Questa opzione contiene caratteri speciali",
     "show_this_task_to": "Show this task to everyone when published",
     "show_this_task_to_desc": "When a survey response is published, data from this task will be displayed.",
-    "survey_name": "Survey name",
+    "survey_name": "Nome sondaggio",
     "describe_your_survey": "Describe your survey...",
     "describe_this_task": "Describe this task...",
+    "create_survey": "Create survey",
+    "update_survey": "Update survey",
     "untitled_task": "Untitled task",
     "add_task": "Aggiungi compito",
     "title": "Titolo",
     "field_allowed_relation_survey": "Indagini consentite",
     "collect_image_caption": "Include image caption field",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "This will disable and hide all existing captions for this field, but you can re-enable them at any time.",
     "description": "Descrizione",
     "task_description": "Descrizione compito",
@@ -324,20 +413,23 @@
     "text_desc": "Una frase o meno",
     "short_text": "Short text",
     "long_text": "Long text",
-    "number_decimal": "Number (Decimal)",
-    "number_integer": "Number (Integer)",
-    "location": "Location",
-    "date": "Date",
-    "datetime": "Date & Time",
-    "select": "Select",
+    "number_decimal": "Numero (Decimale)",
+    "number_integer": "Numero (Intero)",
+    "location": "Posizione",
+    "date": "Data",
+    "datetime": "Data e Ora",
+    "select": "Seleziona",
+    "select_other_name": "A dropdown List",
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
-    "related_post": "Related Post",
-    "related_post_info": "Si prega di notare che i post a cui riferirsi devono essere pubblicati, i post che sono \"In fase di revisione\" non appariranno nei risultati di ricerca",
-    "upload_image": "Image",
-    "embed_video": "Embed video",
+    "related_post": "Post correlati",
+    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
+    "upload_image": "Immagine",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
+    "embed_video": "Incorpora video",
     "markdown": "Markdown",
-    "categories": "Categories",
+    "categories": "Categorie",
     "textarea_desc": "Multiple sentences or paragraphs",
     "decimal_desc": "Un numero con decimali",
     "integer_desc": "Un numero intero",
@@ -348,33 +440,39 @@
     "radio_desc": "Consenti all'utente di selezionare solo uno dei gruppi di opzioni predefiniti.",
     "checkbox_desc": "Consenti all'utente di selezionare uno o più dei gruppi di opzioni predefiniti.",
     "relation_desc": "Crea un collegamento tra indagini differenti",
-    "upload_desc": "Consenti il caricamento di immagini alla segnalazione",
+    "upload_desc": "Upload one or more image file(s)",
+    "audio_desc": "Upload one or more audio file(s)",
+    "document_desc": "Upload one or more document file(s)",
     "video_desc": "Allows Youtube or Vimeo videos to be embed in the post",
+    "maximum_upload_size" : "Maximum Upload Size",
+    "small_upload_size" : "Small",
+    "medium_upload_size" : "Medium",
+    "large_upload_size" : "Large",
     "markdown_desc": "Allows the use of markdown syntax to style the field content.",
     "tasks": "Compiti",
     "task_visible_when_published": "This task will be visible when post is published.",
-    "show_field_description": "Add field description (optional):",
+    "show_field_description": "Aggiungi descrizione del campo (opzionale):",
     "add_field": "Aggiungi campo",
     "edit_field": "Modifica campo",
     "build": "Build",
-    "configure": "Configure",
+    "configure": "Configura",
     "require_section": "Require this task be completed before a post can be visible to the public",
-    "hide_author_information": "Hide author information",
+    "hide_author_information": "Nascondi informazioni sull'autore",
     "hide_author_information_desc": "Only people with permission to edit responses will be able to see who submitted them; and only when editing them.",
     "hide_location_information": "Hide exact location information",
     "hide_location_information_desc": "Only people with permission to edit responses will be able to see exact locations. Other people will see rounded locations. The location will be accurate to {{precision}}km.",
     "hide_time_information": "Hide exact time information",
     "hide_time_information_desc": "Only people with permission to edit responses will be able to see exact time submitted. Other people will see only the date.",
-    "share": "Share",
+    "share": "Condividi",
     "task_name": "Nome compito",
-    "required_field": "Required",
-    "required": "Required",
+    "required_field": "Richiesto",
+    "required": "Richiesto",
     "required_desc": "Require this task be completed before a post can be visible to the public.",
     "require_field_desc": "Require this field be completed",
     "name_this_task": "Nomina questo compito",
     "require_review": "Require posts to be reviewed before they're published",
     "require_review_desc": "New responses to this survey will be put 'under review', and therefore not immediately visible to the public. Users with permission to review the response can review and 'publish' them, which would then make them visible to everyone.",
-    "require_task": "Required",
+    "require_task": "Richiesto",
     "make_response_private": "Make responses private",
     "response_private_desc": "Only people with permission to edit responses can see responses to this field",
     "require_task_desc": "Require this task be completed before a post can be visible to the public",
@@ -385,7 +483,7 @@
     "choose_survey_field": "Choose what should be assigned to each survey field",
     "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
-    "view_detail": "Detail",
+    "view_detail": "Dettaglio",
     "no_options_for_this_field": "Nessuna opzione per questo campo",
     "add_options_first": "Aggiungi prima le opzioni",
     "delete": {
@@ -423,22 +521,22 @@
     "targeted_survey": {
       "title": "Create a new targeted survey",
       "description": "Send questions via SMS to a list of those phone numbers.",
-      "name_title": "Name your survey",
-      "name": "Survey name",
-      "description_title": "Survey Description",
+      "name_title": "Nomina il tuo sondaggio",
+      "name": "Nome sondaggio",
+      "description_title": "Descrizione sondaggio",
       "audience_title": "Choose your audience",
-      "add_questions_title": "Add your questions",
+      "add_questions_title": "Aggiungi le tue domande",
       "add_questions_description": "We will send each question as a separate SMS. After someone responds, we will send the next question in the survey.",
-      "add_another": "Add another question...",
-      "add_a_question": "Add a question...",
-      "edit_title": "Edit question",
-      "new_question_title": "New Question",
-      "question_text": "Question text",
+      "add_another": "Aggiungi un'altra domanda...",
+      "add_a_question": "Aggiungi una domanda...",
+      "edit_title": "Modifica domanda",
+      "new_question_title": "Nuova domanda",
+      "question_text": "Testo della domanda",
       "question_description": "This is what users will see when they go to your survey.",
       "sample_question": "Sample question: Hi there! How are you feeling today? Your response is free.",
       "char_remains": "{{remaining}}/160 characters remaining",
-      "publish": "Publish survey",
-      "delete": "Delete",
+      "publish": "Pubblica il sondaggio",
+      "delete": "Cancella",
       "send_to_old_number_warning": "If you are messaging a number that you have messaged in the past, that person's responses will always apply to the most recent survey. They will no longer be able to reply to previous unanswered survey questions.",
       "publish_description_many": "We will send {{questions}} questions to {{numbers}} people via SMS for a total of {{total_sms_messages}} messages. Your telecommunications provider will charge you for each message. Please be careful about the costs you will incur by sending this survey. This action cannot be undone.",
       "publish_description_one_question": "We will send {{questions}} question to {{numbers}} people via SMS for a total of {{total_sms_messages}} messages. Your telecommunications provider will charge you for each message. Please be careful about the costs you will incur by sending this survey. This action cannot be undone.",
@@ -480,10 +578,19 @@
       "error_contacts": "Some of the numbers you provided failed, please check your numbers and try again",
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
-      "cancel": "Cancel"
+      "cancel": "Annulla"
     }
   },
   "global_filter": {
+    "sources": {
+      "web": "Web",
+      "mobile": "Mobile",
+      "email": "E-mail",
+      "sms": "SMS",
+      "twitter": "Twitter",
+      "ussd": "USSD",
+      "whatsapp": "WhatsApp"
+    },
     "filter": "Filtro",
     "categories": {
       "categories": "Categorie",
@@ -518,8 +625,8 @@
       },
       "orderby": {
         "post_date": "Post Date",
-        "created": "Date created",
-        "updated": "Date updated"
+        "created": "Data di creazione",
+        "updated": "Data di aggiornamento"
       },
       "unlockedOnTop": {
         "filter_type_tag": "Unlocked posts on top"
@@ -530,8 +637,8 @@
       "order_group": {
         "orderby": {
           "post_date": "Post Date",
-          "created": "Date created",
-          "updated": "Date updated"
+          "created": "Data di creazione",
+          "updated": "Data di aggiornamento"
         },
         "order": {
           "desc": "Newest first",
@@ -542,8 +649,8 @@
       },
       "orderby": "Order by",
       "order_unlocked_on_top": "Unlocked posts on top",
-      "savedsearch": "Saved Search",
-      "saved_search": "Saved Search",
+      "savedsearch": "Ricerche Salvate",
+      "saved_search": "Ricerche Salvate",
       "q": "Parola chiave",
       "created_after": "Data di inizio",
       "created_before": "Data di fine",
@@ -564,7 +671,7 @@
       "all_posts": "Show all posts",
       "unmapped": "Show unmapped posts",
       "mapped": "Show posts with a location",
-      "source": "Source"
+      "source": "Sorgente"
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
@@ -599,9 +706,10 @@
     "date_range": "Intervallo data",
     "who_its_visible_to": "Per chi è visibile",
     "status": "Stato",
-    "source": "Source",
+    "source": "Sorgente",
     "saved_filters": "Saved filters",
     "saved_filter": "Filtro salvato",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Sei sicuro di voler eliminare questo filtro salvato?"
@@ -642,7 +750,7 @@
   "modal": {
     "button": {
       "close": "Chiudi",
-      "done": "Done"
+      "done": "Fatto"
     },
     "donation": {
       "thank_you_for_your_donation_start": "La monetizzazione web è abilitata su questo sito web. Grazie per la tua donazione. Tu hai donato",
@@ -670,7 +778,9 @@
     "collections": "Raccolte",
     "comments": "Commenti",
     "data_sources": "Fonti di dati",
-    "data_import": "Importa dati",
+    "data_source": "Data Source",
+    "data_import": "Data import",
+    "data_export": "Data export",
     "deployment_not_found": "Deployment Not Found",
     "deselect": "Deseleziona",
     "edit_profile": "Modifica profilo",
@@ -685,6 +795,7 @@
     "forgotyourpassword": "Password dimenticata?",
     "resetpassword": "Reimposta password",
     "resetmypassword": "Reimposta password",
+    "password_recovery": "Password recovery",
     "forms": "Moduli",
     "help": "Aiuto",
     "home": "Home",
@@ -694,6 +805,7 @@
     "help_support": "Aiuto e Supporto",
     "registration": "Registrati",
     "register": "Registrati",
+    "results": "Results",
     "map_settings": "Impostazioni mappa",
     "more": "Di più",
     "notifications": "Notifiche",
@@ -730,7 +842,9 @@
     "yesterday": "Ieri",
     "map": "Mappa",
     "data": "Dati",
-    "feed": "Visualizzazione dati"
+    "feed": "Visualizzazione dati",
+    "add_new_post":"Add New Post",
+    "edit_post": "Modifica segnalazione"
   },
   "views": {
     "map": "Mappa",
@@ -748,6 +862,7 @@
     "share_on_facebook": "Condividi su Facebook"
   },
   "post": {
+    "loading_posts": "Loading posts in {{ mode }} mode...",
     "post_count": "{{count}} messaggi",
     "see_more_plural": "See {{newPostsCount}} new posts",
     "see_more_singular": "See {{newPostsCount}} new post",
@@ -775,6 +890,9 @@
     "all_posts": "All posts",
     "no_search_results": "La tua ricerca non corrisponde ad alcuna segnalazione",
     "no_search_results_location": "La tua ricerca non ha trovato alcuna corrispondenza con post con informazioni sulla posizione",
+    "no_posts_match_search": "No posts match your keyword search. Please change or clear keyword search to see matching posts.",
+    "no_posts_match_search_plus_filter": "No posts match your keyword search + filters. Please change or clear keyword search and/or filters to see matching posts.",
+    "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
     "no_posts_yet": "Ancora nessuna segnalazione!",
     "no_posts_yet_location": "Non ci sono ancora post con informazioni sulla posizione!",
     "add_first_post": "Aggiungi la prima segnalazione",
@@ -856,8 +974,11 @@
       "unlocked": "Post successfully unlocked",
       "unlock": "Unlock",
       "lock_broken_by_other": "Your Post has been unlocked. Your current unsaved changes will be lost.",
-      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
+    "post_not_authorized": "You are not authorized to perform this action on this post.",
     "modify": {
       "intro": "Seleziona indagine:",
       "no_task_values": "Al momento non sono presenti valori salvati per questa attività.",
@@ -889,6 +1010,20 @@
           "url": "url Collegamento",
           "add_link": "Aggiungi collegamento"
         }
+      },
+      "input_empty_warn": "Input cannot be empty",
+      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "format": {
+        "image": "jpeg or png only",
+        "audio": "mp3, aac or ogg only",
+        "document": "PDF or Word only"
+      },
+      "invalid_video_embed": "Invalid video embed url",
+      "errors": {
+        "required" : "{{label}} field is a required field *",
+        "too_short": "{{label}} field is too short, use at least 2 characters",
+        "invvalid_pattern": "{{label}} field is invalid",
+        "special_char": "{{label}} field contains special characters"
       }
     },
     "preview": {
@@ -966,9 +1101,24 @@
       "add_caption": "Aggiungi didascalia",
       "upload": "Carica",
       "add_photo": "Add photo",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "Delete photo",
       "replace_image": "Replace image",
-      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
+      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
+      "messages": {
+        "max_size" : "Your file is too large.",
+        "max_files" : "You have exceeded the maximum number of files.",
+        "required" : "Media is required.",
+        "invalid_type" : "Unsupported file type."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
+      },
+      "special_char": "This field contains special characters"
     },
     "video": {
       "enter_a_url": "Enter a video URL from Youtube or Vimeo."
@@ -990,17 +1140,23 @@
       "you_can_search_or_click": "È possibile cercare o fare clic sull'area della mappa in cui si desidera posizionare l'indicatore.",
       "search_address": "Cerca indirizzi, nomi di luoghi o coordinate...",
       "nothing_found": "Nessun risultato",
+      "lng": "Lng",
+      "lat": "Lat",
       "errors": {
         "empty_lat": "La latitudine è un campo vuoto",
         "empty_lng": "La longitudine è un campo vuoto",
         "decimal_lat": "Numero decimale solo latitudine",
-        "decimal_lng": "Longitudine solo numero decimale"
+        "decimal_lng": "Longitudine solo numero decimale",
+        "special_lng": "Field longitude contains special characters",
+        "special_lat": "Field latitude contains special characters"
       }
     }
   },
   "role": {
     "are_you_sure_you_want_to_delete_role": "Sei sicuro di voler eliminare {{roleName}} ruolo?",
     "add_role": "Aggiungi ruolo",
+    "create_role": "Create role",
+    "update_role": "Update role",
     "edit_role": "Modifica ruolo",
     "name": "Nome",
     "description": "Descrizione",
@@ -1019,8 +1175,10 @@
     "only_me": "Solo io"
   },
   "webhook": {
-    "add_webhook": "Add Role",
+    "add_webhook": "Add Webhook ",
     "edit_webhook": "Edit Role",
+    "create_webhook": "Create webhook",
+    "update_webhook": "Update webhook",
     "uuid": "Webhook UUID",
     "name": "Name",
     "shared_secret": "Shared Secret",
@@ -1029,9 +1187,13 @@
     "event_type": "Event Type",
     "save": "Save Role",
     "save_add_another": "Save & Add Another",
-    "delete": "Delete",
+    "delete": "Cancella",
     "delete_webhook": "Delete this webhook",
-    "delete_webhook_desc": "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution."
+    "delete_webhook_desc": "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution.",
+    "dialog": {
+      "delete_warn_title": "{{ name }} webhook will be deleted!",
+      "delete_warn_message": "<p>Questa azione non può essere annullata.</p><p>Sei sicuro?</p>"
+    }
   },
   "saved_search": {
     "visible_to_public": "Questa ricerca salvata è visibile a tutti",
@@ -1091,7 +1253,8 @@
     "create_saved_filter": "Crea filtro salvato",
     "collection_saved": "Collection saved.",
     "collection_updated": "Collection updated.",
-    "collection_description": "You can add posts to your collection from the Data view"
+    "collection_description": "You can add posts to your collection from the Data view",
+    "collection_definition": " A \"Collection\" is a manually-curated group of posts. You may find it useful in grouping posts that you would like to share with external partners. It is not dynamic, meaning the posts within it do not change unless you manually update them."
   },
   "category": {
     "add_tag": "Aggiungi categoria",
@@ -1101,10 +1264,11 @@
     "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
     "show_categories": "Show available categories",
     "child_permissions": "Permissions for this category are managed by the parent category.",
-    "which_categories": "Quali categorie dovrebbero essere disponibili",
+    "which_categories": "Which categories should be available?",
     "select_all": "Seleziona tutto",
     "choose_roles": "Seleziona Ruoli",
     "create_tag": "Crea Categoria",
+    "update_tag": "Update Category",
     "saved_tag": "Categoria salvata.",
     "deleted_tags": "Categorie eliminate",
     "manage_tags": "Gestisci Categorie",
@@ -1176,9 +1340,9 @@
       "data_sources_desc": "Configura e-mail, SMS e canali social media che aiutano la tua causa a raccogliere dati d'indagine.",
       "import": "Importa",
       "import_desc": "Carica dati d'indagine alla tua causa da file CSV.",
-      "user_settings": "Configure HDX API",
+      "user_settings": "Configura le API HDX",
       "user_settings_desc": "Configure your API so that your tagged Ushahidi data can be uploaded to your Humanitarian Data Exchange (HDX) account.",
-      "export": "Export data",
+      "export": "Esporta dati",
       "export_hxl": "Export and tag data",
       "export_desc_hxl": "Export your data as a CSV file or assign tags and attributes to your data and upload directly to a Humanitarian Data Exchange (HDX) account or export as a tagged CSV file.",
       "export_desc": "Export all of your data as a CSV file or choose custom fields to export",
@@ -1201,7 +1365,11 @@
       "api_key": "Chiave API",
       "placeholder": {
         "pick_location": "Scegli la posizione..."
-      }
+      },
+      "satellite": "Satellite",
+      "streets": "Streets",
+      "humanitarian": "Humanitarian"
+      
     },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1250,6 +1418,13 @@
       "provider_name": "{{providerName}} origine dati?",
       "do_you_really_want_to_disconnect": "Vuoi davvero disconnettere il tuo provider?",
       "add_source": "Aggiungi sorgente",
+      "providers": {
+        "supported": "Supported",
+        "unsupported": "Unsupported Data Sources",
+        "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
+      },
+      "edit": "Edit {{provider}} Data Source",
+      "add_data_source": "Add Data Source",
       "associate_with_form": "Import to survey",
       "associate_with_form_desc": "All incoming data from {{provider}} will be used to create responses to the survey you choose",
       "data_sources": "Fonti di dati",
@@ -1443,7 +1618,7 @@
     "see_imported_posts": "Vedi segnalazioni importate",
     "import_another_csv": "Importa un altro file CSV",
     "import_complete": "Importato",
-    "import_error": "An error has occurred importing your CSV file.",
+    "import_error": "Si è verificato un errore importando il file CSV.",
     "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
     "get_polling_info": "Ottenere informazioni sui sondaggi",
     "import_another": "Importa un altro file CSV",
@@ -1482,23 +1657,23 @@
     "which_survey": "quale indagine?"
   },
   "data_export": {
-    "title": "Export data",
+    "title": "Esporta dati",
     "title_hxl": "Export and tag data",
     "description": "Export all of your data as a CSV or choose specific survey fields you want to export.",
     "description_hxl": "Export all of your data from Ushahidi as a CSV, choose specific survey fields you want to export as a CSV or assign",
-    "export": "Export",
-    "export_history": "Export History",
-    "hxl_tags": "HXL tags",
-    "hxl_attributes": "HXL attributes",
+    "export": "Esporta",
+    "export_history": "Esporta Storia",
+    "hxl_tags": "Tag HXL",
+    "hxl_attributes": "Attributi HXL",
     "and_choose": "and choose to upload to an",
     "HDX": "Humanitarian Data Exchange",
     "account": "account or download as a HXL 'tagged' CSV file.",
     "all": "Export all data",
-    "select_fields": "Select fields",
-    "select_fields_title": "Select fields for export...",
+    "select_fields": "Seleziona campi",
+    "select_fields_title": "Seleziona campi da esportare",
     "select_fields_desc": "If you don't want to export all of your data at once, you can select specific fields from each survey for export.",
-    "export_selected": "Export selected fields",
-    "cancel": "Cancel",
+    "export_selected": "Esporta i campi selezionati",
+    "cancel": "Annulla",
     "export_progress": "<p>Export in progress... </p><p>You can leave this page if you want. Your export will continue.</p><p> We will let you know when we're done.</p>",
     "no_fields": "Uh oh... you need to select some fields to export first.",
     "expires": "<strong>Expires:</strong> {{expires}}",
@@ -1508,11 +1683,11 @@
     "pending": "<strong>Status:</strong> Pending",
     "failed": "<strong>Status:</strong> Failed",
     "queued": "<strong>Status:</strong> In Progress",
-    "pending_hdx": "Pending HDX",
-    "exported_to_cdn": "Exported to CDN",
-    "tags_attributes": "Assign tags and attributes",
+    "pending_hdx": "HDX Pendenti",
+    "exported_to_cdn": "Esportato su CDN",
+    "tags_attributes": "Assegna tag e attributi",
     "hxl_apikey_alert_1": "It looks like you haven't set up your Humanitarian Data Exchange (HDX) API. Without this set up, you can't tag data and upload to a Humanitarian Data Exchange (HDX) account.",
-    "hxl_configure": "Configure HDX API",
+    "hxl_configure": "Configura le API HDX",
     "hxl_apikey_alert_2": "We strongly advide you set this up now in",
     "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX",
     "hxl_title": "Assign your HXL tags and attributes, select fields and export or upload",
@@ -1520,25 +1695,25 @@
     "hxl_instructions_1": "You can then choose to export your tagged fields to a CSV file or upload to a",
     "hxl_instructions_2": "Humanitarian Data Exchange (HDX)",
     "hxl_instructions_3": "account that has been set up in",
-    "hxl_instructions_4": "Configure HDX API",
+    "hxl_instructions_4": "Configura le API HDX",
     "hxl_instructions_5": "(found in settings menu).",
     "hxl_instructions_6": "Visit the",
     "hxl_instructions_7": "HXL tag assist",
     "hxl_instructions_8": "for more information on how to choose the best HXL tags and attributes for your data or the",
     "hxl_instructions_9": "HXL 'cheat sheet'",
-    "HXL_tags": "HXL tags",
-    "HXL_attributes": "HXL attributes",
+    "HXL_tags": "Tag HXL",
+    "HXL_attributes": "Attributi HXL",
     "tag_preview": "Tag preview",
     "upload_title": "Are you ready to upload to an Humanitarian Data Exchange (HDX) account?",
     "hdx_csv_title": "Are you ready to export to CSV?",
     "upload_desc": "You selected {{fields}} fields to upload to a Humanitarian Data Exchange (HDX) account. <br /> <br /> You assigned tags and attributes - to check, you can go back. If you are done, you can add details and upload. <br /> <br /> The Humanitarian Data Exchange (HDX) requires a few more details in order to upload to their system. You'll add these next",
     "hdx_csv_desc": "You selected {{fields}} fields to export to CSV.<br /> <br /> You assigned tags and attributes - to check these are correct, you can go back and check. If you're done, you can export.",
     "upload_button": "Add dataset details and upload to hdx",
-    "export_button": "Export to csv",
+    "export_button": "Esporta in csv",
     "go_back": "Go back and check",
-    "add_details": "Add details",
+    "add_details": "Aggiungi dettagli",
     "details_desc": "To upload to the Humanitarian Data Exchange (HDX) some extra details are required.",
-    "privacy_title": "Privacy Settings",
+    "privacy_title": "Impostazioni Privacy",
     "privacy_desc": "You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.",
     "this_dataset": "This data set is:",
     "private_desc": "<strong>Private</strong> (Only you and other HDX members of your organisation can <strong>search, view/edit</strong> or <strong> download </strong> this dataset)",
@@ -1546,26 +1721,27 @@
     "dataset": "Dataset Title & Description",
     "dataset_desc": "When users search for data on HDX, their search terms will be matched to terms in your title. Avoid using abbreviations in the title which may not be familiar to all users. Also, avoid using words such as current, latest or previous when referring to the time period (e.g Latest 3W) as these terms become misleading as the dataset ages.",
     "dataset_example": "Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
-    "dataset_title": "Title of data set",
-    "metadata_title": "Metadata",
+    "dataset_title": "Titolo del data set",
+    "metadata_title": "Metadati",
     "metadata_desc": "Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields.",
-    "source": "Source",
-    "organisation": "Organisation",
-    "select_organisation": "Select an organisation",
-    "license": "License",
-    "add_license": "Add license",
+    "source": "Sorgente",
+    "organisation": "Organizzazione",
+    "select_organisation": "Seleziona un'organizzazione",
+    "license": "Licenza",
+    "add_license": "Aggiungi licenza",
     "read_more_licenses": "Read more about licenses",
     "submit_hdx": "Submit to HDX Account",
     "uploading_data": "Uploading data...",
     "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
     "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+    "data_export_err":"Failed to export",
     "no_fields_selected": "You haven't selected any fields or assigned any hxl tags or attributes. Please select at least one field and assign at least one tag to be able to export to CSV or upload to a Humanitarian Data Exchange (HDX) account.",
     "validation": {
-      "title": "A title is needed",
+      "title": "E' necessario un titolo",
       "source": "Source is needed",
-      "organisation": "An organisation is needed",
-      "license": "A license is needed",
-      "all_fields": "Please fill in all required fields"
+      "organisation": "E' necessaria un'organizzazione",
+      "license": "E' necessaria una licenza",
+      "all_fields": "Per favore compila tutti i campi richiesti"
     }
   },
   "user": {
@@ -1573,6 +1749,8 @@
     "role_display": "Role: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "Aggiungi Utente",
+    "create_user": "Create user",
+    "update_user": "Update user",
     "edit_user": "Modifica utente",
     "update_password": "Aggiorna password",
     "change_role": "Cambia ruolo",
@@ -1609,11 +1787,15 @@
     "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Passwords do not match",
+    "enter_new_password": "Enter your new password",
+    "password_change_success": "Your password was successfully changed",
+    "password_change_success_info": "Now you can login with new credentials",
     "check_email": "Check your email",
     "name_will_be_a_display_name": "Il nome immesso sarà un nome visualizzato.",
     "valid": {
       "fields": {
-        "email must be unique": "Un utente con questa e-mail esiste già"
+        "email must be unique": "Un utente con questa e-mail esiste già",
+        "email must be valid": "Email must be a valid email address"
       },
       "name": {
         "required": "Il nome visualizzato è obbligatorio",
@@ -1688,6 +1870,8 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Risorsa salvata",
       "save_error": "Impossibile salvare la risorsa. Riprova",
@@ -1732,7 +1916,7 @@
       "okay": "Ok",
       "alerts": "Avvisi",
       "confirm": "Conferma",
-      "save": "Save"
+      "save": "Salva"
     },
     "login": {
       "failed": "Accesso non riuscito. Controlla e-mail e password."
@@ -1767,7 +1951,7 @@
       "update_status_success_bulk": "Stato aggiornato per {{count}} segnalazioni",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving",
+      "leave_confirm": "Continua senza salvare",
       "unfinished_post_task": "Non puoi pubblicare questo post, il post ha attività incompiute",
       "posts_can_t_be_published": "I seguenti post non possono essere pubblicati: {{titles}}",
       "post_not_found": "Articolo non trovato"
@@ -1834,11 +2018,11 @@
       "validation": {
         "name": {
           "required": "A survey-name is needed",
-          "minlength": "Name is too short",
-          "maxlength": "Name is too long"
+          "minlength": "Il nome è troppo breve",
+          "maxlength": "Il nome è troppo lungo"
         },
         "description": {
-          "required": "Description cannot be empty"
+          "required": "La descrizione non può essere vuota"
         }
       }
     },
@@ -1849,14 +2033,14 @@
       "add_to_collection": "Il messaggio è stato aggiunto a {{collection}}",
       "removed_from_collection": "Il messaggio è stato rimosso da {{collection}}",
       "bulk_add_to_collection": "Sono stati aggiunti {{count}} messaggi a {{collection}}",
-      "done": "Done"
+      "done": "Fatto"
     },
     "savedsearch": {
-      "delete_savedsearch_success": "Saved search deleted successfully.",
-      "delete_savedsearch_plural_success": "Saved searches deleted successfully.",
+      "delete_savedsearch_success": "La ricerca salvata è stata cancellata correttamente",
+      "delete_savedsearch_plural_success": "Le ricerche salvate sono state cancellate correttamente",
       "delete_savedsearch_confirm": "Eliminare questa ricerca salvata?",
-      "savedsearch_updated": "{{savedsearch}} was updated",
-      "savedsearch_saved": "{{savedsearch}} was saved"
+      "savedsearch_updated": "{{savedsearch}} aggiornata",
+      "savedsearch_saved": "{{savedsearch}} salvata"
     },
     "passwordreset": {
       "failed": "Reimpostazione password non riuscita",
@@ -1884,12 +2068,17 @@
       "bulk_destroy_confirm_desc": "Deleting these {{count}} selected surveys will also delete all collected posts and all associated data in the surveys. This step cannot be reversed.",
       "destroy_confirm": "Are you sure you want to delete this survey?",
       "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
-      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting."
+      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
+      "discard_changes": "Discard changes",
+      "save_changes": "Save Changes",
+      "back_to_editing": "Back to editing",
+      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
+      "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
     "confirm_modal": {
       "add_post_success": {
         "success": "Riuscito!",
-        "success_description": "Grazie per aver inviato la tua segnalazione. Il post è in fase di revisione da parte del nostro team e presto apparirà sulla piattaforma.",
+        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
         "success_button": "OK, suona bene"
       },
       "deleted": {
@@ -1897,6 +2086,11 @@
         "success_description": "Hai eliminato definitivamente {{count}} post.",
         "success_button": "OK, suona bene"
       }
+    },
+    "snackbar": {
+      "changes_discarded": "Changes discarded successfully",
+      "no_changes_made": "No changes made yet",
+      "close": "Chiudi"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Vuoi davvero eliminare {{lang}} lingua?"
@@ -1917,10 +2111,10 @@
     "use_current_location": "Use your current location",
     "click_map": "<em>You can search or click the area of map where you want to place the marker.</em>",
     "placeholder": "Search for addresses, place names, or coordinates...",
-    "search_results": "Search results",
+    "search_results": "Risultati di ricerca",
     "error": "Spiacenti, impossibile trovare una posizione che corrisponde alla ricerca",
     "my_location_error": "Sorry we could not find your location",
-    "update_map": "Update map",
+    "update_map": "Aggiorna mappa",
     "no_matching_locations": "No matching locations",
     "invalid_lat": "Il valore specificato non è una latitudine valida.",
     "invalid_lon": "Il valore specificato non è una longitudine valida."
@@ -1972,21 +2166,26 @@
     }
   },
   "terms_of_service": {
-    "title": "Ushahidi Terms of Service",
+    "title": "Termini di Servizio di Ushahidi",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
-    "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue",
+    "agree": "Accetto i Termini di Servizio di Ushahidi",
+    "accept_and_continue": "Accetta e Continua",
     "i_agree": "Accetto <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">l'Informativa sulla privacy</a> di Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Termini e condizioni</a>."
   },
   "translations": {
+    "available_languages": "Available translations (select to see post):",
+    "translate_post": "Translate post",
+    "translate_post_to": "Translate post to {{language}}",
     "languages": "Lingue",
     "language": "Lingua",
     "default": "predefinito",
+    "default_language": "Original language",
+    "text_in_original": "Text in original language:",
+    "translation_default": "(default)",
     "translate_field": "Traduci campo",
     "survey_select_default": "Seleziona la lingua predefinita per questa indagine",
     "category_select_default": "Seleziona la lingua predefinita per questa categoria",
     "error_translation_exists": "Non è possibile selezionare questa lingua poiché esiste già una traduzione.",
-    "edit_default_text": "Testo nella lingua predefinita",
     "edit_placeholder": "Scrivi qui la tua traduzione",
     "add_translation": "Aggiungi la tua traduzione qui sotto:",
     "survey_name_required": "È richiesta la traduzione per il nome dell'indagine",
@@ -2000,7 +2199,12 @@
     "add_a_language": "Aggiungere una lingua",
     "error_no_default": "È necessario specificare una lingua predefinita prima di aggiungere una nuova traduzione.",
     "select_language": "Seleziona una lingua per la quale aggiungere la traduzione",
-    "default_lang_info": "Questa è la lingua che verrà utilizzata se non sono disponibili traduzioni per la lingua impostata dall'utente per la distribuzione."
+    "select_translate_edit": "Select a language to translate to, or edit:",
+    "default_lang_info": "Questa è la lingua che verrà utilizzata se non sono disponibili traduzioni per la lingua impostata dall'utente per la distribuzione.",
+    "translated_to": "Translated to {{language}}",
+    "viewing_translated":"You are viewing a translated version of this post.",
+    "view_original":"View original post",
+    "change_lang": "Change language"
   },
   "languages": {
     "ach": "Acholi",
@@ -2431,8 +2635,8 @@
     "Bahrain": "Bahrain",
     "Bangladesh": "Bangladesh",
     "Barbados": "Barbados",
-    "Belarus": "Belarus",
-    "Belgium": "Belgium",
+    "Belarus": "Bielorussia",
+    "Belgium": "Belgio",
     "Belize": "Belize",
     "Benin": "Benin",
     "Bermuda": "Bermuda",
@@ -2465,7 +2669,7 @@
     "Cook Islands": "Cook Islands",
     "Costa Rica": "Costa Rica",
     "Cote d'Ivoire": "Cote d'Ivoire",
-    "Croatia": "Croatia",
+    "Croatia": "Croazia",
     "Cuba": "Cuba",
     "Cyprus": "Cyprus",
     "Czech Republic": "Czech Republic",
@@ -2479,7 +2683,7 @@
     "Equatorial Guinea": "Equatorial Guinea",
     "Eritrea": "Eritrea",
     "Estonia": "Estonia",
-    "Ethiopia": "Ethiopia",
+    "Ethiopia": "Etiopia",
     "Falkland Islands (Malvinas)": "Falkland Islands (Malvinas)",
     "Faroe Islands": "Faroe Islands",
     "Fiji": "Fiji",
@@ -2491,12 +2695,12 @@
     "Gabon": "Gabon",
     "Gambia": "Gambia",
     "Georgia": "Georgia",
-    "Germany": "Germany",
+    "Germany": "Germania",
     "Ghana": "Ghana",
     "Gibraltar": "Gibraltar",
     "Greece": "Greece",
     "Greenland": "Greenland",
-    "Grenada": "Grenada",
+    "Grenada": "Granada",
     "Guadeloupe": "Guadeloupe",
     "Guam": "Guam",
     "Guatemala": "Guatemala",
@@ -2518,7 +2722,7 @@
     "Ireland": "Ireland",
     "Isle of Man": "Isle of Man",
     "Israel": "Israel",
-    "Italy": "Italy",
+    "Italy": "Italia",
     "Jamaica": "Jamaica",
     "Japan": "Japan",
     "Jersey": "Jersey",
@@ -2538,14 +2742,14 @@
     "Liberia": "Liberia",
     "Libyan Arab Jamahiriya": "Libyan Arab Jamahiriya",
     "Liechtenstein": "Liechtenstein",
-    "Lithuania": "Lithuania",
+    "Lithuania": "Lituania",
     "Luxembourg": "Luxembourg",
     "Macao": "Macao",
     "Macedonia": "Macedonia",
     "Madagascar": "Madagascar",
     "Malawi": "Malawi",
     "Malaysia": "Malaysia",
-    "Maldives": "Maldives",
+    "Maldives": "Maldive",
     "Mali": "Mali",
     "Malta": "Malta",
     "Marshall Islands": "Marshall Islands",
@@ -2553,15 +2757,15 @@
     "Mauritania": "Mauritania",
     "Mauritius": "Mauritius",
     "Mayotte": "Mayotte",
-    "Mexico": "Mexico",
+    "Mexico": "Messico",
     "Micronesia, Federated States of Micronesia": "Micronesia, Federated States of Micronesia",
-    "Moldova": "Moldova",
+    "Moldova": "Moldavia",
     "Monaco": "Monaco",
     "Mongolia": "Mongolia",
     "Montenegro": "Montenegro",
     "Montserrat": "Montserrat",
-    "Morocco": "Morocco",
-    "Mozambique": "Mozambique",
+    "Morocco": "Marocco",
+    "Mozambique": "Mozambico",
     "Myanmar": "Myanmar",
     "Namibia": "Namibia",
     "Nauru": "Nauru",
@@ -2585,7 +2789,7 @@
     "Papua New Guinea": "Papua New Guinea",
     "Paraguay": "Paraguay",
     "Peru": "Peru",
-    "Philippines": "Philippines",
+    "Philippines": "Filippine",
     "Pitcairn": "Pitcairn",
     "Poland": "Poland",
     "Portugal": "Portugal",
@@ -2593,7 +2797,7 @@
     "Qatar": "Qatar",
     "Romania": "Romania",
     "Russia": "Russia",
-    "Rwanda": "Rwanda",
+    "Rwanda": "Ruanda",
     "Reunion": "Reunion",
     "Saint Barthelemy": "Saint Barthelemy",
     "Saint Helena, Ascension and Tristan Da Cunha": "Saint Helena, Ascension and Tristan Da Cunha",
@@ -2605,7 +2809,7 @@
     "Samoa": "Samoa",
     "San Marino": "San Marino",
     "Sao Tome and Principe": "Sao Tome and Principe",
-    "Saudi Arabia": "Saudi Arabia",
+    "Saudi Arabia": "Arabia Saudita",
     "Senegal": "Senegal",
     "Serbia": "Serbia",
     "Seychelles": "Seychelles",
@@ -2624,8 +2828,8 @@
     "Suriname": "Suriname",
     "Svalbard and Jan Mayen": "Svalbard and Jan Mayen",
     "Swaziland": "Swaziland",
-    "Sweden": "Sweden",
-    "Switzerland": "Switzerland",
+    "Sweden": "Svezia",
+    "Switzerland": "Svizzera",
     "Syrian Arab Republic": "Syrian Arab Republic",
     "Taiwan": "Taiwan",
     "Tajikistan": "Tajikistan",
@@ -2635,9 +2839,9 @@
     "Togo": "Togo",
     "Tokelau": "Tokelau",
     "Tonga": "Tonga",
-    "Trinidad and Tobago": "Trinidad and Tobago",
+    "Trinidad and Tobago": "Trinidad Tobago",
     "Tunisia": "Tunisia",
-    "Turkey": "Turkey",
+    "Turkey": "Turchia",
     "Turkmenistan": "Turkmenistan",
     "Turks and Caicos Islands": "Turks and Caicos Islands",
     "Tuvalu": "Tuvalu",
