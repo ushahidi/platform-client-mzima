@@ -1,9 +1,44 @@
 {
+  "onboarding": {
+    "greeting": "Hello {{username}}!",
+    "intro": "<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>",
+    "ready": "You're ready!",
+    "data_collection": {
+      "title": "Data collection",
+      "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
+    },
+    "filtering": {
+      "title": "Filtering",
+      "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+    },
+    "sorting": {
+      "title": "Sorting",
+      "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
+    },
+    "activity": {
+      "title": "Активность",
+      "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
+    },
+    "collections": {
+      "title": "Коллекции",
+      "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
+    },
+    "settings": {
+      "title": "Настройки",
+      "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
+    },
+    "final_step": {
+      "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
+      "desc_2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
+      "help": "Помощь и поддержка"
+    }
+  },
   "app": {
     "contact_email_address": "Контактный адрес электронной почты:",
     "powered_by_ushahidi": "На базе Ushahidi. ",
     "support": "Служба поддержки пользователей Ushahidi",
     "by": "от",
+    "confirm": "Confirm",
     "submit": "Отправить",
     "anonymous": "Анонимный",
     "submitting": "Отправка данных",
@@ -69,6 +104,7 @@
     "more": "Подробнее",
     "cancel": "Отменить",
     "save": "Сохранить",
+    "date_shows_up_here": "Date shows up here",
     "save_and_close": "Сохранить и закрыть",
     "update": "Обновить",
     "update_and_close": "Обновить и закрыть",
@@ -93,7 +129,7 @@
     "add_role": "Добавить роль",
     "webhooks": "Webhooks",
     "edit_webhook": "Edit Webhook",
-    "add_webhook": "Add Webhook",
+    "add_webhook": "Add Webhook ",
     "categories": "Категории",
     "edit_category": "Редактировать категорию",
     "add_category": "Добавить категорию",
@@ -114,6 +150,7 @@
     "close_and_view": "Close and view results",
     "show_more_less": "Показать больше/меньше",
     "filters": "Фильтры",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Фильтр по исследованию",
     "configure": "Настроить",
     "post": "Публикация",
@@ -150,6 +187,7 @@
     "you_are_not_authorized": "У вас нет полномочий на выполнение данного действия",
     "lost_internet_connection": "Потеря подключения к Интернету",
     "tweet_is_unavailable": "Этот твит недоступен",
+    "tweet_failed_to_load": "Tweet failed to load",
     "file_uploader": "Загрузчик файлов",
     "preview_image": "Предварительный просмотр изображения",
     "privacy_policy": "Политика конфиденциальности",
@@ -164,8 +202,38 @@
     "we_ve_updated_deployments_to_version_5": "Мы обновили развертывания до версии 5. В ближайшее время у пользователей может не быть доступа к вашему развертыванию. ",
     "for_more_details_on_deployment_update": "Для получения более подробной информации об обновлении развертывания перейдите в раздел «Справка и поддержка» (это должна быть ссылка) или отправьте электронное письмо по адресу:",
     "open_chat": "Открыть чат",
-    "end_post": "End of Posts"
+    "end_post": "End of Posts",
+    "read_more": "Подробнее"
   },
+  "date": {
+    "aLongTimeAgo": "a long time ago",
+    "justNow": "just now",
+    "aMomentAgo": "a moment ago",
+    "second": {
+      "singular": "{{time}} second ago",
+      "plural": "{{time}} seconds ago"
+    },
+    "minute": {
+      "singular": "{{time}} minute ago",
+      "plural": "{{time}} minutes ago"
+    },
+    "hour": {
+      "singular": "{{time}} hour ago",
+      "plural": "{{time}} hours ago"
+    },
+    "day": {
+      "singular": "{{time}} day ago",
+      "plural": "{{time}} days ago"
+    },
+    "month": {
+      "singular": "{{time}} month ago",
+      "plural": "{{time}} months ago"
+    },
+    "year": {
+      "singular": "{{time}} year ago",
+      "plural": "{{time}} years ago"
+    }
+},
   "cookies": {
     "we_use_cookies": "Как ты! Мы используем файлы cookie, чтобы сделать ваш опыт лучше.",
     "cookies_privacy": "Если вы хотите узнать больше или отозвать свое согласие, ознакомьтесь с нашей <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Политикой конфиденциальности</a>.",
@@ -223,7 +291,18 @@
     "no_crowdsourced": "У вас нет данных краудсорсинг-опросов для отображения.",
     "targeted_activity": "Активность по Целевым Опросам",
     "crowdsourced_activity": "Активность по краудсорсинговым опросам",
-    "tooltip_template": "This is the single point tooltip template"
+    "tooltip_template": "This is the single point tooltip template",
+    "select_range": "Select range",
+    "select_filter": "Select filter",
+    "show_all_posts": "Показать все публикации",
+    "categories": "Категории",
+    "survey": "Опрос",
+    "status": "Статус",
+    "statuses": "Statuses",
+    "all_time": "Постоянно",
+    "last_week": "Last week",
+    "last_month": "Last month",
+    "last_year": "Last year"
   },
   "form": {
     "add_field": "Добавить поле",
@@ -295,7 +374,14 @@
     "no_fields": "Полей нет",
     "select_color": "Выберите цвет",
     "choose_survey": "Выбрать опрос",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "Удалить задачу",
     "duplicate_survey": "Продублировать",
     "main_info": "Основная информация",
@@ -309,11 +395,14 @@
     "survey_name": "Название опроса",
     "describe_your_survey": "Опишите ваш опрос...",
     "describe_this_task": "Опишите эту задачу...",
+    "create_survey": "Create survey",
+    "update_survey": "Update survey",
     "untitled_task": "Задача без названия",
     "add_task": "Добавить задачу",
     "title": "Заголовок",
     "field_allowed_relation_survey": "Разрешенные исследования",
     "collect_image_caption": "Включить поле заголовка изображения",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "Это отключит и скроет все существующие подписи для этого поля, но вы можете снова включить их в любое время.",
     "description": "Описание",
     "task_description": "Описание задачи",
@@ -330,11 +419,14 @@
     "date": "Дата",
     "datetime": "Дата и время",
     "select": "Список",
+    "select_other_name": "A dropdown List",
     "radio_button": "Радиокнопка (кнопки)",
     "checkbox": "Флажок (флажки)",
     "related_post": "Связанная публикация",
-    "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
+    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
     "upload_image": "Image",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
     "embed_video": "Embed video",
     "markdown": "Markdown",
     "categories": "Categories",
@@ -348,8 +440,14 @@
     "radio_desc": "Позволяет пользователю выбрать только один параметр из готового набора.",
     "checkbox_desc": "Позволяет пользователю выбрать один или несколько параметров из готового набора.",
     "relation_desc": "Связать между собой несколько исследований",
-    "upload_desc": "К публикациям можно добавлять изображения",
+    "upload_desc": "Upload one or more image file(s)",
+    "audio_desc": "Upload one or more audio file(s)",
+    "document_desc": "Upload one or more document file(s)",
     "video_desc": "Allows Youtube or Vimeo videos to be embed in the post",
+    "maximum_upload_size" : "Maximum Upload Size",
+    "small_upload_size" : "Small",
+    "medium_upload_size" : "Medium",
+    "large_upload_size" : "Large",
     "markdown_desc": "Allows the use of markdown syntax to style the field content.",
     "tasks": "Задачи",
     "task_visible_when_published": "This task will be visible when post is published.",
@@ -484,6 +582,15 @@
     }
   },
   "global_filter": {
+    "sources": {
+      "web": "Web",
+      "mobile": "Mobile",
+      "email": "Адрес электронной почты",
+      "sms": "SMS",
+      "twitter": "Twitter",
+      "ussd": "USSD",
+      "whatsapp": "WhatsApp"
+    },
     "filter": "Фильтр",
     "categories": {
       "categories": "Категории",
@@ -602,6 +709,7 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "saved_filter": "Сохраненный фильтр",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Вы уверены, что хотите удалить этот сохраненный фильтр?"
@@ -670,7 +778,9 @@
     "collections": "Коллекции",
     "comments": "Комментарии",
     "data_sources": "Источники данных",
-    "data_import": "Импорт данных",
+    "data_source": "Data Source",
+    "data_import": "Data import",
+    "data_export": "Data export",
     "deployment_not_found": "Deployment Not Found",
     "deselect": "Отменить выделение",
     "edit_profile": "Редактировать профиль",
@@ -685,6 +795,7 @@
     "forgotyourpassword": "Забыли пароль?",
     "resetpassword": "Сбросить пароль",
     "resetmypassword": "Сбросить пароль",
+    "password_recovery": "Password recovery",
     "forms": "Формы",
     "help": "Помощь",
     "home": "Домой",
@@ -694,6 +805,7 @@
     "help_support": "Помощь и поддержка",
     "registration": "Регистрация",
     "register": "Регистрация",
+    "results": "Results",
     "map_settings": "Настройки карты",
     "more": "Подробнее",
     "notifications": "Уведомления",
@@ -730,7 +842,9 @@
     "yesterday": "Вчера",
     "map": "Карта",
     "data": "Данные",
-    "feed": "Представление данных"
+    "feed": "Представление данных",
+    "add_new_post":"Add New Post",
+    "edit_post": "Редактировать пост"
   },
   "views": {
     "map": "Карта",
@@ -748,6 +862,7 @@
     "share_on_facebook": "Поделиться в Facebook"
   },
   "post": {
+    "loading_posts": "Loading posts in {{ mode }} mode...",
     "post_count": "{{count}} постов",
     "see_more_plural": "Увидеть {{newPostsCount}} новых публикаций",
     "see_more_singular": "Увидеть {{newPostsCount}} новых публикаций",
@@ -775,6 +890,9 @@
     "all_posts": "Все публикации",
     "no_search_results": "Ваш поиск не нашел ни одной публикации",
     "no_search_results_location": "Ваш поиск не нашел публикаций с местоположением",
+    "no_posts_match_search": "No posts match your keyword search. Please change or clear keyword search to see matching posts.",
+    "no_posts_match_search_plus_filter": "No posts match your keyword search + filters. Please change or clear keyword search and/or filters to see matching posts.",
+    "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
     "no_posts_yet": "Публикаций еще нет!",
     "no_posts_yet_location": "There are no posts with location information yet!",
     "add_first_post": "Добавить первую публикацию",
@@ -856,8 +974,11 @@
       "unlocked": "Post successfully unlocked",
       "unlock": "Unlock",
       "lock_broken_by_other": "Your Post has been unlocked. Your current unsaved changes will be lost.",
-      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
+    "post_not_authorized": "You are not authorized to perform this action on this post.",
     "modify": {
       "intro": "Выбрать опрос:",
       "no_task_values": "В настоящий момент нет сохраненных значений для этой задачи.",
@@ -889,6 +1010,20 @@
           "url": "Адрес ссылки",
           "add_link": "Добавить ссылку"
         }
+      },
+      "input_empty_warn": "Input cannot be empty",
+      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "format": {
+        "image": "jpeg or png only",
+        "audio": "mp3, aac or ogg only",
+        "document": "PDF or Word only"
+      },
+      "invalid_video_embed": "Invalid video embed url",
+      "errors": {
+        "required" : "{{label}} field is a required field *",
+        "too_short": "{{label}} field is too short, use at least 2 characters",
+        "invvalid_pattern": "{{label}} field is invalid",
+        "special_char": "{{label}} field contains special characters"
       }
     },
     "preview": {
@@ -966,9 +1101,24 @@
       "add_caption": "Добавить подпись",
       "upload": "Загрузить",
       "add_photo": "Add photo",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "Delete photo",
       "replace_image": "Replace image",
-      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
+      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
+      "messages": {
+        "max_size" : "Your file is too large.",
+        "max_files" : "You have exceeded the maximum number of files.",
+        "required" : "Media is required.",
+        "invalid_type" : "Unsupported file type."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
+      },
+      "special_char": "This field contains special characters"
     },
     "video": {
       "enter_a_url": "Enter a video URL from Youtube or Vimeo."
@@ -990,17 +1140,23 @@
       "you_can_search_or_click": "Вы можете найти или щелкнуть область карты, где вы хотите разместить маркер.",
       "search_address": "Поиск адресов, географических названий или координат...",
       "nothing_found": "Ничего не найдено",
+      "lng": "Lng",
+      "lat": "Lat",
       "errors": {
         "empty_lat": "Широта - пустое поле",
         "empty_lng": "Долгота - пустое поле",
         "decimal_lat": "Широта только десятичное число",
-        "decimal_lng": "Долгота только десятичное число"
+        "decimal_lng": "Долгота только десятичное число",
+        "special_lng": "Field longitude contains special characters",
+        "special_lat": "Field latitude contains special characters"
       }
     }
   },
   "role": {
     "are_you_sure_you_want_to_delete_role": "Вы уверены, что хотите удалить {{roleName}} роли?",
     "add_role": "Добавить роль",
+    "create_role": "Create role",
+    "update_role": "Update role",
     "edit_role": "Редактировать роль",
     "name": "Имя",
     "description": "Описание",
@@ -1019,8 +1175,10 @@
     "only_me": "Только я"
   },
   "webhook": {
-    "add_webhook": "Добавить роль",
+    "add_webhook": "Add Webhook ",
     "edit_webhook": "Редактировать роль",
+    "create_webhook": "Create webhook",
+    "update_webhook": "Update webhook",
     "uuid": "Webhook UUID",
     "name": "Имя",
     "shared_secret": "Shared Secret",
@@ -1031,7 +1189,11 @@
     "save_add_another": "Сохранить и добавить еще",
     "delete": "Удалить",
     "delete_webhook": "Удалить этот вебхук",
-    "delete_webhook_desc": "<strong>Если вы удалите этот вебхук</strong>, все связанные с ним события также будут потеряны. Будьте осторожны."
+    "delete_webhook_desc": "<strong>Если вы удалите этот вебхук</strong>, все связанные с ним события также будут потеряны. Будьте осторожны.",
+    "dialog": {
+      "delete_warn_title": "{{ name }} webhook will be deleted!",
+      "delete_warn_message": "<p>Это действие нельзя отменить.</p><p>Уверен?</p>"
+    }
   },
   "saved_search": {
     "visible_to_public": "Эти сохраненные результаты поиска доступны для общего просмотра",
@@ -1091,7 +1253,8 @@
     "create_saved_filter": "Создать сохраненный фильтр",
     "collection_saved": "Collection saved.",
     "collection_updated": "Collection updated.",
-    "collection_description": "You can add posts to your collection from the Data view"
+    "collection_description": "You can add posts to your collection from the Data view",
+    "collection_definition": " A \"Collection\" is a manually-curated group of posts. You may find it useful in grouping posts that you would like to share with external partners. It is not dynamic, meaning the posts within it do not change unless you manually update them."
   },
   "category": {
     "add_tag": "Добавить категорию",
@@ -1101,10 +1264,11 @@
     "delete_category_desc": "<strong>Если вы удалите категорию</strong>, она будет также удалена из всех публикаций. Будьте осторожны.",
     "show_categories": "Показать доступные категории",
     "child_permissions": "Разрешения для этой категории управляются через родительскую категорию.",
-    "which_categories": "Какие категории должны быть доступны",
+    "which_categories": "Which categories should be available?",
     "select_all": "Выбрать все",
     "choose_roles": "Выбрать роли",
     "create_tag": "Создать категорию",
+    "update_tag": "Update Category",
     "saved_tag": "Категория сохранена.",
     "deleted_tags": "Категории удалены.",
     "manage_tags": "Управление категориями",
@@ -1201,7 +1365,11 @@
       "api_key": "Ключ API",
       "placeholder": {
         "pick_location": "Выберите местоположение..."
-      }
+      },
+      "satellite": "Satellite",
+      "streets": "Streets",
+      "humanitarian": "Humanitarian"
+      
     },
     "user_settings": {
       "user_settings_desc_1": "Здесь вы можете добавить свой уникальный ключ API для аккаунта Humanitarian Data Exchange (HDX).",
@@ -1250,6 +1418,13 @@
       "provider_name": "{{providerName}} источник данных?",
       "do_you_really_want_to_disconnect": "Вы действительно хотите отключить своего провайдера?",
       "add_source": "Добавить источник",
+      "providers": {
+        "supported": "Supported",
+        "unsupported": "Unsupported Data Sources",
+        "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
+      },
+      "edit": "Edit {{provider}} Data Source",
+      "add_data_source": "Add Data Source",
       "associate_with_form": "Импортировать в опрос",
       "associate_with_form_desc": "Все входящие данные от {{provider}} будут использованы для создания ответов к выбранному опросу",
       "data_sources": "Источники данных",
@@ -1559,6 +1734,7 @@
     "uploading_data": "Uploading data...",
     "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
     "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+    "data_export_err":"Failed to export",
     "no_fields_selected": "You haven't selected any fields or assigned any hxl tags or attributes. Please select at least one field and assign at least one tag to be able to export to CSV or upload to a Humanitarian Data Exchange (HDX) account.",
     "validation": {
       "title": "A title is needed",
@@ -1573,6 +1749,8 @@
     "role_display": "Роль: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "Добавить пользователя",
+    "create_user": "Create user",
+    "update_user": "Update user",
     "edit_user": "Редактирование Пользователя",
     "update_password": "Обновить пароль",
     "change_role": "Изменить роль",
@@ -1609,11 +1787,15 @@
     "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Passwords do not match",
+    "enter_new_password": "Enter your new password",
+    "password_change_success": "Your password was successfully changed",
+    "password_change_success_info": "Now you can login with new credentials",
     "check_email": "Check your email",
     "name_will_be_a_display_name": "Введенное имя будет отображаемым именем.",
     "valid": {
       "fields": {
-        "email must be unique": "Пользователь с таким email уже существует"
+        "email must be unique": "Пользователь с таким email уже существует",
+        "email must be valid": "Email must be a valid email address"
       },
       "name": {
         "required": "Отображаемое имя обязательно",
@@ -1688,6 +1870,8 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "Это действие невозможно отменить. Пожалуйста, будьте осторожны.",
       "save_success": "Сохраненный ресурс",
       "save_error": "Невозможно сохранить ресурс, пожалуйста, попробуйте ещё раз",
@@ -1884,12 +2068,17 @@
       "bulk_destroy_confirm_desc": "Deleting these {{count}} selected surveys will also delete all collected posts and all associated data in the surveys. This step cannot be reversed.",
       "destroy_confirm": "Are you sure you want to delete this survey?",
       "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
-      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting."
+      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
+      "discard_changes": "Discard changes",
+      "save_changes": "Save Changes",
+      "back_to_editing": "Back to editing",
+      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
+      "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
     "confirm_modal": {
       "add_post_success": {
         "success": "Успешно!",
-        "success_description": "Благодарим Вас за отправку доклада. Пост находится на рассмотрении нашей команды и скоро появится на платформе.",
+        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
         "success_button": "Хорошо, звучит неплохо"
       },
       "deleted": {
@@ -1897,6 +2086,11 @@
         "success_description": "Вы безвозвратно удалили {{count}} публикации.",
         "success_button": "Хорошо, звучит неплохо"
       }
+    },
+    "snackbar": {
+      "changes_discarded": "Changes discarded successfully",
+      "no_changes_made": "No changes made yet",
+      "close": "Закрыть"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Вы действительно хотите удалить {{lang}} язык?"
@@ -1979,14 +2173,19 @@
     "i_agree": "Я согласен с <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Политикой конфиденциальности</a> Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Правила и условия</a>."
   },
   "translations": {
+    "available_languages": "Available translations (select to see post):",
+    "translate_post": "Translate post",
+    "translate_post_to": "Translate post to {{language}}",
     "languages": "Языки",
     "language": "Язык",
     "default": "по умолчанию",
+    "default_language": "Original language",
+    "text_in_original": "Text in original language:",
+    "translation_default": "(default)",
     "translate_field": "Перевести поле",
     "survey_select_default": "Выбрать язык по умолчанию для этого опроса",
     "category_select_default": "Выбрать язык по умолчанию для этой категории",
     "error_translation_exists": "You cannot select this language since there is already a translation for it.",
-    "edit_default_text": "Text in default language",
     "edit_placeholder": "Write your translation here",
     "add_translation": "Add your translation below:",
     "survey_name_required": "Translation for survey-name is required",
@@ -2000,7 +2199,12 @@
     "add_a_language": "Add a language",
     "error_no_default": "You need to specify a default language before adding a new translation.",
     "select_language": "Select a language to add translation for",
-    "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
+    "select_translate_edit": "Select a language to translate to, or edit:",
+    "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment.",
+    "translated_to": "Translated to {{language}}",
+    "viewing_translated":"You are viewing a translated version of this post.",
+    "view_original":"View original post",
+    "change_lang": "Change language"
   },
   "languages": {
     "ach": "Acoli",
