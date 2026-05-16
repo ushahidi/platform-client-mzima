@@ -17,6 +17,7 @@
     position: relative;
     display: inline-flex;
     align-items: center;
+    white-space: nowrap;
     vertical-align: top;
     justify-content: flex-start;
   }
@@ -103,6 +104,9 @@
   &.mat-flat-button,
   &.mat-raised-button,
   &.mat-mini-fab {
+    color: var(--color-light);
+    background-color: var(--color-primary-60);
+
     &:hover {
       background-color: var(--color-primary-70);
     }

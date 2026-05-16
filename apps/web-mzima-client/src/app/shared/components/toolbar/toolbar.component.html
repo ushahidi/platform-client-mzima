@@ -20,7 +20,7 @@
     <app-search-form class="search-form" *ngIf="showSearchForm"></app-search-form>
     <ng-container *ngIf="isDesktop$ | async">
       <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
-      <mzima-client-button (buttonClick)="openShare()" color="secondary" class="toolbar__button">
+      <mzima-client-button (buttonClick)="openShare()" color="primary" class="toolbar__button">
         <span>{{ 'app.share' | translate }}</span>
         <mat-icon icon svgIcon="share"></mat-icon>
       </mzima-client-button>
@@ -69,10 +69,10 @@
   <div class="menu__head">
     <div class="menu__logo">
       <img
-        src="../../../../assets/images/ushahidi-logo.svg"
-        alt="ushahidi"
-        width="177"
-        height="54"
+        src="../../../../assets/images/saferworld-logo.png"
+        alt="Saferworld"
+        width="220"
+        height="40"
       />
     </div>
     <mzima-client-button
