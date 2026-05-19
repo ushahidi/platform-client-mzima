@@ -100,12 +100,12 @@ export class ToolbarComponent implements OnInit {
         visible: true,
         action: () => this.openCollections(),
       },
-      {
-        label: 'nav.help_support',
-        icon: 'info',
-        visible: true,
-        action: () => this.openSupportModal(),
-      },
+      // {
+      //   label: 'nav.help_support',
+      //   icon: 'info',
+      //   visible: true,
+      //   action: () => this.openSupportModal(),
+      // },
       {
         label: 'nav.my_account',
         icon: 'account',

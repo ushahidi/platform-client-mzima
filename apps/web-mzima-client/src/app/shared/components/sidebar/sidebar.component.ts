@@ -153,13 +153,13 @@ export class SidebarComponent implements OnInit {
         action: () => this.openLogin(),
         ref: 'auth',
       },
-      {
-        label: 'nav.help_support',
-        icon: 'info',
-        visible: true,
-        action: () => this.openSupportModal(),
-        ref: 'support',
-      },
+      // {
+      //   label: 'nav.help_support',
+      //   icon: 'info',
+      //   visible: true,
+      //   action: () => this.openSupportModal(),
+      //   ref: 'support',
+      // },
     ];
   }
 
