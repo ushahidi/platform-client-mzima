@@ -94,12 +94,12 @@ export class ToolbarComponent implements OnInit {
 
   private initMenu() {
     this.menu = [
-      {
-        label: 'nav.collections',
-        icon: 'collections',
-        visible: true,
-        action: () => this.openCollections(),
-      },
+      // {
+      //   label: 'nav.collections',
+      //   icon: 'collections',
+      //   visible: true,
+      //   action: () => this.openCollections(),
+      // },
       // {
       //   label: 'nav.help_support',
       //   icon: 'info',
