@@ -11,6 +11,7 @@
   --side-offset: 24px;
   flex-direction: column;
   scroll-behavior: smooth;
+  background: var(--color-primary-60);
   color: var(--color-neutral-50);
   -webkit-overflow-scrolling: touch;
 
@@ -29,11 +30,13 @@
     flex-direction: column;
     justify-content: center;
     padding: 8px var(--side-offset) 0;
-    border-bottom: 1px solid var(--color-neutral-90);
+    border-bottom: 1px solid rgba(var(--color-light-rgb), 0.35);
     margin: -24px calc(var(--side-offset) * -1) 8px;
 
     img {
       display: block;
+      width: 210px;
+      height: auto;
       max-width: 100%;
     }
   }
@@ -43,8 +46,22 @@
     border-width: 1px 0;
     border-style: solid;
     padding: 12px var(--side-offset);
-    border-color: var(--color-neutral-90);
+    border-color: rgba(var(--color-light-rgb), 0.35);
     margin: 0 calc(var(--side-offset) * -1) 8px;
+
+    &::ng-deep {
+      .mzima-button {
+        --color: var(--color-light);
+        --background-color: transparent;
+        --background-color-clear: var(--color-light);
+        --hover-background-color: transparent;
+        --active-background-color: transparent;
+        --disabled-color: rgba(var(--color-light-rgb), 0.6);
+        --disabled-background-color: transparent;
+
+        font-weight: 700;
+      }
+    }
 
     @include breakpoint-max($laptop-small) {
       padding-left: 16px;
@@ -69,7 +86,7 @@
       &:not(:first-child) {
         margin-top: 8px;
         padding-top: 8px;
-        border-top: 1px solid var(--color-neutral-90);
+        border-top: 1px solid rgba(var(--color-light-rgb), 0.35);
       }
     }
 
@@ -82,13 +99,13 @@
 
 .sidebar-menu-button {
   display: flex;
-  color: inherit;
+  color: var(--color-light);
   cursor: pointer;
   font-size: 16px;
   border-radius: 0;
   line-height: 1.6;
   text-align: start;
-  font-weight: normal;
+  font-weight: 700;
   align-items: center;
   border-style: solid;
   font-family: inherit;
@@ -99,7 +116,7 @@
   justify-content: flex-start;
   box-shadow: none !important;
   transition-timing-function: ease;
-  background: var(--color-neutral-100);
+  background: transparent;
   transition-property: color, background-color, border-color;
 
   @include breakpoint-min($tablet) {
@@ -131,7 +148,7 @@
       position: absolute;
       pointer-events: none;
       transition: opacity 0.35s ease;
-      background-color: var(--color-primary-60);
+      background-color: var(--color-light);
     }
 
     &:not(.sidebar-menu-button--active) {
@@ -142,18 +159,18 @@
   }
 
   &:hover {
-    color: var(--color-primary-60);
+    color: var(--color-light);
   }
 
   &:focus {
-    color: var(--color-primary-60);
-    border-color: var(--color-primary-60);
+    color: var(--color-light);
+    border-color: var(--color-light);
   }
 
   &--active {
-    color: var(--color-primary-60);
-    background-color: var(--color-black);
-    border-color: var(--color-primary-60);
+    color: var(--color-light);
+    background-color: transparent;
+    border-color: var(--color-light);
   }
 
   &:not(:first-child) {

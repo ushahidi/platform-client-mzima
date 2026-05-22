@@ -5,3 +5,4 @@ export * from './filter-control.interface';
 export * from './session.interface';
 export * from './date-range-format.interface';
 export * from './location.interface';
+export * from './language.interface';

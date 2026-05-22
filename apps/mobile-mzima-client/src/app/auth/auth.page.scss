@@ -1,5 +1,24 @@
+.auth-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #ffffff;
+  padding-top: 52px;
+
+  ion-toolbar {
+    --background: #ffffff;
+    --border-width: 0;
+    --min-height: 84px;
+    --padding-bottom: 0;
+    --padding-end: 0;
+    --padding-start: 0;
+    --padding-top: 0;
+  }
+}
+
 .auth-tabs {
   position: static;
+  margin-top: 12px;
 
   ion-tab-bar {
     height: 52px;
@@ -27,52 +46,16 @@
 }
 
 .logo {
-  display: block;
-  min-height: 109px;
+  display: flex;
+  min-height: 84px;
   text-align: center;
-  position: relative;
-  padding-bottom: 37px;
-  margin: 40px auto 32px;
-  transition: all 0.35s ease;
-
-  &--small {
-    margin-top: 8px;
-    min-height: 64px;
-    padding-bottom: 0;
-    margin-bottom: 8px;
-  }
+  align-items: center;
+  justify-content: center;
+  padding: calc(env(safe-area-inset-top) + 10px) 20px 10px;
 
   &__img {
-    left: 0;
-    font-size: 72px;
-    position: relative;
-    transition: all 0.35s ease;
-    color: var(--ion-color-primary);
-
-    .logo--small & {
-      left: -68px;
-      font-size: 64px;
-    }
-  }
-
-  &__title {
-    left: 50%;
-    bottom: -64px;
-    font-size: 155px;
-    position: absolute;
-    pointer-events: none;
-    transition: all 0.35s ease;
-    transform: translateX(-50%);
-
-    .logo--small & {
-      bottom: -34px;
-      font-size: 132px;
-      transform: translateX(calc(-50% + 44px));
-    }
-  }
-
-  app-icon {
-    line-height: 1;
+    width: min(76vw, 300px);
+    height: auto;
     display: block;
   }
 }

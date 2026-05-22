@@ -14,9 +14,9 @@
       class="select"
       [(ngModel)]="value"
       interface="popover"
-      [placeholder]="placeholder"
+      [placeholder]="placeholder | translate"
       (ionChange)="handleSelectChange($event)"
-      [label]="label ? label + (required ? '*' : '') : null"
+      [label]="label ? (label | translate) + (required ? '*' : '') : null"
       [labelPlacement]="label ? 'floating' : 'end'"
       [required]="required"
       [disabled]="disabled"
@@ -24,7 +24,7 @@
       (ionBlur)="handleBlur()"
     >
       <ion-select-option *ngFor="let option of options" [value]="option.value || option">
-        {{ option.label || option }}
+        {{ getOptionLabel(option) | translate }}
       </ion-select-option>
     </ion-select>
     <span slot="end">

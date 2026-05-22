@@ -37,27 +37,27 @@ export class FeedViewComponent extends MainViewComponent {
   public sorting = 'created?desc';
   public sortingOptions = [
     {
-      label: 'Date created (Newest first)',
+      label: 'map.date_created_newest',
       value: 'created?desc',
     },
     {
-      label: 'Date created (Oldest first)',
+      label: 'map.date_created_oldest',
       value: 'created?asc',
     },
     {
-      label: 'Post date (Newest first)',
+      label: 'map.post_date_newest',
       value: 'post_date?desc',
     },
     {
-      label: 'Post date (Oldest first)',
+      label: 'map.post_date_oldest',
       value: 'post_date?asc',
     },
     {
-      label: 'Date updated (Newest first)',
+      label: 'map.date_updated_newest',
       value: 'updated?desc',
     },
     {
-      label: 'Date updated (Oldest first)',
+      label: 'map.date_updated_oldest',
       value: 'updated?asc',
     },
   ];

@@ -1,17 +1,17 @@
 export const navigationMenu = [
   {
-    label: 'Map',
+    label: 'navigation.map',
     icon: 'location',
     route: '/',
     activeRoutes: ['/search/', '/collection/'],
   },
   {
-    label: 'Activity',
+    label: 'navigation.activity',
     icon: 'activity',
     route: '/activity',
   },
   {
-    label: 'Profile',
+    label: 'navigation.profile',
     icon: 'profile',
     route: '/profile',
   },

@@ -2,7 +2,7 @@
   #layout
   class="main"
   [isSearch]="true"
-  title="Deployments"
+  [title]="'deployment.title' | translate"
   [header]="isProfile"
   (back)="backHandle()"
   (search)="searchDeployments($event)"
@@ -10,15 +10,16 @@
   (searchBlur)="isSearchView = false"
   [ngClass]="{ 'main--profile': isProfile, 'main--search-view': isSearchView }"
 >
-  <app-icon
+  <img
     *ngIf="!isProfile"
     class="logo"
     [ngClass]="{ 'logo--hidden': isSearchView }"
-    name="ushahidi"
-  ></app-icon>
+    src="assets/saferworld-logo.png"
+    alt="Saferworld"
+  />
   <ng-container *ngIf="deploymentList.length && !isSearchView">
     <ion-text color="medium" class="title ion-padding-horizontal">
-      Choose one Deployment from list
+      {{ 'deployment.choose_one' | translate }}
     </ion-text>
     <ion-list class="deployment-list">
       <app-deployment-item
@@ -34,7 +35,7 @@
     <ng-container *ngIf="!isDeploymentsLoading; else spinner">
       <ng-container *ngIf="foundedDeploymentList.length; else emptyList">
         <ion-text color="medium" class="title">
-          Founded {{ foundedDeploymentList.length }} items
+          {{ 'deployment.found_items' | translate : { count: foundedDeploymentList.length } }}
         </ion-text>
         <ion-list class="search-list" [ngStyle]="{ background: 'none' }">
           <app-deployment-item
@@ -51,14 +52,16 @@
       </ng-container>
       <ng-template #emptyList>
         <ion-text class="empty" color="medium">
-          Start typing Deployment name or paste <br />Deployment link
+          <span [innerHTML]="'deployment.empty_search' | translate"></span>
         </ion-text>
       </ng-template>
     </ng-container>
   </ng-container>
 
   <ion-footer class="footer ion-padding" footer *ngIf="isSearchView && addButtonVisible">
-    <app-button (buttonClick)="addDeployment()" iconName="plus">Add</app-button>
+    <app-button (buttonClick)="addDeployment()" iconName="plus">{{
+      'common.add' | translate
+    }}</app-button>
   </ion-footer>
 </app-main-layout>
 

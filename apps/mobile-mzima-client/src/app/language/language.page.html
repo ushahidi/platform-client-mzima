@@ -1,0 +1,26 @@
+<ion-content fullscreen class="language-page">
+  <div class="language-page__inner">
+    <img class="language-page__logo" src="assets/saferworld-logo.png" alt="Saferworld" />
+
+    <div class="language-page__content">
+      <p>{{ 'language.subtitle' | translate }}</p>
+
+      <div class="language-list">
+        <button
+          *ngFor="let language of languages"
+          type="button"
+          class="language-list__item"
+          [class.language-list__item--selected]="selectedLanguage === language.code"
+          (click)="selectLanguage(language.code)"
+        >
+          <span>{{ ('languages.' + language.code) | translate }}</span>
+          <ion-icon *ngIf="selectedLanguage === language.code" name="checkmark"></ion-icon>
+        </button>
+      </div>
+
+      <ion-button class="language-page__continue" expand="block" (click)="continue()">
+        {{ 'language.continue' | translate }}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

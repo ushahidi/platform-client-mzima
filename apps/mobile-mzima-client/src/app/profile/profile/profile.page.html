@@ -1,8 +1,8 @@
 <app-main-layout [header]="false" class="main">
-  <ion-title class="title">Switch Deployment</ion-title>
+  <ion-title class="title">{{ 'profile.switch_deployment' | translate }}</ion-title>
   <app-deployment-info (deploymentClick)="goTo(['/profile/deployment'])"></app-deployment-info>
 
-  <ion-title class="title">Profile</ion-title>
+  <ion-title class="title">{{ 'navigation.profile' | translate }}</ion-title>
   <ion-list class="profile-menu">
     <app-profile-menu-item
       (action)="callAction($event)"
@@ -11,7 +11,7 @@
     ></app-profile-menu-item>
   </ion-list>
 
-  <ion-title class="title">Support and Information</ion-title>
+  <ion-title class="title">{{ 'profile.support_and_information' | translate }}</ion-title>
   <ion-list class="profile-menu">
     <app-profile-menu-item
       (action)="callAction($event)"
@@ -25,7 +25,7 @@
 
 <app-modal
   [isOpen]="isSupportModalOpen"
-  title="Help and Support"
+  [title]="'profile.help_and_support' | translate"
   (modalClose)="isSupportModalOpen = false"
 >
   <ng-container *ngIf="filteredSupportItems.length; else emptySupportItems">
@@ -45,6 +45,8 @@
     </ion-item>
   </ng-container>
   <ng-template #emptySupportItems>
-    <ion-text color="medium" class="empty ion-text-center"> Nothing found! </ion-text>
+    <ion-text color="medium" class="empty ion-text-center">
+      {{ 'common.nothing_found' | translate }}
+    </ion-text>
   </ng-template>
 </app-modal>

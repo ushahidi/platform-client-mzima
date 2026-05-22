@@ -1,0 +1,140 @@
+{
+  "languages": {
+    "en": "Ingiriisi",
+    "so": "Soomaali"
+  },
+  "common": {
+    "add": "Ku dar",
+    "apply": "Codso",
+    "cancel": "Jooji",
+    "clear": "Nadiifi",
+    "nothing_found": "Waxba lama helin!",
+    "save": "Kaydi",
+    "search": "Raadi",
+    "skip": "Ka bood"
+  },
+  "language": {
+    "continue": "Sii wad",
+    "subtitle": "Dooro luqadda aad rabto inaad ku isticmaasho app-ka.",
+    "title": "Dooro luqaddaada"
+  },
+  "navigation": {
+    "activity": "Hawlaha",
+    "map": "Khariidad",
+    "profile": "Profile"
+  },
+  "walkthrough": {
+    "add_deployment": {
+      "title": "Ku dar deployment",
+      "description": "Si aad app-ka u bilowdo, raadi deployment-kaaga oo ku dar akoonkaaga."
+    },
+    "share_information": {
+      "title": "Bilow wadaagista macluumaadka",
+      "description": "Waxaad adigu ku dari kartaa qoraallo ama waxaad ka raadin kartaa Khariidadda ama xogta."
+    },
+    "filter_data": {
+      "title": "Shaandhee oo kala saar xogtaada",
+      "description": "Raadi qoraallo gaar ah oo si degdeg ah xogta ugu habbee shuruudaha aad doorato."
+    },
+    "offline_data": {
+      "title": "Xog ururi adigoon internet haysan",
+      "description": "Sii wad ururinta iyo soo gudbinta macluumaad muhiim ah, xitaa internet la’aan!"
+    }
+  },
+  "deployment": {
+    "choose_one": "Ka dooro hal Deployment liiska",
+    "current": "Hadda",
+    "empty_search": "Bilow qorista magaca Deployment ama dhaji <br />xiriirka Deployment",
+    "found_items": "Waxaa la helay {{ count }} shay",
+    "title": "Deployments"
+  },
+  "auth": {
+    "agree_to": "Waan oggolahay Saferworld",
+    "and_the": "iyo",
+    "display_name_hint": "Magaca aad geliso wuxuu noqon doonaa magaca muuqda",
+    "email": "Iimayl",
+    "enter_email": "Geli iimaylkaaga",
+    "enter_name": "Geli magaca",
+    "enter_password": "Geli erayga sirta ah",
+    "forgot_password": "Ma illowday erayga sirta ah?",
+    "forgot_password_question": "Ma illowday eraygaaga sirta ah?",
+    "log_in": "Gal",
+    "name": "Magac",
+    "password": "Eray sir ah",
+    "password_hint": "Erayga sirta ah waa inuu leeyahay ugu yaraan 8 xaraf, xaraf yar, xaraf weyn, lambar iyo calaamad.",
+    "password_recovery": "Soo celinta erayga sirta ah",
+    "password_recovery_help": "Ha welwelin! Geli iimaylkaaga oo hubi sanduuqaaga si aad u hesho xiriirka dib-u-dejinta.",
+    "reset_password": "Dib u deji erayga sirta ah",
+    "sign_up": "Is diiwaangeli",
+    "skip_for_now": "Hadda ka bood",
+    "welcome_back": "Ku soo dhawoow mar kale!",
+    "welcome_to_saferworld": "Ku soo dhawoow Saferworld!"
+  },
+  "profile": {
+    "help_and_support": "Caawimaad iyo Taageero",
+    "support_and_information": "Taageero iyo Macluumaad",
+    "switch_deployment": "Beddel Deployment",
+    "menu": {
+      "log_in_or_sign_up": "Gal ama Is diiwaangeli",
+      "log_out": "Ka bax",
+      "my_posts": "Qoraalladayda",
+      "my_posts_description": "Qoraallada aad abuurtay",
+      "privacy_policy": "Siyaasadda Asturnaanta",
+      "profile_information": "Macluumaadka profile-ka",
+      "profile_information_description": "Wax ka beddel sawirkaaga ama macluumaadkaaga",
+      "terms_and_conditions": "Shuruudaha iyo Xeerarka"
+    }
+  },
+  "map": {
+    "add_post": "Ku dar qoraal",
+    "all_filters": "Dhammaan shaandhooyinka",
+    "all_locations": "Dhammaan goobaha",
+    "all_time": "Waqti oo dhan",
+    "applied_filters_all": "Shaandhooyinka la adeegsaday: dhammaan",
+    "categories": "Qaybaha",
+    "clear_filters_message": "Dhammaan shaandhooyinka marka laga reebo <strong>Surveys</strong>, <strong>Sources</strong> iyo <strong>Status</strong> waa la nadiifin doonaa",
+    "date_created_newest": "Taariikhda abuurista (kuwa cusub marka hore)",
+    "date_created_oldest": "Taariikhda abuurista (kuwa hore marka hore)",
+    "date_range": "Xadka taariikhda",
+    "date_updated_newest": "Taariikhda cusboonaysiinta (kuwa cusub marka hore)",
+    "date_updated_oldest": "Taariikhda cusboonaysiinta (kuwa hore marka hore)",
+    "enter_city_or_address": "Geli magaalo ama cinwaan",
+    "filter_name": "Magaca shaandhada",
+    "filters": "Shaandhooyin",
+    "found_items": "Waxaa la helay {{ count }} shay",
+    "found_posts": "Qoraallo la helay:",
+    "last_3_months": "3-dii bilood ee ugu dambeysay",
+    "last_6_months": "6-dii bilood ee ugu dambeysay",
+    "last_month": "Bishii ugu dambeysay",
+    "last_week": "Toddobaadkii ugu dambeysay",
+    "last_year": "Sannadkii ugu dambeysay",
+    "location": "Goob",
+    "no_categories": "Weli ma lihid qaybo",
+    "no_posts": "Weli qoraal ma jiro. Ku dar qoraal.",
+    "no_saved_filters": "Weli ma lihid shaandhooyin kaydsan",
+    "no_search_posts": "Waan ka xunnahay, qoraallo lama helin",
+    "no_search_posts_detail": "iyadoo lagu saleynayo shuruudaha raadintaada.",
+    "no_surveys": "Weli ma lihid surveys",
+    "none": "midna",
+    "post_date_newest": "Taariikhda qoraalka (kuwa cusub marka hore)",
+    "post_date_oldest": "Taariikhda qoraalka (kuwa hore marka hore)",
+    "post_plural": "qoraallo",
+    "post_singular": "qoraal",
+    "radius": "Masaafad",
+    "save_as": "U kaydi sida",
+    "save_filter_name": "Kaydi magaca shaandhada?",
+    "saved_filters": "Shaandhooyin kaydsan",
+    "select_date_range": "Dooro xadka taariikhda",
+    "select_dates": "Dooro taariikhaha",
+    "select_locations": "Dooro goobaha",
+    "selected": "La doortay:",
+    "selected_count_of": "La doortay {{ selected }} ka mid ah",
+    "selected_filters": "Shaandhooyinka la doortay:",
+    "sort_by": "U kala saar",
+    "sources": "Ilaha",
+    "start_typing_posts": "Bilow qorista si aad u hesho qoraallo",
+    "status": "Xaalad",
+    "surveys": "Surveys",
+    "update_filter_name": "Cusboonaysii magaca shaandhada?"
+  }
+}

@@ -177,7 +177,7 @@ $laptop: 1439px;
 
   // Color
   &--primary {
-    --color: var(--color-black);
+    --color: var(--color-light);
     --background-color: var(--color-primary-60);
     --hover-background-color: var(--color-primary-70);
     --active-background-color: var(--color-primary-50);
@@ -259,7 +259,12 @@ $laptop: 1439px;
     display: flex;
     position: relative;
     align-items: center;
+    white-space: nowrap;
     justify-content: var(--justify-content, center);
+  }
+
+  &__text {
+    white-space: nowrap;
   }
 
   &__prefix {
