@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NotDeploymentGuard, WalkthroughGuard } from '@guards';
+import { LanguageGuard, NotDeploymentGuard, WalkthroughGuard } from '@guards';
 
 const routes: Routes = [
   {
     path: '',
-    canActivate: [WalkthroughGuard, NotDeploymentGuard],
+    canActivate: [LanguageGuard, WalkthroughGuard, NotDeploymentGuard],
     children: [
       {
         path: '',

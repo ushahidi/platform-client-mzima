@@ -8,7 +8,7 @@
     (ionFocus)="isInputOnFocus = true"
     (ionBlur)="handleInputBlur()"
     (inputClear)="handleInputClear()"
-    placeholder="Enter city or address"
+    [placeholder]="'map.enter_city_or_address' | translate"
     [ngClass]="{ 'search-input--has-results': results.length && isInputOnFocus }"
   >
     <ng-container start>
@@ -26,7 +26,7 @@
     </div>
   </app-form-control>
   <app-select
-    label="Radius"
+    label="map.radius"
     [options]="radiusOptions"
     [(ngModel)]="radiusValue"
     (ngModelChange)="setRadius()"

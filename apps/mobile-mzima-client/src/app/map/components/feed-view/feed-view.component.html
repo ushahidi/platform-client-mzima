@@ -6,7 +6,7 @@
   }"
 >
   <app-select
-    label="Sort by"
+    label="map.sort_by"
     [(ngModel)]="sorting"
     class="sorting-select"
     [options]="sortingOptions"
@@ -19,7 +19,8 @@
     </ng-container>
   </app-select>
   <div class="total-posts" *ngIf="!isPostsLoading">
-    {{ totalPosts }} {{ totalPosts > 1 ? 'posts' : 'post' }}
+    {{ totalPosts }}
+    {{ (totalPosts === 1 ? 'map.post_singular' : 'map.post_plural') | translate }}
   </div>
   <ng-container *ngIf="posts.length; else emptyBox">
     <app-post-item
@@ -44,10 +45,10 @@
   <div class="empty-box" [ngClass]="{ 'empty-box--loading': isPostsLoading }">
     <ng-container *ngIf="!posts.length && !isPostsLoading">
       <ion-text color="medium" class="empty ion-text-center">
-        There is no post yet. Add a post.
+        {{ 'map.no_posts' | translate }}
       </ion-text>
       <app-button class="create-post-btn" (buttonClick)="createPost()" iconName="plus">
-        Add post
+        {{ 'map.add_post' | translate }}
       </app-button>
     </ng-container>
     <app-spinner *ngIf="isPostsLoading"></app-spinner>

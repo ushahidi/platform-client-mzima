@@ -17,6 +17,7 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import _ from 'lodash';
 import { Router } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { TranslateService } from '@ngx-translate/core';
 
 @UntilDestroy()
 @Component({
@@ -42,25 +43,25 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     {
       name: 'saved-filters',
       icon: 'saved-filters',
-      label: 'Saved filters',
-      selected: 'none',
-      selectedLabel: 'Selected:',
+      label: 'map.saved_filters',
+      selected: 'map.none',
+      selectedLabel: 'map.selected',
       value: this.getFilterDefaultValue('saved-filters'),
-      noOptionsText: "You don't have any saved filters yet",
+      noOptionsText: 'map.no_saved_filters',
     },
     {
       name: 'form',
       icon: 'surveys',
-      label: 'Surveys',
-      selected: 'none',
+      label: 'map.surveys',
+      selected: 'map.none',
       selectedCount: '',
       value: [],
-      noOptionsText: "You don't have surveys yet",
+      noOptionsText: 'map.no_surveys',
     },
     {
       name: 'source',
       icon: 'sources',
-      label: 'Sources',
+      label: 'map.sources',
       selectedCount: searchFormHelper.sources.length,
       selected: String(searchFormHelper.sources.length),
       value: this.getFilterDefaultValue('source'),
@@ -68,7 +69,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     {
       name: 'status',
       icon: 'status',
-      label: 'Status',
+      label: 'map.status',
       selectedCount: searchFormHelper.statuses.length,
       selected: '2',
       value: this.getFilterDefaultValue('status'),
@@ -76,25 +77,25 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     {
       name: 'tags',
       icon: 'categories',
-      label: 'Categories',
-      selected: 'none',
+      label: 'map.categories',
+      selected: 'map.none',
       value: this.getFilterDefaultValue('tags'),
-      noOptionsText: "You don't have categories yet",
+      noOptionsText: 'map.no_categories',
     },
     {
       name: 'date',
       icon: 'calendar',
-      label: 'Date range',
-      selectedLabel: 'Select the date range',
-      selectedCount: 'All Time',
+      label: 'map.date_range',
+      selectedLabel: 'map.select_date_range',
+      selectedCount: 'map.all_time',
       value: this.getFilterDefaultValue('date'),
     },
     {
       name: 'center_point',
       icon: 'marker',
-      label: 'Location',
-      selectedLabel: 'Select locations',
-      selectedCount: 'All locations',
+      label: 'map.location',
+      selectedLabel: 'map.select_locations',
+      selectedCount: 'map.all_locations',
       value: this.getFilterDefaultValue('location'),
     },
   ];
@@ -123,6 +124,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     private router: Router,
     private searchService: SearchService,
     private envService: EnvService,
+    private translate: TranslateService,
   ) {
     this.searchSubject.pipe(takeUntil(this.destroy$), debounceTime(500)).subscribe({
       next: (query: string) => {
@@ -392,15 +394,14 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
   public async handleClearFilters(): Promise<void> {
     const result = await this.alertService.presentAlert({
       header: 'Clear all filters?',
-      message:
-        'All filters except <strong>Surveys</strong>, <strong>Sources</strong> and <strong>Status</strong> will be cleared',
+      message: this.translate.instant('map.clear_filters_message'),
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant('common.cancel'),
           role: 'cancel',
         },
         {
-          text: 'Clear',
+          text: this.translate.instant('common.clear'),
           role: 'confirm',
           cssClass: 'danger',
         },
@@ -544,7 +545,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     switch (filter.name) {
       case 'date':
         if (!filter.value?.start || !filter.value?.start) {
-          filter.selectedCount = 'All Time';
+          filter.selectedCount = 'map.all_time';
         } else {
           filter.selectedCount = `
             ${dateHelper.toUTC(filter.value.start, 'DD MMM')}
@@ -560,16 +561,16 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
             ${filter.value?.location.label} (${filter.value?.distance}km)
           `;
         } else {
-          filter.selectedCount = 'All locations';
+          filter.selectedCount = 'map.all_locations';
         }
         break;
 
       case 'saved-filters':
-        filter.selected = this.activeSavedFilter?.name ?? 'none';
+        filter.selected = this.activeSavedFilter?.name ?? 'map.none';
         break;
 
       default:
-        filter.selected = filter.value?.length ? String(filter.value.length) : 'none';
+        filter.selected = filter.value?.length ? String(filter.value.length) : 'map.none';
         break;
     }
   }
@@ -608,20 +609,22 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
 
   public async saveSavedFilters(): Promise<void> {
     const result = await this.alertService.presentAlert({
-      header: `${this.selectedSavedFilter ? 'Update' : 'Save'} filter name?`,
+      header: this.translate.instant(
+        this.selectedSavedFilter ? 'map.update_filter_name' : 'map.save_filter_name',
+      ),
       inputs: [
         {
-          placeholder: 'Filter name',
+          placeholder: this.translate.instant('map.filter_name'),
           value: this.selectedSavedFilter?.label,
         },
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant('common.cancel'),
           role: 'cancel',
         },
         {
-          text: 'Save',
+          text: this.translate.instant('common.save'),
           role: 'confirm',
           cssClass: 'primary',
         },

@@ -1,22 +1,22 @@
 export const WalkthroughSlider = [
   {
     img: '/assets/images/walkthrough/slide_1.svg',
-    title: 'Add a deployment',
-    description: 'To start using the app, search for your deployment and add it to your account.',
+    title: 'walkthrough.add_deployment.title',
+    description: 'walkthrough.add_deployment.description',
   },
   {
     img: '/assets/images/walkthrough/slide_2.svg',
-    title: 'Start sharing information',
-    description: 'You can add posts by yourself or search for them in the Map View or Data View.',
+    title: 'walkthrough.share_information.title',
+    description: 'walkthrough.share_information.description',
   },
   {
     img: '/assets/images/walkthrough/slide_3.svg',
-    title: 'Filter and sort your data',
-    description: 'Find specific posts and quickly organise the data by any criteria you choose.',
+    title: 'walkthrough.filter_data.title',
+    description: 'walkthrough.filter_data.description',
   },
   {
     img: '/assets/images/walkthrough/slide_4.svg',
-    title: 'Collect your data offline',
-    description: 'Keep collecting and reporting crucial information, even without internet access!',
+    title: 'walkthrough.offline_data.title',
+    description: 'walkthrough.offline_data.description',
   },
 ];

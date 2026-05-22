@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NotDeploymentGuard, WalkthroughGuard } from '@guards';
+import { LanguageGuard, NotDeploymentGuard, WalkthroughGuard } from '@guards';
 import { MapPage } from './map.page';
 
 const routes: Routes = [
   {
     path: '',
     component: MapPage,
-    canActivate: [WalkthroughGuard, NotDeploymentGuard],
+    canActivate: [LanguageGuard, WalkthroughGuard, NotDeploymentGuard],
   },
   {
     path: 'collection',

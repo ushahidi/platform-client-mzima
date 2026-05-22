@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, FactoryProvider, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,11 +10,14 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { ApiUrlLoader, EnvLoader, SdkModule } from '@mzima-client/sdk';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ConfigService } from './core/services/config.service';
 import { EnvService } from '@services';
+import { SharedModule } from '@shared';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
@@ -34,6 +37,10 @@ export function EnvLoaderFactory(env: EnvService): any {
   return new ApiUrlLoader(env);
 }
 
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/locales/', '.json');
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -45,6 +52,15 @@ export function EnvLoaderFactory(env: EnvService): any {
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    SharedModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+      useDefaultLang: true,
+    }),
     SdkModule.forRoot({
       loader: {
         provide: EnvLoader,

@@ -23,7 +23,9 @@
   </ion-label>
 
   <div class="deployment-item__end" slot="end">
-    <ion-text color="primary" class="deployment-item__current" *ngIf="isCurrent">Current</ion-text>
+    <ion-text color="primary" class="deployment-item__current" *ngIf="isCurrent">
+      {{ 'deployment.current' | translate }}
+    </ion-text>
     <app-button
       fill="clear"
       color="medium"

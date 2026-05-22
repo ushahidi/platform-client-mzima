@@ -30,6 +30,7 @@ import {
   ChooseCollectionComponent,
   CollectionItemComponent,
   PostControlsComponent,
+  LanguageComponent,
 } from './components';
 import { CalendarModule } from 'ion2-calendar';
 import { TextareaControlComponent } from './components/textarea-control/textarea-control.component';
@@ -61,6 +62,7 @@ const components = [
   ChooseCollectionComponent,
   CollectionItemComponent,
   PostControlsComponent,
+  LanguageComponent,
 ];
 
 @NgModule({
@@ -75,6 +77,6 @@ const components = [
     ReactiveFormsModule,
     TruncateModule,
   ],
-  exports: [IonicModule, CommonModule, ...components],
+  exports: [IonicModule, CommonModule, TranslateModule, ...components],
 })
 export class SharedModule {}
