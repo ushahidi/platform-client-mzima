@@ -1014,7 +1014,7 @@
       "input_empty_warn": "Pembejeo haiwezi kuwa tupu",
       "max_size": "Ukubwa wa juu zaidi: {{size}} MB Muundo: {{format}}",
       "format": {
-        "image": "jpeg or png only",
+        "image": "jpeg au png pekee",
         "audio": "mp3, aac or ogg only",
         "document": "PDF or Word only"
       },
