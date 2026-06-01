@@ -2180,7 +2180,7 @@
     "language": "Lugha",
     "default": "Kaida",
     "default_language": "Lugha ya asili",
-    "text_in_original": "Text in original language:",
+    "text_in_original": "Maandishi katika lugha asili:",
     "translation_default": "(chaguo-msingi)",
     "translate_field": "Tafsiri ya uga",
     "survey_select_default": "Chagua lugha chaguo-msingi kwa ajili ya utafiti huu",
