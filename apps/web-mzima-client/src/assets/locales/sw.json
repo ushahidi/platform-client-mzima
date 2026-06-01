@@ -1012,7 +1012,7 @@
         }
       },
       "input_empty_warn": "Pembejeo haiwezi kuwa tupu",
-      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "max_size": "Ukubwa wa juu zaidi: {{size}} MB Muundo: {{format}}",
       "format": {
         "image": "jpeg or png only",
         "audio": "mp3, aac or ogg only",
