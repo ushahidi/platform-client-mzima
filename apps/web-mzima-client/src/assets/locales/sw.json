@@ -2173,7 +2173,7 @@
     "i_agree": "Nakubaliana na<a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Sera ya Faragha</a> ya Ushahidi na\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Sheria na Masharti</a>."
   },
   "translations": {
-    "available_languages": "Available translations (select to see post):",
+    "available_languages": "Tafsiri zinazopatikana (chagua ili kuona chapisho):",
     "translate_post": "Translate post",
     "translate_post_to": "Translate post to {{language}}",
     "languages": "Lugha",
