@@ -2201,7 +2201,7 @@
     "select_language": "Chagua lugha ya kuongeza tafsiri kwa",
     "select_translate_edit": "Chagua lugha ya kutafsiri au kuhariri:",
     "default_lang_info": "Hii ni lugha ambayo itatumika ikiwa hakuna tafsiri zinazopatikana kwa lugha ambayo mtumiaji ameweka kwa kupelekwa.",
-    "translated_to": "Translated to {{language}}",
+    "translated_to": "Imetafsiriwa kwa {{language}}",
     "viewing_translated":"You are viewing a translated version of this post.",
     "view_original":"View original post",
     "change_lang": "Change language"
