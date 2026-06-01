@@ -2174,7 +2174,7 @@
   },
   "translations": {
     "available_languages": "Tafsiri zinazopatikana (chagua ili kuona chapisho):",
-    "translate_post": "Translate post",
+    "translate_post": "Tafsiri chapisho",
     "translate_post_to": "Translate post to {{language}}",
     "languages": "Lugha",
     "language": "Lugha",
