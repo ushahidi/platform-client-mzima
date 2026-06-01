@@ -2199,7 +2199,7 @@
     "add_a_language": "Ongeza lugha",
     "error_no_default": "Unahitaji kutaja lugha chaguo-msingi kabla ya kuongeza tafsiri mpya.",
     "select_language": "Chagua lugha ya kuongeza tafsiri kwa",
-    "select_translate_edit": "Select a language to translate to, or edit:",
+    "select_translate_edit": "Chagua lugha ya kutafsiri au kuhariri:",
     "default_lang_info": "Hii ni lugha ambayo itatumika ikiwa hakuna tafsiri zinazopatikana kwa lugha ambayo mtumiaji ameweka kwa kupelekwa.",
     "translated_to": "Translated to {{language}}",
     "viewing_translated":"You are viewing a translated version of this post.",
