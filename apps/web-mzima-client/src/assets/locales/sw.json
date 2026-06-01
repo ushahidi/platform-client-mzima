@@ -1419,7 +1419,7 @@
       "do_you_really_want_to_disconnect": "Je, kweli unataka kukata mawasiliano na mtoa huduma wako?",
       "add_source": "Ongeza chanzo",
       "providers": {
-        "supported": "Supported",
+        "supported": "Inayokubalika",
         "unsupported": "Unsupported Data Sources",
         "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
       },
