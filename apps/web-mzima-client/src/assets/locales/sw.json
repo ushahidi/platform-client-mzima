@@ -1015,7 +1015,7 @@
       "max_size": "Ukubwa wa juu zaidi: {{size}} MB Muundo: {{format}}",
       "format": {
         "image": "jpeg au png pekee",
-        "audio": "mp3, aac or ogg only",
+        "audio": "mp3, aac au ogg pekee",
         "document": "PDF or Word only"
       },
       "invalid_video_embed": "URL batili ya kupachika video",
