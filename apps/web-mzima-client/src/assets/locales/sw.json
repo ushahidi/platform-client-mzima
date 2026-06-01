@@ -1420,7 +1420,7 @@
       "add_source": "Ongeza chanzo",
       "providers": {
         "supported": "Inayokubalika",
-        "unsupported": "Unsupported Data Sources",
+        "unsupported": "Vyanzo vya data visivyotumika",
         "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
       },
       "edit": "Badilisha Chanzo cha Data cha {{provider}}",
