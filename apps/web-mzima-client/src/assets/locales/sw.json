@@ -440,9 +440,9 @@
     "radio_desc": "Ruhusu mtumizi achague tu mojawapo ya seti zilizotambuliwa.",
     "checkbox_desc": "Ruhusu mtumizi achague tu mojawapo ya seti zilizotambuliwa.",
     "relation_desc": "Unda ushirikiano kati ya hojaji tofautitofauti",
-    "upload_desc": "Upload one or more image file(s)",
-    "audio_desc": "Upload one or more audio file(s)",
-    "document_desc": "Upload one or more document file(s)",
+    "upload_desc": "Pakia picha moja au zaidi",
+    "audio_desc": "Pakia faili za sauti moja au zaidi",
+    "document_desc": "Pakia hati moja au zaidi",
     "video_desc": "Huruhusu video za YouTube au Vimeo kupachikwa kwenye chapisho",
     "maximum_upload_size" : "Upeo wa Ukubwa wa Kupakia",
     "small_upload_size" : "Ndogo",
@@ -1012,11 +1012,11 @@
         }
       },
       "input_empty_warn": "Pembejeo haiwezi kuwa tupu",
-      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "max_size": "Ukubwa wa juu zaidi: {{size}} MB Muundo: {{format}}",
       "format": {
-        "image": "jpeg or png only",
-        "audio": "mp3, aac or ogg only",
-        "document": "PDF or Word only"
+        "image": "jpeg au png pekee",
+        "audio": "mp3, aac au ogg pekee",
+        "document": "PDF ama Word pekee"
       },
       "invalid_video_embed": "URL batili ya kupachika video",
       "errors": {
@@ -1419,9 +1419,9 @@
       "do_you_really_want_to_disconnect": "Je, kweli unataka kukata mawasiliano na mtoa huduma wako?",
       "add_source": "Ongeza chanzo",
       "providers": {
-        "supported": "Supported",
-        "unsupported": "Unsupported Data Sources",
-        "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
+        "supported": "Inayokubalika",
+        "unsupported": "Vyanzo vya data visivyotumika",
+        "info_add_new_datasource": "Bonyeza \"Ongeza Chanzo\" ili kusanidi chanzo cha data kutoka kwenye vyanzo vya data vinavyokubalika."
       },
       "edit": "Badilisha Chanzo cha Data cha {{provider}}",
       "add_data_source": "Ongeza Chanzo cha Data",
@@ -2071,7 +2071,7 @@
       "destroy_confirm_desc_end": "Unaweza <a href=\"settings/data-import\">kupakua na kuagiza</a> data yako yote kabla ya kufuta.",
       "discard_changes": "Katisha mabadilikio",
       "save_changes": "Hifadhi Mabadilikio",
-      "back_to_editing": "Back to editing",
+      "back_to_editing": "Rejea kuhariri",
       "invalid_characters": "Tafadhali ondoa vibambo batili (kama vile +, $, ^, =)",
       "translations_missing": "Unahitaji kuongeza tafsiri za majina yote, na uhakikishe kuwa visanduku vya kuteua na redio hazina nakala. Hakikisha kuwa umetafsiri majina ya uchunguzi kwa lugha zote zilizoongezwa na kwamba kisanduku cha kuteua na thamani za vitufe vya redio ni za kipekee (ndani ya kila lugha)."
     },
@@ -2173,14 +2173,14 @@
     "i_agree": "Nakubaliana na<a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Sera ya Faragha</a> ya Ushahidi na\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Sheria na Masharti</a>."
   },
   "translations": {
-    "available_languages": "Available translations (select to see post):",
-    "translate_post": "Translate post",
-    "translate_post_to": "Translate post to {{language}}",
+    "available_languages": "Tafsiri zinazopatikana (chagua ili kuona chapisho):",
+    "translate_post": "Tafsiri chapisho",
+    "translate_post_to": "Tafsiri chapisho kwa lugha ya {{language}}",
     "languages": "Lugha",
     "language": "Lugha",
     "default": "Kaida",
-    "default_language": "Original language",
-    "text_in_original": "Text in original language:",
+    "default_language": "Lugha ya asili",
+    "text_in_original": "Maandishi katika lugha asili:",
     "translation_default": "(chaguo-msingi)",
     "translate_field": "Tafsiri ya uga",
     "survey_select_default": "Chagua lugha chaguo-msingi kwa ajili ya utafiti huu",
@@ -2199,12 +2199,12 @@
     "add_a_language": "Ongeza lugha",
     "error_no_default": "Unahitaji kutaja lugha chaguo-msingi kabla ya kuongeza tafsiri mpya.",
     "select_language": "Chagua lugha ya kuongeza tafsiri kwa",
-    "select_translate_edit": "Select a language to translate to, or edit:",
+    "select_translate_edit": "Chagua lugha ya kutafsiri au kuhariri:",
     "default_lang_info": "Hii ni lugha ambayo itatumika ikiwa hakuna tafsiri zinazopatikana kwa lugha ambayo mtumiaji ameweka kwa kupelekwa.",
-    "translated_to": "Translated to {{language}}",
-    "viewing_translated":"You are viewing a translated version of this post.",
-    "view_original":"View original post",
-    "change_lang": "Change language"
+    "translated_to": "Imetafsiriwa kwa {{language}}",
+    "viewing_translated":"Unaona chapisho hili katika toleo lililotafsiriwa.",
+    "view_original":"Tazama chapisho la asili",
+    "change_lang": "Badilisha lugha"
   },
   "languages": {
     "ach": "Acoli",
