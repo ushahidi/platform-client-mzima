@@ -2,7 +2,13 @@ import { Component, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
-import { CollectionsService, MediaService, PostsService, SurveysService } from '@mzima-client/sdk';
+import {
+  apiHelpers,
+  CollectionsService,
+  MediaService,
+  PostsService,
+  SurveysService,
+} from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   DatabaseService,
@@ -38,6 +44,7 @@ export class AppComponent extends BaseComponent {
   private toastMessage$ = new Subject<string>();
   public languages: LanguageInterface[];
   public selectedLanguage$: any;
+  private isInitialized = false;
 
   constructor(
     override router: Router,
@@ -74,6 +81,7 @@ export class AppComponent extends BaseComponent {
     this.getSurveys(false).subscribe();
     this.getCollections(false).subscribe();
     this.loadLanguageInformation();
+    this.isInitialized = true;
   }
 
   public loadLanguageInformation() {
@@ -91,7 +99,7 @@ export class AppComponent extends BaseComponent {
     this.networkService.networkStatus$
       .pipe(
         distinctUntilChanged(),
-        filter((value) => value === true),
+        filter((value) => value === true && this.isInitialized),
         untilDestroyed(this),
         concatMap(() => this.getCollections().pipe(delay(2000))),
         concatMap(() => this.getSurveys().pipe(delay(2000))),
@@ -103,7 +111,7 @@ export class AppComponent extends BaseComponent {
     this.networkService.networkStatus$
       .pipe(
         distinctUntilChanged(),
-        filter((value) => value === true),
+        filter((value) => value === true && this.isInitialized),
         untilDestroyed(this),
         concatMap(() => from(this.checkPendingCollections()).pipe(delay(2000))),
       )
@@ -118,6 +126,7 @@ export class AppComponent extends BaseComponent {
       orderby: 'created',
       order: 'desc',
       q: '',
+      only: apiHelpers.ONLY.NAME_ID_DESCRIPTION,
     };
 
     return this.collectionsService.getCollections(params).pipe(

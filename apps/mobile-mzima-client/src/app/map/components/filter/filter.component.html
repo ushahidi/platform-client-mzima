@@ -55,6 +55,9 @@
               type="item"
               [(ngModel)]="option.checked"
               *ngIf="!option.options?.length"
+              [option]="option"
+              [showCheckboxAvatar]="!option.options?.length"
+              [firstLetter]="getFirstLetter(option.label)"
               (checkboxChange)="optionChanged($event, option)"
             >
               {{ option.label }}
@@ -64,7 +67,7 @@
               class="multiselect-option"
               lines="none"
               *ngIf="option.options?.length"
-              (click)="showSubcategories(option)"
+              (click)="toggleSubcategoryDropdown(option)"
             >
               <ion-avatar
                 slot="start"
@@ -76,16 +79,36 @@
               <div>
                 {{ option.label }}
                 <span class="multiselect-option__info">
-                  Selected {{ getCheckedSubcategoriesLength(option.options) }} of
-                  {{ option.options?.length }}
+                  {{
+                    'app.categories.filter_info.subcategories.selected'
+                      | translate
+                        : {
+                            checkedOption: getCheckedSubcategoriesLength(option.options),
+                            optionsTotal: option.options?.length
+                          }
+                  }}
                 </span>
               </div>
               <app-icon
                 class="multiselect-option__details"
+                [ngClass]="{ 'multiselect-option__icon-facedown': option.isDropDownOpen }"
                 slot="end"
                 name="arrow-right"
-              ></app-icon>
+              >
+              </app-icon>
             </ion-item>
+            <ng-container *ngIf="option.isDropDownOpen">
+              <ng-container *ngFor="let childOption of option.options">
+                <app-checkbox
+                  type="item"
+                  [(ngModel)]="childOption.checked"
+                  (ngModelChange)="isSubcategoriesPristine = false"
+                  (checkboxChange)="optionChanged($event, childOption)"
+                >
+                  {{ childOption.label }}
+                </app-checkbox>
+              </ng-container>
+            </ng-container>
           </ng-container>
         </ng-container>
       </ng-container>
@@ -105,7 +128,11 @@
 <ion-footer class="footer">
   <ion-toolbar class="footer__toolbar">
     <div class="btn-panel">
-      <app-button expand="inline" [disabled]="isPristine" (buttonClick)="applyFilter()">
+      <app-button
+        expand="inline"
+        [disabled]="isPristine || isSubcategoriesPristine"
+        (buttonClick)="applyFilter()"
+      >
         {{ 'app.apply' | translate }}
       </app-button>
       <app-button
@@ -138,49 +165,3 @@
     {{ filter.noOptionsText }}
   </ion-text>
 </ng-template>
-
-<app-modal
-  class="subcategories-modal"
-  [isOpen]="!!selectedCategory"
-  (modalClose)="modalCloseHandle()"
-  *ngIf="type === filterType.MULTILEVELSELECT"
-  [options]="{
-    footer: true,
-    offsetBottom: false
-  }"
-  [title]="selectedCategory?.label?.toString() ?? ''"
->
-  <ion-text color="medium" class="subcategories-modal__total-posts" header-end>
-    {{ 'app.found_posts' | translate }}
-    <strong class="subcategories-modal__total-posts__count">{{ totalPosts }}</strong>
-  </ion-text>
-  <div class="subcategories-modal__filters">
-    <app-checkbox
-      type="item"
-      [(ngModel)]="option.checked"
-      *ngFor="let option of selectedCategory?.options"
-      (ngModelChange)="isSubcategoriesPristine = false"
-    >
-      {{ option.label }}
-    </app-checkbox>
-  </div>
-  <div class="subcategories-modal__footer" footer>
-    <app-button
-      expand="inline"
-      class="subcategories-modal__button"
-      [disabled]="isSubcategoriesPristine"
-      (buttonClick)="applySelectedSubcategories()"
-    >
-      {{ 'app.apply' | translate }}
-    </app-button>
-    <app-button
-      fill="outline"
-      color="medium"
-      expand="inline"
-      class="subcategories-modal__button"
-      (buttonClick)="clearSelectedSubcategories()"
-    >
-      {{ 'app.clear' | translate }}
-    </app-button>
-  </div>
-</app-modal>

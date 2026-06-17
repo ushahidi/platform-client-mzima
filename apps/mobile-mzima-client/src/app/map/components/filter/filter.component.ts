@@ -1,9 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { FilterControl, FilterControlOption } from '@models';
-import { CategoriesService, CategoryInterface, SavedsearchesService } from '@mzima-client/sdk';
+import {
+  apiHelpers,
+  CategoriesService,
+  CategoryInterface,
+  SavedsearchesService,
+} from '@mzima-client/sdk';
 import { AlertService, NetworkService, SessionService, ToastService } from '@services';
-import { searchFormHelper } from '@helpers';
-import _ from 'lodash';
+import { searchFormHelper, getDeploymentAvatarPlaceholder } from '@helpers';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import dayjs from 'dayjs';
 
@@ -199,30 +203,33 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   }
 
   private getCategories(): void {
-    this.categoriesService.get().subscribe({
-      next: (response) => {
-        const mainCategories = response?.results.filter((c: CategoryInterface) => !c.parent_id);
-        this.options = mainCategories?.map((category: CategoryInterface) => ({
-          checked: this.value.has(category.id),
-          value: category.id,
-          label: String(category.tag),
-          color: category.color!,
-          options: response?.results
-            ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
-            .map((cat: CategoryInterface) => ({
-              value: cat.id,
-              label: cat.tag,
-              checked: this.value.has(cat.id),
-            })),
-        }));
-        this.isOptionsLoading = false;
-      },
-      error: (err) => {
-        if (err.message.match(/Http failure response for/)) {
-          setTimeout(() => this.getCategories(), 5000);
-        }
-      },
-    });
+    this.categoriesService
+      .getCategories({ only: apiHelpers.ONLY.TAG_ID_PARENTID_CHILDREN })
+      .subscribe({
+        next: (response) => {
+          const mainCategories = response?.results.filter((c: CategoryInterface) => !c.parent_id);
+          this.options = mainCategories?.map((category: CategoryInterface) => ({
+            checked: this.value.has(category.id),
+            value: category.id,
+            label: String(category.tag),
+            color: getDeploymentAvatarPlaceholder(String(category.tag)),
+            options: category.children.length
+              ? category.children.map((cat: CategoryInterface) => ({
+                  value: cat.id,
+                  label: cat.tag,
+                  checked: this.value.has(cat.id),
+                }))
+              : null,
+            isDropDownOpen: category.children.length ? false : null,
+          }));
+          this.isOptionsLoading = false;
+        },
+        error: (err) => {
+          if (err.message.match(/Http failure response for/)) {
+            setTimeout(() => this.getCategories(), 5000);
+          }
+        },
+      });
   }
 
   public getObjectKeysCount(obj: any): number {
@@ -282,65 +289,18 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     return typeof label === 'string' && label ? label[0] : '';
   }
 
-  public showSubcategories(category: FilterControlOption): void {
-    this.selectedCategory = _.cloneDeep(category);
-  }
-
   public getCheckedSubcategoriesLength(options?: Omit<FilterControlOption, 'options'>[]): number {
     return options?.filter((o) => o.checked).length ?? 0;
-  }
-
-  public modalCloseHandle(): void {
-    this.selectedCategory = null;
-    this.isSubcategoriesPristine = true;
-  }
-
-  public applySelectedSubcategories(): void {
-    if (!this.selectedCategory) return;
-    const option = this.options.find((o) => o.value === this.selectedCategory?.value);
-    if (!option) return;
-    const changedOptions = option.options
-      ?.filter(
-        (o) =>
-          o.checked !== this.selectedCategory?.options?.find((so) => so.value === o.value)?.checked,
-      )
-      .map((o) => (!o.checked ? this.value.add(o.value) : this.value.delete(o.value)));
-    if (changedOptions?.length) {
-      this.isPristine = false;
-    }
-    option.options = _.cloneDeep(this.selectedCategory.options);
-    option.checked = !!option.options?.find((o) => o.checked);
-    option.checked ? this.value.add(option.value) : this.value.delete(option.value);
-    this.selectedCategory = null;
-    this.isSubcategoriesPristine = true;
-  }
-
-  public async clearSelectedSubcategories(): Promise<void> {
-    const result = await this.alertService.presentAlert({
-      header: `Clear ${this.selectedCategory?.label} filter?`,
-      message: 'This filter will be cleared',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-        {
-          text: 'Clear',
-          role: 'confirm',
-          cssClass: 'danger',
-        },
-      ],
-    });
-
-    if (result.role === 'confirm') {
-      this.isSubcategoriesPristine = false;
-      this.selectedCategory?.options?.forEach((option) => (option.checked = false));
-    }
   }
 
   public optionChanged(state: boolean, option: FilterControlOption): void {
     state ? this.value.add(option.value) : this.value.delete(option.value);
     this.isPristine = false;
+    this.isSubcategoriesPristine = false;
+  }
+
+  public toggleSubcategoryDropdown(option: FilterControlOption) {
+    option.isDropDownOpen = !option.isDropDownOpen;
   }
 
   public applyFilter(): void {

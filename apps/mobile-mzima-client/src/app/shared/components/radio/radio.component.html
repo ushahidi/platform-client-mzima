@@ -30,7 +30,9 @@
       [labelPlacement]="type === 'default' ? 'end' : 'start'"
       [justify]="justify"
     >
-      <ng-content></ng-content>
+      <span class="radio-item-wrap">
+        <ng-content></ng-content>
+      </span>
     </ion-radio>
   </ion-item>
 </ng-template>

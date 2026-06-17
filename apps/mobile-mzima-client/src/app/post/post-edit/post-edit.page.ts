@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import {
+  apiHelpers,
   GeoJsonFilter,
   MediaService,
   PostContent,
@@ -131,9 +132,9 @@ export class PostEditPage {
 
     this.filters = this.getFilters();
     this.post = await this.checkPost();
-    this.surveyList = await this.getSurveys();
-
-    if (this.post) {
+    if (!this.post) {
+      this.surveyList = await this.getSurveys();
+    } else {
       this.selectedSurveyId = this.post.form_id!;
       this.loadForm(this.selectedSurveyId, this.post.post_content);
     }
@@ -146,6 +147,7 @@ export class PostEditPage {
   }
 
   async checkPost(): Promise<any> {
+    this.isSubmitting = 'no';
     return new Promise<number>((resolve, reject) => {
       this.route.paramMap
         .pipe(
@@ -203,16 +205,32 @@ export class PostEditPage {
       : 'The connection was lost, the information will be saved to the database';
   }
 
+  async getSurvey(): Promise<any> {
+    if (this.isConnection) {
+      try {
+        const response: any = await lastValueFrom(
+          this.surveysService.getSurveyById(this.selectedSurveyId!),
+        );
+        return response.result;
+      } catch (err) {
+        return this.loadSurveyFormLocalDB();
+      }
+    } else {
+      return this.loadSurveyFormLocalDB();
+    }
+  }
+
   async getSurveys(): Promise<any[]> {
     if (this.isConnection) {
       try {
-        const response: any = await this.surveysService
-          .getSurveys('', {
+        const response: any = await lastValueFrom(
+          this.surveysService.getSurveys('', {
             page: 1,
             order: 'asc',
             limit: 0,
-          })
-          .toPromise();
+            only: apiHelpers.ONLY.NAME_COLOR_PERMISSIONS,
+          }),
+        );
 
         const filteredSurveys = response.results.filter((survey: any) => {
           return (
@@ -227,10 +245,10 @@ export class PostEditPage {
         return filteredSurveys;
       } catch (err) {
         console.log(err);
-        return this.loadSurveyFormLocalDB();
+        return this.loadSurveysFormLocalDB();
       }
     } else {
-      return this.loadSurveyFormLocalDB();
+      return this.loadSurveysFormLocalDB();
     }
   }
 
@@ -275,16 +293,14 @@ export class PostEditPage {
       : new PostEditForm(this.formBuilder).addFormControl(value, field);
   }
 
-  loadForm(surveyId?: any, updateContent?: PostContent[]) {
+  async loadForm(surveyId?: any, updateContent?: PostContent[]) {
     if (surveyId) this.selectedSurveyId = surveyId;
     if (!this.selectedSurveyId) return;
     this.clearData();
-
-    this.selectedSurvey = this.surveyList.find((item: any) => item.id === this.selectedSurveyId);
+    this.selectedSurvey = await this.getSurvey();
     this.requireApproval = this.selectedSurvey?.require_approval;
     this.color = this.selectedSurvey?.color;
     this.tasks = this.selectedSurvey?.tasks;
-
     const fields: any = {};
     for (const task of this.tasks ?? []) {
       task.fields
@@ -387,8 +403,16 @@ export class PostEditPage {
   public setCalendar(event: any, key: any, type: string) {
     this.updateFormControl(key, dateHelper.setDate(event.detail.value, type));
   }
-
-  private async loadSurveyFormLocalDB(): Promise<any[]> {
+  private async loadSurveyFormLocalDB(): Promise<any> {
+    if (!this.selectedSurveyId) return null;
+    try {
+      const surveysFromDB: any[] = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+      return surveysFromDB.find((survey) => survey.id === this.selectedSurveyId) || null;
+    } catch (error: any) {
+      throw new Error(`Error loading surveys from local database: ${error.message}`);
+    }
+  }
+  private async loadSurveysFormLocalDB(): Promise<any[]> {
     try {
       const surveysFromDB: any[] = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
       const filteredSurveys = surveysFromDB.filter((survey) => {
@@ -642,6 +666,9 @@ export class PostEditPage {
               } else {
                 value.value = this.form.value[field.key] || null;
               }
+              // TODO: Implement edit on new multimedia fields, but ignore for now.
+            } else if (['image', 'audio', 'document'].includes(field.input)) {
+              value.value = [];
             } else {
               value.value = this.form.value[field.key] || null;
             }
@@ -678,6 +705,7 @@ export class PostEditPage {
     if (this.form.disabled) return;
 
     this.isSubmitting = 'yes';
+
     try {
       await this.preparationData();
     } catch (error: any) {
@@ -687,6 +715,7 @@ export class PostEditPage {
         duration: 3000,
       });
       console.log(error);
+      this.isSubmitting = 'no';
       return;
     }
 
@@ -741,7 +770,7 @@ export class PostEditPage {
     const promises: Promise<any>[] = [];
     for (let postData of pendingPosts) {
       for (const field of postData.post_content[0].fields) {
-        if (field.type === 'media') {
+        if (field.type === 'media' && field.input === 'upload') {
           if (field?.file?.delete) {
             postData = await this.deleteFile(postData, field.file);
           } else if (field.value.value && typeof field.value.value !== 'number') {
@@ -858,7 +887,7 @@ export class PostEditPage {
       const result = await this.alertService.presentAlert({
         header: 'Success!',
         message:
-          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
+          'Thank you for submitting your post. It is being reviewed, and will soon will appear on the platform.',
       });
       if (result.role !== 'confirm') return;
     }

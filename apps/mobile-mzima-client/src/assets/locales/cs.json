@@ -2,6 +2,10 @@
     "app": {
       "activity_view_wip": "Zobrazení aktivit již brzy",
       "welcome_back": "Vítejte zpět!",
+      "placeholder_enter_name": "Enter your name",
+      "placeholder_enter_email": "Enter your email",
+      "placeholder_enter_password": "Enter password",
+      "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol.",
       "login_private": "Přihlášení do soukromého nasazení",
       "login_details_desc": "Pro přístup k nasazení zadejte své přihlašovací údaje. Nebo kontaktujte správce",
       "forgot_password": "Zapomněli jste heslo?",
@@ -32,6 +36,7 @@
       "published":"Zveřejněno",
       "under_review": "Probíhá kontrola",
       "archived": "Archivováno",
+      "via_source": "Via {{source}}",
       "privacy_policy_text": "<p>Ushahidi se zavazuje chránit vaše soukromí.</p><p>Máte právo být informováni o tom, jak Ushahidi spravuje vaše osobní údaje. Tyto zásady ochrany osobních údajů poskytujeme, abychom vysvětlili, jak shromažďujeme, přijímáme, používáme, ukládáme, sdílíme a zveřejňujeme vaše údaje prostřednictvím našich služeb. </p><p>pro snazší čtení těchto zásad se Stránky, naše služby, platformy a Aplikace souhrnně nazývají „Služby“. Máte-li jakékoli dotazy týkající se vašich osobních údajů a našich zásad, napište nám na adresu <a href=\"mailto:privacy@ushahidi.com\">privacy@ushahidi.com</a></p><p>Tyto Zásady ochrany osobních údajů se nevztahují na žádné služby třetích stran (jak je definováno níže), a to ani v případě, že jsou přístupné prostřednictvím našich služeb. </p><p>Vezměte prosím také na vědomí, že pokud v těchto Zásadách ochrany osobních údajů nedefinujeme nějaký termín, mají všechny termíny s velkými písmeny použité v těchto Zásadách ochrany osobních údajů stejný význam jako v našich Podmínkách poskytování služeb. Proto se prosím ujistěte, že jste si přečetli naše Podmínky služby a že jim rozumíte.</p><h2>Zahrnuto v našich Zásadách</h2><p>Kdo jsme</p><ul><li>Shromažďování a používání informací</li><li>Způsoby, jakými vaše informace používáme</li><li>Informace, které sdílíme s třetími stranami</li><li>Zákony na ochranu dat</li><li>Vaše práva</li><li>Vaše volby</li><li>Odpovědi na signály Do Not Track</li><li>Zabezpečení vašich informací</li><li>Jak dlouho vaše údaje uchováváme.</li></ul>",
       "profile_name":"Název profilu",
       "profile_settings": "Nastavení profilu",
@@ -78,6 +83,19 @@
         "posts_not_uploaded" : "<b>{{num_posts}} Příspěvky nebyly nahrány!</b><br/>Příspěvky nebyly nahrány z důvodu špatného připojení k internetu nebo jste byli offline. Budou automaticky nahrány, jakmile se připojíte k internetu.",
         "posts_uploading" : "<b>Nahrávání {{num_posts}} příspěvků. </b><br/>V současné době nahráváme vaše příspěvky",
         "posts_uploaded" : "<b>{{num_posts}} příspěvky byly úspěšně nahrány!</b><br/>Vaše příspěvky byly úspěšně nahrány. Můžete je vidět v části „Moje příspěvky“"
-      }
+      },
+      "map": "Map",
+      "activity": "Activity",
+      "profile": "Profile",
+      "language": "Language",
+      "help_support": "Help and Support",
+      "help_support_desc":"Documentation, Report a bug",
+      "profile_info":"Profile information",
+      "profile_info_desc":"Edit your photo or information",
+      "my_posts":"My Posts",
+      "my_posts_desc":"Post you’ve created",
+      "logout" : "Logout",
+      "login_register":"Log in or Sign up",
+      "add_edit_collection":"Add or Edit collections"
     }
 }

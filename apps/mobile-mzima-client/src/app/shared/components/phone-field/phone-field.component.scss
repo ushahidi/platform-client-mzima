@@ -1,0 +1,87 @@
+::ng-deep {
+  @import '~intl-tel-input/build/css/intlTelInput';
+  .phone-field {
+    .item-native {
+      padding: 0 !important;
+    }
+  }
+  .iti {
+    --iti-general-bg: #fff;
+    --iti-general-color: #000;
+    --iti-border-color: #efefee;
+    @media (prefers-color-scheme: dark) {
+      --iti-border-color: #6c7074;
+      --iti-dialcode-color: #d3d4d5;
+      --iti-dropdown-bg: #383e45;
+      --iti-arrow-color: #d3d4d5;
+      --iti-hover-color: #8aabff4d;
+      --iti-text-gray: #d3d4d5;
+      --iti-path-globe-1x: url('~intl-tel-input/build/img/globe_light.webp');
+      --iti-path-globe-2x: url('~intl-tel-input/build/img/globe_light@2x.webp');
+
+      --iti-general-bg: #383e45;
+      --iti-general-color: #d3d4d5;
+    }
+    &.iti--allow-dropdown {
+      width: 100%;
+      color: var(--iti-general-color);
+      .iti__selected-dial-code {
+        position: absolute;
+        left: 70px;
+      }
+      .iti__country-container {
+        margin-left: 10px;
+        border-radius: 6px;
+        border: 1px solid var(--iti-border-color);
+        background-color: var(--iti-general-bg);
+        height: 40px;
+      }
+      input.iti__tel-input,
+      input.iti__tel-input[type='text'],
+      input.iti__tel-input[type='tel'] {
+        padding-right: var(--iti-input-padding);
+        left: var(--iti-selected-country-arrow-padding);
+        padding-left: 10px;
+        padding-bottom: 2px;
+        margin-left: 20px;
+        width: calc(100% - var(--iti-selected-country-arrow-padding) - 20px);
+        height: 40px;
+        border: 1px solid var(--iti-border-color);
+        background-color: var(--iti-general-bg);
+        border-radius: 6px;
+        outline: none;
+      }
+      &[dir='rtl'] {
+        input.iti__tel-input,
+        input.iti__tel-input[type='text'],
+        input.iti__tel-input[type='tel'] {
+          right: var(--iti-selected-country-arrow-padding);
+          padding-right: 20px;
+          padding-left: var(--iti-input-padding);
+          padding-bottom: 2px;
+          margin-right: 10px;
+          width: calc(100% - var(--iti-selected-country-arrow-padding));
+          height: 40px;
+          border: none;
+          border-radius: 4px;
+        }
+      }
+    }
+    &.iti--container {
+      &.iti--fullscreen-popup {
+        .iti__dropdown-content {
+          border: 1px solid var(--iti-border-color);
+          background-color: var(--iti-general-bg);
+          .iti__search-input {
+            background-color: var(--iti-general-bg);
+            outline: none;
+          }
+          .iti__country {
+            border: 1px solid var(--iti-border-color);
+          }
+        }
+      }
+    }
+    // }
+  }
+}

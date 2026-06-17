@@ -1,12 +1,15 @@
 <app-header (back)="backNavigation()" title="{{!postId ? 'Create' : 'Edit'}} post"></app-header>
 
 <ion-content class="ion-padding-horizontal ion-padding-top page">
-  <ng-container *ngIf="!surveyList.length">
+  <ng-container *ngIf="!surveyList.length && !postId">
     <p>{{'app.loading' | translate}}</p>
+  </ng-container>
+  <ng-container *ngIf="postId && !selectedSurvey">
+    <p>{{'app.loading_post' | translate}}</p>
   </ng-container>
 
   <ng-container *ngIf="surveyList.length && !form">
-    <ion-title class="list-title">Select a survey</ion-title>
+    <ion-title class="list-title">{{'app.select_survey' | translate}} </ion-title>
     <ion-list class="list">
       <ion-item
         class="list-item"
@@ -27,9 +30,13 @@
     [disabled]="!!postId"
     [(ngModel)]="selectedSurveyId"
     (ngModelChange)="loadForm()"
-    *ngIf="form"
+    *ngIf="form && !postId"
   >
   </app-select>
+  <ion-title class="list-title survey-title" *ngIf="selectedSurvey&& postId">
+    {{selectedSurvey.name}}</ion-title
+  >
+
   <form
     class="form-post-create"
     novalidate
@@ -69,7 +76,7 @@
         >
           <!-- title, varchar -->
           <ng-container
-            *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
+            *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar') && field.label !== 'mobile_test'"
           >
             <div class="form-control--section">
               <ion-label class="field-label"
@@ -101,6 +108,21 @@
                 [hintHTML]="field?.instructions"
                 [rows]="3"
               ></app-textarea-control>
+            </div>
+          </ng-container>
+
+          <!-- phone -->
+          <ng-container *ngIf="field.input === 'text' && field.label === 'mobile_test'">
+            <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
+              <app-phone-field
+                color="light"
+                [required]="field?.required"
+                [formControlName]="field.key"
+              ></app-phone-field>
             </div>
           </ng-container>
 

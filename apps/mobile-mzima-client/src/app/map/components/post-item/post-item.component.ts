@@ -92,13 +92,14 @@ export class PostItemComponent implements OnInit {
   }
 
   private getMedia() {
-    this.mediaId = this.post.post_content
-      ?.flatMap((c) => c.fields)
-      .find((f) => f.input === 'upload')?.value?.value;
-
-    this.mediaUrl = this.post.post_content
-      ?.flatMap((c) => c.fields)
-      .find((f) => f.input === 'upload')?.value?.mediaSrc;
+    if (this.post.post_media) {
+      this.mediaId = this.post.post_media.value.value as number;
+      this.mediaService.getById(this.mediaId).subscribe({
+        next: (media) => {
+          this.mediaUrl = media.result.original_file_url;
+        },
+      });
+    }
   }
 
   private async checkNetwork() {

@@ -58,13 +58,13 @@ export class PostsPage {
         if (this.isEditMode) {
           this.editPosts();
         }
-        this.getMyPosts();
+        this.getMyPosts(true);
       },
     });
   }
 
   ionViewWillEnter(): void {
-    this.getMyPosts();
+    this.getMyPosts(false, true);
   }
 
   ionViewDidLeave(): void {
@@ -78,37 +78,60 @@ export class PostsPage {
         next: (value) => {
           this.isConnection = value;
           if (this.isConnection) {
-            this.getMyPosts();
+            this.getMyPosts(false, true);
           }
         },
       });
   }
+  // reset: boolean determines if the posts should reset to first page and clear current list
+  // reloadAll: boolean decides if the function should fetch all posts in a single API call
 
-  public async getMyPosts(add = false): Promise<void> {
+  public async getMyPosts(reset = false, reloadAll = false): Promise<void> {
     this.isPostsLoading = true;
+    //resetting the page to 1 and clearing current posts if true
+    if (reset) {
+      this.params.page = 1;
+      this.posts = [];
+    }
+
+    const originalPage = this.params.page ?? 1;
+    const originalLimit = this.params.limit ?? 6;
+
+    //Ensuring all posts upto the current page are fetched in one go once true
+    if (reloadAll) {
+      this.params.limit = (this.params.page ?? 1) * (this.params.limit ?? 6);
+      this.params.page = 1;
+    }
+
     try {
       const response = await lastValueFrom(this.postsService.getMyPosts('', this.params));
       await this.databaseService.set(STORAGE_KEYS.POSTS, response);
-      this.postDisplayProcessing(response, add);
+      this.postDisplayProcessing(response, !reset && !reloadAll);
     } catch (error) {
       console.error('error: ', error);
       const response = await this.databaseService.get(STORAGE_KEYS.POSTS);
       if (response) {
-        this.postDisplayProcessing(response, add);
+        this.postDisplayProcessing(response, !reset && !reloadAll);
       }
+      //resetting the parameters if reloadAll is true
+    } finally {
+      if (reloadAll) {
+        this.params.limit = originalLimit;
+        this.params.page = originalPage;
+      }
+      this.isPostsLoading = false;
     }
   }
 
   postDisplayProcessing(response: PostApiResponse, add: boolean) {
     this.posts = add ? [...this.posts, ...response.results] : response.results;
-    this.isPostsLoading = false;
     this.totalPosts = response.meta.total;
   }
 
   public async loadMorePosts(ev: any): Promise<void> {
     if (this.isConnection && this.totalPosts > this.posts.length && this.params.page) {
       this.params.page++;
-      await this.getMyPosts(true);
+      await this.getMyPosts();
       (ev as InfiniteScrollCustomEvent).target.complete();
     }
   }

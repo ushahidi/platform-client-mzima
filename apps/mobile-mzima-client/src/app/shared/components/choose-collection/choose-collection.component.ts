@@ -12,6 +12,7 @@ import {
   ToastService,
 } from '@services';
 import {
+  apiHelpers,
   CollectionItem,
   CollectionsService,
   NotificationsService,
@@ -28,6 +29,7 @@ interface CollectionsParams {
   page: number;
   q: string;
   editableBy?: string;
+  only?: string;
 }
 
 enum CollectionAction {
@@ -48,6 +50,7 @@ export class ChooseCollectionComponent {
   @Input() public selectedCollections: Set<number> = new Set();
   @Output() back = new EventEmitter();
   public isAddCollectionModalOpen = false;
+  public canManageCollections: boolean;
   collectionToEdit: string | number;
   public createCollectionForm = this.formBuilder.group({
     name: ['', [Validators.required]],
@@ -72,9 +75,12 @@ export class ChooseCollectionComponent {
     page: 1,
     q: '',
     editableBy: 'me',
+    only: apiHelpers.ONLY.NAME_ID_DESCRIPTION,
   };
   public roleOptions: any;
-  private userRole: string;
+  public userRole: string;
+  public currentUserId: any;
+  public userPermissions: string;
   private userData$: Observable<UserInterface>;
   public isLoading = false;
   public isSearchView = false;
@@ -115,11 +121,25 @@ export class ChooseCollectionComponent {
     });
 
     this.userData$ = this.sessionService.currentUserData$.pipe(untilDestroyed(this));
-
     this.userData$.subscribe((userData) => {
       this.userRole = userData.role!;
+      this.currentUserId = userData.userId;
+      this.userPermissions = Array.isArray(userData.permissions)
+        ? userData.permissions.join(',')
+        : userData.permissions!;
+
+      if (this.userRole && this.userPermissions) {
+        this.canManageCollections = this.checkManageCollections(userData);
+      } else {
+        console.log('Cannot retrieve userRole and permissions');
+      }
       this.initRoles();
     });
+  }
+
+  private checkManageCollections(userData: UserInterface) {
+    const hasPermission = userData.permissions!.includes('Manage Collections and Saved Searches');
+    return hasPermission;
   }
 
   async ionViewWillEnter() {
@@ -391,10 +411,7 @@ export class ChooseCollectionComponent {
       is_notifications_enabled: false,
     });
 
-    this.updateForm(
-      'visible_to',
-      formHelper.mapRoleToVisible(collection.role, !!collection.featured),
-    );
+    this.updateForm('visible_to', formHelper.mapRoleToVisible(collection.role));
 
     this.notificationsService.get(String(collection.id)).subscribe({
       next: (response) => {

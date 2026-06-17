@@ -28,25 +28,18 @@
   title="Help and Support"
   (modalClose)="isSupportModalOpen = false"
 >
-  <ng-container *ngIf="filteredSupportItems.length; else emptySupportItems">
-    <ion-item
-      class="list-item"
-      button
-      lines="none"
-      *ngFor="let supportItem of filteredSupportItems"
-    >
-      <div (click)="supportItem.action()">
-        <span class="list-item__title">{{ supportItem.title }}</span>
-        <ion-text class="list-item__description" color="medium"
-          >{{ supportItem.description }}</ion-text
-        >
+  <ng-container>
+    <ion-item class="list-item" lines="none">
+      <div>
+        <span class="list-item__title">{{"app.contact_support" | translate}}</span>
+        <ion-text class="list-item__description" color="medium">
+          {{"app.contact_support_desc_1" |translate}}
+          <a href="https://www.ushahidi.com/support/" target="_blank"
+            >{{"app.contact_support_desc_2" | translate}}</a
+          >
+          {{"app.contact_support_desc_3" | translate}}
+        </ion-text>
       </div>
-      <app-icon class="list-item__details" slot="end" name="arrow-right"></app-icon>
     </ion-item>
   </ng-container>
-  <ng-template #emptySupportItems>
-    <ion-text color="medium" class="empty ion-text-center">
-      {{"app.nothing_found" | translate}}
-    </ion-text>
-  </ng-template>
 </app-modal>

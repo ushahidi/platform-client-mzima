@@ -69,9 +69,14 @@
     </span>
   </ion-item>
   <span *ngIf="hintHTML?.length" class="hint ion-padding-horizontal" [innerHTML]="hintHTML"></span>
-  <span *ngIf="hint?.length && (!errors?.length || isOnFocus)" class="hint ion-padding-horizontal">
-    {{ hint }}
-  </span>
+  <ng-container *ngIf="hint">
+    <span
+      *ngIf="hint?.length && (!errors?.length || isOnFocus)"
+      class="hint ion-padding-horizontal"
+    >
+      {{ hint | translate }}
+    </span>
+  </ng-container>
   <ng-container *ngIf="!isOnFocus && errors?.length">
     <ion-text *ngFor="let error of errors" color="danger" class="error-msg ion-padding-horizontal">
       {{ error }}

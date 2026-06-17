@@ -8,6 +8,7 @@ import {
   SavedsearchesService,
   SurveyItem,
   SurveysService,
+  apiHelpers,
 } from '@mzima-client/sdk';
 import { Subject, debounceTime, lastValueFrom, takeUntil } from 'rxjs';
 import { AlertService, EnvService, SearchService, SessionService } from '@services';
@@ -311,7 +312,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
       this.activeFilters = null;
     }
     this.surveys = null;
-    this.surveysService.get().subscribe({
+    this.surveysService.getSurveys('', { only: apiHelpers.ONLY.NAME_ID_COLOR }).subscribe({
       next: (response) => {
         this.surveys = response.results;
         this.initSurveyFilters(isDeplaymentChanged);

@@ -33,7 +33,9 @@ import {
 } from './components';
 import { CalendarModule } from 'ion2-calendar';
 import { TextareaControlComponent } from './components/textarea-control/textarea-control.component';
+import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
 import { TruncateModule } from '@pipes';
+import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 
 const components = [
   IconComponent,
@@ -61,6 +63,7 @@ const components = [
   ChooseCollectionComponent,
   CollectionItemComponent,
   PostControlsComponent,
+  PhoneFieldComponent,
 ];
 
 @NgModule({
@@ -74,6 +77,7 @@ const components = [
     CalendarModule,
     ReactiveFormsModule,
     TruncateModule,
+    NgxMatIntlTelInputComponent,
   ],
   exports: [IonicModule, CommonModule, ...components],
 })

@@ -2,6 +2,10 @@
     "app": {
       "activity_view_wip": "Mwonekano wa Shughuli unakuja hivi karibuni",
       "welcome_back": "Karibu Tena!",
+      "placeholder_enter_name": "Enter your name",
+      "placeholder_enter_email": "Enter your email",
+      "placeholder_enter_password": "Enter password",
+      "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol.",
       "login_private": "Ingia kwenye Usanidi wa Kibinafsi",
       "login_details_desc": "Tafadhali ingiza maelezo yako ya kuingia ili upate ufikiaji wa usanidi. Au wasiliana na msimamizi.",
       "forgot_password": "Umeisahau Nenosiri Yako?",
@@ -32,6 +36,7 @@
       "published":"Imechapishwa",
       "under_review": "Inakaguliwa",
       "archived": "Imehifadhiwa",
+      "via_source": "Via {{source}}",
       "privacy_policy_text": "<p>Ushahidi imejitolea kulinda faragha yako.</p><p>Ni haki yako kufahamishwa kuhusu jinsi Ushahidi hudhibiti taarifa zako za kibinafsi. Tunatoa Sera hii ya Faragha ili kueleza jinsi tunavyokusanya, kupokea, kutumia, kuhifadhi, kushiriki na kufichua data yako kupitia Huduma zetu.</p><p>Ili kurahisisha kusoma kwa sera hii, Tovuti, huduma, mifumo na Programu zetu kwa pamoja huitwa \"Huduma.\" Ikiwa una maswali yoyote kuhusu data yako ya kibinafsi na sera zetu, tafadhali tuma barua pepe kwa<a href=\"mailto:privacy@ushahidi.com\">privacy@ushahidi.com</a></p><p>Sera hii ya Faragha haitumiki kwa Huduma zozote za Watu Wengine (kama ilivyofafanuliwa hapa chini), hata kama zinaweza kufikiwa kupitia Huduma zetu.</p><p> Pia, tafadhali kumbuka kuwa isipokuwa tufafanue neno katika Sera hii ya Faragha, maneno yote yenye herufi kubwa yanayotumiwa katika Sera ya Faragha yana maana sawa na katika Sheria na Masharti yetu. Kwa hivyo, tafadhali hakikisha kwamba umesoma na kuelewa Sheria na Masharti yetu.</p><h2>Imejumuishwa katika Sera Yetu</h2><p>Sisi ni Nani</p><ul><li>Ukusanyaji na Matumizi ya Taarifa</li><li>Njia Tunazotumia Taarifa Zako</li><li>Taarifa tunazosambaza na Wahusika wa Tatu<li>Sheria za Ulinzi wa Data</li><li>Haki zako</li><li>Chaguo lako</li><li>Kujibu Ishara za \"Do Not Track\"</li><li>Usalama wa Taarifa Yako</li><li>Muda ambao tunahifadhi data yako</li></ul>",
       "profile_name":"Jina la wasifu",
       "profile_settings": "Mipangilio ya wasifu",
@@ -78,6 +83,19 @@
         "posts_not_uploaded" : "<b>Machapisho {{num_posts}} hayajapakiwa!</b><br/>Machapisho hayakupakiwa kwa sababu ya muunganisho mbaya wa intaneti au ulikuwa nje ya mtandao. Zitapakiwa kiotomatiki pindi tu utakapounganisha kwenye intaneti",
         "posts_uploading" : "<b>Inapakia Machapisho {{num_posts}} </b><br/>Kwa sasa tunapakia machapisho yako",
         "posts_uploaded" : "<b>Machapisho {{num_posts}} Yamepakiwa kwa mafanikio!</b><br/>Machapisho yako yamepakiwa kwa mafanikio. Unaweza kuyaona chini ya \"Machapisho Yangu\""
-      }
+      },
+      "map": "Map",
+      "activity": "Activity",
+      "profile": "Profile",
+      "language": "Language",
+      "help_support": "Help and Support",
+      "help_support_desc":"Documentation, Report a bug",
+      "profile_info":"Profile information",
+      "profile_info_desc":"Edit your photo or information",
+      "my_posts":"My Posts",
+      "my_posts_desc":"Post you’ve created",
+      "logout" : "Logout",
+      "login_register":"Log in or Sign up",
+      "add_edit_collection":"Add or Edit collections"
     }
 }

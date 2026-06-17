@@ -13,7 +13,34 @@
         {{ (post.user?.realname ?? post.contact?.contact ?? post.author_realname) || 'Anonymous' }}
       </ion-card-title>
       <ion-card-subtitle class="post__date">
-        {{ post.post_date | date : 'mediumDate' }}
+        <span class="post__info">
+          <ion-text color="medium" class="post__info-item">
+            {{ post.post_date | dateAgo }}
+          </ion-text>
+          <ion-text
+            class="post__info-item post__status"
+            [ngClass]="{
+              'post__status--published': post.status === 'published',
+              'post__status--draft': post.status === 'draft',
+              'post__status--archived': post.status === 'archived'
+            }"
+          >
+            <ng-container [ngSwitch]="post.status">
+              <ng-container *ngSwitchCase="'published'">{{
+                'app.published' | translate
+              }}</ng-container>
+              <ng-container *ngSwitchCase="'draft'">{{
+                'app.under_review' | translate
+              }}</ng-container>
+              <ng-container *ngSwitchCase="'archived'">{{
+                'app.archived' | translate
+              }}</ng-container>
+            </ng-container>
+          </ion-text>
+          <ion-text color="medium" class="post__info-item">{{
+            'app.via_source' | translate : { source: post.source }
+          }}</ion-text>
+        </span>
       </ion-card-subtitle>
     </div>
     <app-button
@@ -35,7 +62,7 @@
     </app-checkbox>
   </ion-card-header>
   <ng-container *ngIf="isConnection && mediaId && post.source !== 'Twitter'">
-    <ion-img class="post__media" [src]="mediaUrl | prependUrl : backendUrl"></ion-img>
+    <ion-img class="post__media" [src]="mediaUrl"></ion-img>
   </ng-container>
   <app-twitter-widget
     *ngIf="post.source === 'Twitter' && post.data_source_message_id"
