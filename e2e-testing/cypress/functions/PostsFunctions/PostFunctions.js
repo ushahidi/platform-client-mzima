@@ -101,8 +101,12 @@ class PostFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
-    //verify post count to verify we are in correct post page
-    cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
+    //verify post count to verify we are in correct post page. Only the page size (20) is
+    //asserted here, not the total, since the total record count on the shared test backend
+    //grows over time as other automated tests create posts.
+    cy.get('[data-qa="feed-page-results"]').should(($el) => {
+      expect($el.text()).to.match(/Current results: 20 \/ \d+/);
+    });
     cy.contains(this.postTitle).scrollIntoView();
 
     //change post to be deleted to "New Post Title for Location"
