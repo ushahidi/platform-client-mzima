@@ -31,9 +31,15 @@ class PostFunctions {
 
     //type in nairobi county in full. this gets one result and picks it automatically, populating lat and long fields
     cy.get(PostLocators.locationSearchField).type('nairobi county');
-    //verify values in lat and long fields
-    cy.get(PostLocators.locationLatField).should('have.value', '-1.3026148499999999');
-    cy.get(PostLocators.locationLongField).should('have.value', '36.82884201813725');
+    //verify values in lat and long fields land within Nairobi. Not an exact match because the
+    //geocoder (Nominatim/OSM) can return a slightly different centroid over time as the
+    //underlying OSM boundary data is edited.
+    cy.get(PostLocators.locationLatField).should(($el) => {
+      expect(parseFloat($el.val())).to.be.closeTo(-1.3, 0.15);
+    });
+    cy.get(PostLocators.locationLongField).should(($el) => {
+      expect(parseFloat($el.val())).to.be.closeTo(36.83, 0.15);
+    });
 
     // click on date field to open pop up
     // cy.get(PostLocators.dateField).click(); //the first click opens the date picker
