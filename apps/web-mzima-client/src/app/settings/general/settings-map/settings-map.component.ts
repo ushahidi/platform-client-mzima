@@ -2,7 +2,8 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface, MapViewInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { SessionService } from '@services';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationService, SessionService } from '@services';
 import {
   control,
   DragEndEvent,
@@ -45,7 +46,12 @@ export class SettingsMapComponent implements OnInit {
   locationPrecisionEnabled: any;
   currentPrecision = 9;
 
-  constructor(private sessionService: SessionService, private changeDetector: ChangeDetectorRef) {}
+  constructor(
+    private sessionService: SessionService,
+    private changeDetector: ChangeDetectorRef,
+    private notificationService: NotificationService,
+    private translate: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     this.searchSubject.pipe(debounceTime(600), untilDestroyed(this)).subscribe((query) => {
@@ -85,7 +91,16 @@ export class SettingsMapComponent implements OnInit {
   addTileLayerToMap(code: MapViewInterface['baselayer']) {
     const currentLayer = mapHelper.getMapLayers().baselayers[code];
     this.mapLayers = this.mapLayers.filter((layer) => !(layer instanceof TileLayer));
-    this.mapLayers.push(tileLayer(currentLayer.url, currentLayer.layerOptions));
+    const baseTileLayer = mapHelper.attachTileFallback(
+      tileLayer(currentLayer.url, currentLayer.layerOptions),
+      currentLayer.code,
+      (fallbackLayer) => {
+        this.mapLayers = this.mapLayers.filter((layer) => !(layer instanceof TileLayer));
+        this.mapLayers.push(fallbackLayer);
+        this.notificationService.showError(this.translate.instant('notify.map.baselayer_fallback'));
+      },
+    );
+    this.mapLayers.push(baseTileLayer);
   }
 
   layerChange(newLayer: MapViewInterface['baselayer']) {

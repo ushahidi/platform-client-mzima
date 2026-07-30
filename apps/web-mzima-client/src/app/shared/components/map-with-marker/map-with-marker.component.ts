@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import {
   control,
   FitBoundsOptions,
@@ -11,6 +12,7 @@ import {
   marker,
 } from 'leaflet';
 import { pointIcon } from '../../../core/helpers/map';
+import { NotificationService } from '../../../core/services/notification.service';
 import { SessionService } from '../../../core/services/session.service';
 
 @Component({
@@ -31,19 +33,33 @@ export class MapWithMarkerComponent implements OnInit {
     animate: true,
   };
   public mapLayers: any[] = [];
+  private map: Map;
 
-  constructor(private sessionService: SessionService) {}
+  constructor(
+    private sessionService: SessionService,
+    private notificationService: NotificationService,
+    private translate: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     const currentLayer =
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+    const baseTileLayer = mapHelper.attachTileFallback(
+      tileLayer(currentLayer.url, currentLayer.layerOptions),
+      currentLayer.code,
+      (fallbackLayer) => {
+        this.map.removeLayer(baseTileLayer);
+        this.map.addLayer(fallbackLayer);
+        this.notificationService.showError(this.translate.instant('notify.map.baselayer_fallback'));
+      },
+    );
 
     this.leafletOptions = {
       scrollWheelZoom: true,
       zoomControl: false,
-      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+      layers: [baseTileLayer],
       center: [this.marker.lat, this.marker.lon],
       zoom: this.mapConfig.default_view!.zoom,
     };
@@ -63,6 +79,7 @@ export class MapWithMarkerComponent implements OnInit {
   }
 
   public onMapReady(map: Map) {
+    this.map = map;
     control.zoom({ position: 'bottomleft' }).addTo(map);
   }
 }
