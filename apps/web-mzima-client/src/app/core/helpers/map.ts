@@ -1,5 +1,5 @@
 // import { EnvService } from '@services';
-import { divIcon, marker } from 'leaflet';
+import { divIcon, marker, tileLayer, TileLayer } from 'leaflet';
 import { EnvService } from '../services/env.service';
 
 export const pointIcon = (color: string, type: string = 'default') => {
@@ -70,4 +70,29 @@ export const getMapLayers = () => {
       },
     },
   };
+};
+
+export const FALLBACK_BASELAYER_CODE = 'hOSM';
+
+/**
+ * Wires a base tile layer so that if its tiles fail to load (e.g. an invalid/missing
+ * Mapbox API key), it swaps itself out for the Humanitarian (OSM) layer, which needs no key.
+ * `onFallback` is called at most once and is responsible for actually replacing the layer
+ * wherever the caller keeps track of it (e.g. on the Leaflet map or in an Angular-bound array).
+ */
+export const attachTileFallback = (
+  layer: TileLayer,
+  currentCode: string,
+  onFallback: (fallbackLayer: TileLayer, fallbackCode: string) => void,
+): TileLayer => {
+  if (currentCode === FALLBACK_BASELAYER_CODE) {
+    return layer;
+  }
+
+  layer.once('tileerror', () => {
+    const fallback = getMapLayers().baselayers[FALLBACK_BASELAYER_CODE];
+    onFallback(tileLayer(fallback.url, fallback.layerOptions), fallback.code);
+  });
+
+  return layer;
 };
