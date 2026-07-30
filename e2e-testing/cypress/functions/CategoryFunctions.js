@@ -48,12 +48,19 @@ class CategoryFunctions {
     this.complete_add_category_steps();
   }
 
-  delete_category_bulk_actions(category_id) {
+  delete_category_bulk_actions(categoryName) {
     //click bulk actions
     cy.get(CategoryLocators.blkActionsBtn).click();
     cy.get(CategoryLocators.deleteBtn).should('be.visible');
-    //click on checkbox
-    cy.get(category_id).scrollIntoView().should('be.visible').click();
+    //select the checkbox for the row matching this category name. Deliberately not
+    //selecting by Angular Material's auto-generated #mat-checkbox-N id: that id comes from
+    //a global counter shared by every mat-checkbox rendered in the session, so it shifts
+    //whenever unrelated checkboxes are added/removed elsewhere in the app.
+    cy.contains(CategoryLocators.categoryItemTitle, categoryName)
+      .find('mat-checkbox')
+      .scrollIntoView()
+      .should('be.visible')
+      .click();
     //click delete
     cy.get(CategoryLocators.deleteBtn).click();
     //confirm delete
