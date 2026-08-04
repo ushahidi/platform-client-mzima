@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  NgZone,
   OnInit,
   Output,
 } from '@angular/core';
@@ -70,6 +71,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private notificationService: NotificationService,
+    private zone: NgZone,
   ) {}
 
   ngOnInit(): void {
@@ -85,6 +87,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     const baseTileLayer = mapHelper.attachTileFallback(
       tileLayer(currentLayer.url, currentLayer.layerOptions),
       currentLayer.code,
+      this.zone,
       (fallbackLayer) => {
         this.map.removeLayer(baseTileLayer);
         this.map.addLayer(fallbackLayer);

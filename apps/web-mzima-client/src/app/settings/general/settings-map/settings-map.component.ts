@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, NgZone, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface, MapViewInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -51,6 +51,7 @@ export class SettingsMapComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private notificationService: NotificationService,
     private translate: TranslateService,
+    private zone: NgZone,
   ) {}
 
   ngOnInit(): void {
@@ -94,8 +95,9 @@ export class SettingsMapComponent implements OnInit {
     const baseTileLayer = mapHelper.attachTileFallback(
       tileLayer(currentLayer.url, currentLayer.layerOptions),
       currentLayer.code,
+      this.zone,
       (fallbackLayer) => {
-        this.mapLayers = this.mapLayers.filter((layer) => !(layer instanceof TileLayer));
+        this.mapLayers = this.mapLayers.filter((layer) => layer !== baseTileLayer);
         this.mapLayers.push(fallbackLayer);
         this.notificationService.showError(this.translate.instant('notify.map.baselayer_fallback'));
       },

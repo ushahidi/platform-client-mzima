@@ -102,14 +102,11 @@ export class MapComponent extends MainViewComponent implements OnInit {
     const baseTileLayer = mapHelper.attachTileFallback(
       tileLayer(currentLayer.url, currentLayer.layerOptions),
       currentLayer.code,
+      this.zone,
       (fallbackLayer) => {
-        this.zone.run(() => {
-          this.map.removeLayer(baseTileLayer);
-          this.map.addLayer(fallbackLayer);
-          this.notificationService.showError(
-            this.translate.instant('notify.map.baselayer_fallback'),
-          );
-        });
+        this.map.removeLayer(baseTileLayer);
+        this.map.addLayer(fallbackLayer);
+        this.notificationService.showError(this.translate.instant('notify.map.baselayer_fallback'));
       },
     );
 
