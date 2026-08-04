@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -39,6 +39,7 @@ export class MapWithMarkerComponent implements OnInit {
     private sessionService: SessionService,
     private notificationService: NotificationService,
     private translate: TranslateService,
+    private zone: NgZone,
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +50,7 @@ export class MapWithMarkerComponent implements OnInit {
     const baseTileLayer = mapHelper.attachTileFallback(
       tileLayer(currentLayer.url, currentLayer.layerOptions),
       currentLayer.code,
+      this.zone,
       (fallbackLayer) => {
         this.map.removeLayer(baseTileLayer);
         this.map.addLayer(fallbackLayer);
