@@ -18,6 +18,7 @@ const CategoryLocators = {
   adminCheckbox: '[data-qa="admin"]',
   categoryDeleteBtn: '[data-qa="btn-category-delete"]',
   toggleChildrenBtn: '[data-qa="toggle-children"]',
+  categoryItemTitle: '.category-item__title',
 };
 
 export const getUniqueSelector = (name) => name.split(' ').join('-').toLowerCase();
