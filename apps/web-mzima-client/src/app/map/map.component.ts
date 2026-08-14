@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { mapHelper, takeUntilDestroy$ } from '@helpers';
 import { MapConfigInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TranslateService } from '@ngx-translate/core';
 import { MainViewComponent } from '@shared';
 import {
   Content,
@@ -28,7 +29,13 @@ import {
   PostsService,
   GeoJsonPostsResponse,
 } from '@mzima-client/sdk';
-import { SessionService, EventBusService, EventType, BreakpointService } from '@services';
+import {
+  SessionService,
+  EventBusService,
+  EventType,
+  BreakpointService,
+  NotificationService,
+} from '@services';
 
 @UntilDestroy()
 @Component({
@@ -67,6 +74,8 @@ export class MapComponent extends MainViewComponent implements OnInit {
     private dialog: MatDialog,
     private zone: NgZone,
     private mediaService: MediaService,
+    private notificationService: NotificationService,
+    private translate: TranslateService,
   ) {
     super(
       router,
@@ -90,13 +99,23 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
     const currentLayer =
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+    const baseTileLayer = mapHelper.attachTileFallback(
+      tileLayer(currentLayer.url, currentLayer.layerOptions),
+      currentLayer.code,
+      this.zone,
+      (fallbackLayer) => {
+        this.map.removeLayer(baseTileLayer);
+        this.map.addLayer(fallbackLayer);
+        this.notificationService.showError(this.translate.instant('notify.map.baselayer_fallback'));
+      },
+    );
 
     this.leafletOptions = {
       minZoom: 1,
       maxZoom: 22,
       scrollWheelZoom: true,
       zoomControl: false,
-      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+      layers: [baseTileLayer],
       center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
       zoom: this.mapConfig.default_view!.zoom,
     };

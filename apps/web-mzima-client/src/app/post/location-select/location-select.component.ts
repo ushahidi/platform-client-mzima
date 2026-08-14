@@ -4,13 +4,14 @@ import {
   Component,
   EventEmitter,
   Input,
+  NgZone,
   OnInit,
   Output,
 } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { SessionService } from '@services';
+import { NotificationService, SessionService } from '@services';
 import {
   control,
   FitBoundsOptions,
@@ -69,6 +70,8 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     private sessionService: SessionService,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
+    private notificationService: NotificationService,
+    private zone: NgZone,
   ) {}
 
   ngOnInit(): void {
@@ -81,12 +84,22 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
     const currentLayer =
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+    const baseTileLayer = mapHelper.attachTileFallback(
+      tileLayer(currentLayer.url, currentLayer.layerOptions),
+      currentLayer.code,
+      this.zone,
+      (fallbackLayer) => {
+        this.map.removeLayer(baseTileLayer);
+        this.map.addLayer(fallbackLayer);
+        this.notificationService.showError(this.translate.instant('notify.map.baselayer_fallback'));
+      },
+    );
 
     this.leafletOptions = {
       scrollWheelZoom: true,
       zoomControl: false,
       worldCopyJump: true,
-      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+      layers: [baseTileLayer],
       center: [
         this.location?.lat || this.mapConfig.default_view!.lat,
         this.location?.lng || this.mapConfig.default_view!.lon,

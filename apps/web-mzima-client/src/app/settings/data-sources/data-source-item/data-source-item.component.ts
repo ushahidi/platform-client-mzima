@@ -25,6 +25,9 @@ import _ from 'lodash';
 // WHOLE COMPONENT SHOULD BE REFACTORED BECAUSE OF NEW CONFIG API
 export class DataSourceItemComponent extends BaseComponent implements AfterContentChecked, OnInit {
   public provider: any;
+  public providers: {
+    supported: any[];
+  };
   public surveyList: any[];
   public form: FormGroup;
   private dataSourceList: any[];
@@ -120,6 +123,9 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
           p.selected_survey = this.surveyList.find((s) => s.id === p.params.form_id);
         });
         this.cloneProviders = _.cloneDeep(this.providersData);
+        this.providers = {
+          supported: this.providersData.filter((provider: any) => provider.supported),
+        };
         // this.availableProviders = this.getAvailableProviders(this.providersData);
 
         // this.dataSourceList = this.dataSourcesService.combineDataSource(

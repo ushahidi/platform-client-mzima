@@ -352,6 +352,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     dialogRef.afterClosed().subscribe((response) => {
       if (response) {
         this.post = response.post;
+        this.getData(this.post);
         this.displayLanguage = response.displayLanguage.code;
       }
     });

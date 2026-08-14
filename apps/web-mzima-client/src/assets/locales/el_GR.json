@@ -440,9 +440,9 @@
     "radio_desc": "Επιτρέπει στο Χρήστη να επιλέξει μόνο ένα απο μια προκαθορισμένη ομάδα επιλογών ",
     "checkbox_desc": "Επιτρέπει στο Χρήστη να επιλέξει μια ή περισσότερες απο μια προκαθορισμένη ομάδα επιλογών ",
     "relation_desc": "Δημιουργήστε μια σχέση μεταξύ διαφορετικών ερευνών",
-    "upload_desc": "Επιτρέπει τη μεταφόρτωση εικόνας/ων στην ανάρτηση",
-    "audio_desc": "Allows audio file(s) to be uploaded to the post",
-    "document_desc": "Allows document(s) to be uploaded to the post",
+    "upload_desc": "Upload one or more image file(s)",
+    "audio_desc": "Upload one or more audio file(s)",
+    "document_desc": "Upload one or more document file(s)",
     "video_desc": "Επιτρέπει στα βίντεο Youtube ή Vimeo να ενσωματωθούν στην ανάρτηση ",
     "maximum_upload_size" : "Maximum Upload Size",
     "small_upload_size" : "Small",
@@ -1012,7 +1012,12 @@
         }
       },
       "input_empty_warn": "Input cannot be empty",
-      "max_size": "Max size: {{size}} MB",
+      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "format": {
+        "image": "jpeg or png only",
+        "audio": "mp3, aac or ogg only",
+        "document": "PDF or Word only"
+      },
       "invalid_video_embed": "Invalid video embed url",
       "errors": {
         "required" : "{{label}} field is a required field *",
@@ -1413,6 +1418,11 @@
       "provider_name": "{{providerName}} Data Source?",
       "do_you_really_want_to_disconnect": "Do you really want to disconnect your provider?",
       "add_source": "Add source",
+      "providers": {
+        "supported": "Supported",
+        "unsupported": "Unsupported Data Sources",
+        "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
+      },
       "edit": "Edit {{provider}} Data Source",
       "add_data_source": "Add Data Source",
       "associate_with_form": "Import to survey",
@@ -2061,6 +2071,7 @@
       "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
       "discard_changes": "Discard changes",
       "save_changes": "Save Changes",
+      "back_to_editing": "Back to editing",
       "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
       "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
@@ -2162,15 +2173,19 @@
     "i_agree": "I agree to Ushahidi's <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a> and\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>."
   },
   "translations": {
+    "available_languages": "Available translations (select to see post):",
+    "translate_post": "Translate post",
+    "translate_post_to": "Translate post to {{language}}",
     "languages": "Languages",
     "language": "Language",
     "default": "default",
+    "default_language": "Original language",
+    "text_in_original": "Text in original language:",
     "translation_default": "(default)",
     "translate_field": "Translate field",
     "survey_select_default": "Select default language for this survey",
     "category_select_default": "Select default language for this category",
     "error_translation_exists": "You cannot select this language since there is already a translation for it.",
-    "edit_default_text": "Text in default language",
     "edit_placeholder": "Write your translation here",
     "add_translation": "Add your translation below:",
     "survey_name_required": "Translation for survey-name is required",
@@ -2184,7 +2199,12 @@
     "add_a_language": "Add a language",
     "error_no_default": "You need to specify a default language before adding a new translation.",
     "select_language": "Select a language to add translation for",
-    "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
+    "select_translate_edit": "Select a language to translate to, or edit:",
+    "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment.",
+    "translated_to": "Translated to {{language}}",
+    "viewing_translated":"You are viewing a translated version of this post.",
+    "view_original":"View original post",
+    "change_lang": "Change language"
   },
   "languages": {
     "ach": "Acoli",

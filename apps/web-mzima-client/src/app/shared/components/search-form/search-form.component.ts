@@ -697,6 +697,12 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       ) {
         this.activeSavedSearch.filter.source = [this.activeSavedSearch.filter.source];
       }
+      if (this.activeSavedSearch.filter.date_before || this.activeSavedSearch.filter.date_before) {
+        this.activeSavedSearch.filter.date = {
+          start: this.activeSavedSearch.filter.date_after,
+          end: this.activeSavedSearch.filter.date_before,
+        };
+      }
 
       this.activeSavedSearch.filter.currentView = this.activeSavedSearch.view;
 

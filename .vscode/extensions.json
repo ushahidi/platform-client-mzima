@@ -1,7 +1,7 @@
 {
-  "recommendations": [
-    "angular.ng-template",
-    "firsttris.vscode-jest-runner",
-    "dbaeumer.vscode-eslint"
-  ]
+    "recommendations": [
+        "myml.vscode-markdown-plantuml-preview",
+        "esbenp.prettier-vscode",
+        "jebbs.plantuml"
+    ]
 }

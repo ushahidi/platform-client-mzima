@@ -1,9 +1,44 @@
 {
+  "onboarding": {
+    "greeting": "Hallo {{username}}!",
+    "intro": "<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>",
+    "ready": "Sie sind bereit!",
+    "data_collection": {
+      "title": "Datenerhebung ",
+      "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
+    },
+    "filtering": {
+      "title": "Filterung",
+      "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+    },
+    "sorting": {
+      "title": "Sortieren",
+      "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
+    },
+    "activity": {
+      "title": "Aktivität",
+      "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
+    },
+    "collections": {
+      "title": "Sammlungen",
+      "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
+    },
+    "final_step": {
+      "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
+      "desc_2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
+      "help": "Hilfe & Support"
+    }
+  },
   "app": {
     "contact_email_address": "Kontakt-E-Mail-Adresse:",
     "powered_by_ushahidi": "Betrieben mit Ushahidi.",
-    "support": "Ushahidi Support",
+    "support": "Ushahidi-Support",
     "by": "nach",
+    "confirm": "Bestätigen",
     "submit": "Absenden",
     "anonymous": "Anonym",
     "submitting": "Wird gesendet",
@@ -24,17 +59,17 @@
     "choose": "Auswählen…",
     "add_all_fields": "Alle Felder hinzufügen",
     "insert_text_here": "Text hier einfügen...",
-    "deployment_not_found" : {
-      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
-      "button_exit" : "Exit",
-      "button_create_deployment" : "Create Deployment"
+    "deployment_not_found": {
+      "text": "Sorry, that deployment does not exist. Would you like to create a new deployment?",
+      "button_exit": "Beenden",
+      "button_create_deployment": "Create Deployment"
     },
     "documentation": {
       "title": "Dokumentation",
       "description": "Erfahren Sie, wie Sie Ihre Ushahidi-Umgebung einrichten, konfigurieren und verwalten."
     },
-    "donate": "Donate",
-    "donation": "Donation",
+    "donate": "Spenden",
+    "donation": "Spende",
     "disable_monetization": "Disable Monetization",
     "enable_monetization": "Enable Monetization",
     "enable_monetization_error": "Fill in required fields above before enabling monetization.",
@@ -69,6 +104,7 @@
     "more": "Mehr",
     "cancel": "Abbrechen",
     "save": "Speichern",
+    "date_shows_up_here": "Datum wird hier angezeigt",
     "save_and_close": "Speichern und schließen",
     "update": "Aktualisieren",
     "update_and_close": "Aktualisieren und schließen",
@@ -93,7 +129,7 @@
     "add_role": "Rolle hinzufügen",
     "webhooks": "Webhooks",
     "edit_webhook": "Webhook bearbeiten",
-    "add_webhook": "Webhook hinzufügen",
+    "add_webhook": "Add Webhook ",
     "categories": "Kategorien",
     "edit_category": "Kategorie bearbeiten",
     "add_category": "Kategorie hinzufügen",
@@ -111,9 +147,10 @@
     "filter_by": "Filtern nach...",
     "sort_filter": "Sortieren & filtern",
     "apply_filters": "Anwenden",
-    "close_and_view": "Close and view results",
+    "close_and_view": "Schließen und Ergebnisse anzeigen",
     "show_more_less": "Mehr/weniger anzeigen",
     "filters": "Filter",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Nach Umfrage filtern",
     "configure": "Konfigurieren",
     "post": "Beitrag",
@@ -121,7 +158,7 @@
     "key": "Schlüssel",
     "survey_web_address": "Your survey's web address",
     "default_value": "Default value (optional):",
-    "select_one": "Select One",
+    "select_one": "Eins auswählen",
     "sort_and_filter": "Sortieren & filtern",
     "saved_search": "Gespeicherte Suche",
     "tasks": "Aufgaben",
@@ -138,10 +175,10 @@
     "sort_by": "Sortieren nach ...",
     "newest_first": "Neueste zuerst",
     "oldest_first": "Älteste zuerst",
-    "language": "Language",
-    "select_language": "Select language",
-    "add_new_post": "Add new post",
-    "previous": "Previous",
+    "language": "Sprache",
+    "select_language": "Sprache auswählen",
+    "add_new_post": "Neuen Beitrag hinzufügen",
+    "previous": "Vorherige",
     "duplicate": "Duplizieren",
     "yes_delete": "Ja, löschen",
     "no_go_back": "Nein, zurück",
@@ -150,6 +187,7 @@
     "you_are_not_authorized": "Sie sind nicht berechtigt",
     "lost_internet_connection": "Verlorene Internetverbindung",
     "tweet_is_unavailable": "Dieser Tweet ist nicht verfügbar",
+    "tweet_failed_to_load": "Tweet failed to load",
     "file_uploader": "Datei uploader",
     "preview_image": "Vorschaubild",
     "privacy_policy": "Datenschutzerklärung",
@@ -164,7 +202,37 @@
     "we_ve_updated_deployments_to_version_5": "Wir haben Bereitstellungen auf Version 5 aktualisiert. Benutzer haben möglicherweise bald keinen Zugriff mehr auf Ihre Bereitstellung. ",
     "for_more_details_on_deployment_update": "Weitere Informationen zum Bereitstellungsupdate finden Sie unter Hilfe und Support (dies sollte ein Link sein) oder senden Sie eine E-Mail an:",
     "open_chat": "Chat öffnen",
-    "end_post": "End of Posts"
+    "end_post": "End of Posts",
+    "read_more": "Weiterlesen"
+  },
+  "date": {
+    "aLongTimeAgo": "a long time ago",
+    "justNow": "just now",
+    "aMomentAgo": "a moment ago",
+    "second": {
+      "singular": "{{time}} second ago",
+      "plural": "{{time}} seconds ago"
+    },
+    "minute": {
+      "singular": "{{time}} minute ago",
+      "plural": "{{time}} minutes ago"
+    },
+    "hour": {
+      "singular": "{{time}} hour ago",
+      "plural": "{{time}} hours ago"
+    },
+    "day": {
+      "singular": "vor {{time}} Tag",
+      "plural": "vor {{time}} Tagen"
+    },
+    "month": {
+      "singular": "{{time}} month ago",
+      "plural": "{{time}} months ago"
+    },
+    "year": {
+      "singular": "{{time}} year ago",
+      "plural": "{{time}} years ago"
+    }
   },
   "cookies": {
     "we_use_cookies": "Hallöchen! Wir verwenden Cookies, um Ihre Erfahrung zu verbessern.",
@@ -223,16 +291,27 @@
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
     "crowdsourced_activity": "Crowdsourced Survey Activity",
-    "tooltip_template": "This is the single point tooltip template"
+    "tooltip_template": "This is the single point tooltip template",
+    "select_range": "Select range",
+    "select_filter": "Select filter",
+    "show_all_posts": "Alle Beiträge anzeigen",
+    "categories": "Kategorien",
+    "survey": "Umfrage",
+    "status": "Status",
+    "statuses": "Statuses",
+    "all_time": "Immer",
+    "last_week": "Last week",
+    "last_month": "Last month",
+    "last_year": "Last year"
   },
   "form": {
     "add_field": "Feld hinzufügen",
     "add_field_instructions": "Anweisungen zu diesem Feld hinzufügen",
     "add_field_instructions_info": "Diese Anweisungen werden dem Nutzer beim Ausfüllen des Feldes als QuickInfo angezeigt.",
-    "add_field_instructions_placeholder": "Explain this field...",
+    "add_field_instructions_placeholder": "Dieses Feld erklären",
     "add_post_type": "Umfrage hinzufügen",
     "add_step": "Aufgabe hinzufügen",
-    "add_language": "Add language",
+    "add_language": "Sprach hinzufügen",
     "added_form_stage_attribute": "Gespeichertes Feld",
     "field_allowed_relation_post_type": "Zulässige Umfragen",
     "choose_order_message": "Wählen und sortieren Sie die Felder, die in dieser Umfrage enthalten sein sollen",
@@ -252,7 +331,7 @@
     "edit_post_type": "Umfrage bearbeiten: {{form}}",
     "edit_post_types": "Umfragen bearbeiten",
     "field_add_option": "Hinzufügen",
-    "field_add_other": "Add other",
+    "field_add_other": "Andere hinzufügen",
     "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
     "field_default": "Feldstandard",
     "field_key": "Feld Schlüssel",
@@ -295,7 +374,14 @@
     "no_fields": "Keine Felder",
     "select_color": "Farbe auswählen",
     "choose_survey": "Umfrage auswählen",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "Aufgabe löschen",
     "duplicate_survey": "Duplizieren",
     "main_info": "Hauptinfo",
@@ -309,11 +395,14 @@
     "survey_name": "Name der Umfrage",
     "describe_your_survey": "Beschreiben Sie Ihre Umfrage...",
     "describe_this_task": "Describe this task...",
+    "create_survey": "Create survey",
+    "update_survey": "Update survey",
     "untitled_task": "Untitled task",
     "add_task": "Aufgabe hinzufügen",
     "title": "Titel",
     "field_allowed_relation_survey": "Zulässige Umfragen",
     "collect_image_caption": "Include image caption field",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "This will disable and hide all existing captions for this field, but you can re-enable them at any time.",
     "description": "Beschreibung",
     "task_description": "Aufgabenbeschreibung",
@@ -327,14 +416,17 @@
     "number_decimal": "Number (Decimal)",
     "number_integer": "Number (Integer)",
     "location": "Standort",
-    "date": "Date",
+    "date": "Datum",
     "datetime": "Date & Time",
     "select": "Select",
+    "select_other_name": "A dropdown List",
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
     "related_post": "Related Post",
-    "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
+    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
     "upload_image": "Image",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
     "embed_video": "Embed video",
     "markdown": "Markdown",
     "categories": "Kategorien",
@@ -348,14 +440,20 @@
     "radio_desc": "Ermöglicht es dem Benutzer, eine Option aus einer vordefinierten Reihe von Optionen auszuwählen.",
     "checkbox_desc": "Ermöglicht es dem Benutzer, eine oder mehrere Optionen aus einer vordefinierten Reihe von Optionen auszuwählen.",
     "relation_desc": "Eine Verbindung zwischen verschiedenen Umfragen erstellen",
-    "upload_desc": "Ermöglicht das Hochladen von Bildern zu einem Beitrag.",
+    "upload_desc": "Upload one or more image file(s)",
+    "audio_desc": "Upload one or more audio file(s)",
+    "document_desc": "Upload one or more document file(s)",
     "video_desc": "Allows Youtube or Vimeo videos to be embed in the post",
+    "maximum_upload_size": "Maximum Upload Size",
+    "small_upload_size": "Klein",
+    "medium_upload_size": "Mittel",
+    "large_upload_size": "Groß",
     "markdown_desc": "Allows the use of markdown syntax to style the field content.",
     "tasks": "Aufgaben",
     "task_visible_when_published": "This task will be visible when post is published.",
     "show_field_description": "Add field description (optional):",
-    "add_field": "Add {{fieldType | lowercase}} field",
-    "edit_field": "Edit {{fieldType | lowercase}} field",
+    "add_field": "Feld {{fieldType | lowercase}} hinzufügen",
+    "edit_field": "Feld {{fieldType | lowercase}} bearbeiten",
     "build": "Build",
     "configure": "Konfigurieren",
     "require_section": "Festlegen, dass diese Aufgabe abgeschlossen sein muss, bevor ein Beitrag öffentlich sichtbar sein kann",
@@ -416,7 +514,7 @@
     "fields": {
       "fields_title": "Felder",
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *.",
+        "required": "Pflichtfelder fehlen. Diese Felder sind mit einem * markiert",
         "special_characters": "{{name}} Feld enthält Sonderzeichen"
       }
     },
@@ -457,8 +555,8 @@
       "send_to_people": "<strong>Zielgerichtet:</strong> Diese Umfrage per SMS an {{recipientCount}} Personen senden",
       "country_code": "Country Code",
       "country_code_error": "You must select a country.",
-      "select_country": "Select Country",
-      "phone_numbers": "Phone Numbers",
+      "select_country": "Land auswählen",
+      "phone_numbers": "Telefonnummern",
       "phone_number_warning": "You must enter at least 1 phone number.",
       "one_repeat_alert": "We removed a total of {{repeatCount}} repeat number from your list.",
       "multi_repeat_alert": "We removed a total of {{repeatCount}} repeat numbers from your list.",
@@ -484,7 +582,16 @@
     }
   },
   "global_filter": {
-    "filter": "Filter",
+    "sources": {
+      "web": "Web",
+      "mobile": "Mobile",
+      "email": "E-Mail",
+      "sms": "SMS",
+      "twitter": "Twitter",
+      "ussd": "USSD-Codes",
+      "whatsapp": "WhatsApp"
+    },
+    "filter": "Filtern",
     "categories": {
       "categories": "Kategorien",
       "all_categories": "Alle Kategorien"
@@ -509,7 +616,7 @@
       "all_collections": "Alle Sammlungen",
       "search_collections": "Sammlungen durchsuchen"
     },
-    "sorting": "Sorting",
+    "sorting": "Sortieren",
     "sort": {
       "order": {
         "filter_type_tag": "Reihenfolge",
@@ -563,12 +670,12 @@
       "has_location": "Post-locations",
       "all_posts": "Alle Beiträge anzeigen",
       "unmapped": "Show unmapped posts",
-      "mapped": "Show posts with a location",
+      "mapped": "Beiträge mit Standort anzeigen",
       "source": "Quelle"
     },
-    "unmapped_start_one": "There is",
-    "unmapped_start_many": "There are",
-    "unmapped_one": "{{ notShownPostsCount }} post",
+    "unmapped_start_one": "Es gibt ",
+    "unmapped_start_many": "Es gibt",
+    "unmapped_one": "{{ notShownPostsCount }} Beitrag",
     "unmapped_many": "{{ notShownPostsCount }} Beiträge",
     "unmapped_end": "not shown here because they don't include location information.",
     "unmapped_none": "No posts without location information.",
@@ -600,10 +707,11 @@
     "who_its_visible_to": "Für wen dies sichtbar ist",
     "status": "Status",
     "source": "Quelle",
-    "saved_filters": "Saved filters",
+    "saved_filters": "Gespeicherte Filter",
     "saved_filter": "Gespeicherter Filter",
-    "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters",
+    "no_saved_filters": "Keine gespeicherten Filter. Gespeicherte Filter (s) erscheinen hier zur Auswahl, sobald sie verfügbar sind.",
+    "save_new_filter": "Neuen Filter speichern",
+    "clear_all_filters": "Alle Filter löschen",
     "delete_this_saved_filter": "Sind Sie sicher, dass Sie diesen gespeicherten Filter löschen möchten?"
   },
   "graph": {
@@ -642,7 +750,7 @@
   "modal": {
     "button": {
       "close": "Schließen",
-      "done": "Done"
+      "done": "Fertig"
     },
     "donation": {
       "thank_you_for_your_donation_start": "Die Web-Monetarisierung ist auf dieser Website aktiviert. Vielen Dank für Ihre Spende. Sie haben gespendet",
@@ -670,8 +778,10 @@
     "collections": "Sammlungen",
     "comments": "Kommentare",
     "data_sources": "Datenquellen",
-    "data_import": "Datenimport",
-    "deployment_not_found": "Deployment Not Found",
+    "data_source": "Data Source",
+    "data_import": "Data import",
+    "data_export": "Data export",
+    "deployment_not_found": "Bereitstellung nicht gefunden",
     "deselect": "Abwählen",
     "edit_profile": "Profil bearbeiten",
     "edit_post_type": "Umfrage bearbeiten",
@@ -685,6 +795,7 @@
     "forgotyourpassword": "Passwort vergessen?",
     "resetpassword": "Passwort zurücksetzen",
     "resetmypassword": "Mein Passwort zurücksetzen",
+    "password_recovery": "Passwort-Wiederherstellung",
     "forms": "Formulare",
     "help": "Hilfe",
     "home": "Start",
@@ -694,6 +805,7 @@
     "help_support": "Hilfe & Support",
     "registration": "Registrieren",
     "register": "Registrieren",
+    "results": "Ergebnisse",
     "map_settings": "Karteneinstellungen",
     "more": "Mehr",
     "notifications": "Benachrichtigungen",
@@ -730,7 +842,9 @@
     "yesterday": "Gestern",
     "map": "Karte",
     "data": "Daten",
-    "feed": "Datenansicht"
+    "feed": "Datenansicht",
+    "add_new_post": "Neuen Beitrag hinzufügen",
+    "edit_post": "Beitrag bearbeiten"
   },
   "views": {
     "map": "Karte",
@@ -748,18 +862,19 @@
     "share_on_facebook": "Auf Facebook teilen"
   },
   "post": {
+    "loading_posts": "Loading posts in {{ mode }} mode...",
     "post_count": "{{count}} Beiträge",
     "see_more_plural": "See {{newPostsCount}} new posts",
     "see_more_singular": "See {{newPostsCount}} new post",
     "add_to_form": "Zu {{form}} hinzufügen",
     "posts": "Beiträge",
-    "post_title": "Post title",
+    "post_title": "Beitragstitel",
     "post_desc": "Post description",
     "there_are_no_posts": "Es sind keine Beiträge vorhanden",
     "in_this_deployment": "in dieser Bereitstellung.",
     "posts_total": "{{posts}} von {{total_nb}} Beiträgen",
     "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
-    "search_results": "Results:",
+    "search_results": "Ergebnisse:",
     "by": "von",
     "duplicate_option": "There's a problem with the configuration of this field because of duplicates, please go to the survey-settings and fix it.",
     "task_completed": "Aufgabe abgeschlossen",
@@ -775,6 +890,9 @@
     "all_posts": "Alle Beiträge",
     "no_search_results": "Ihre Suche hat keine passenden Beiträge ergeben.",
     "no_search_results_location": "Your search didn't match any posts with location information",
+    "no_posts_match_search": "No posts match your keyword search. Please change or clear keyword search to see matching posts.",
+    "no_posts_match_search_plus_filter": "No posts match your keyword search + filters. Please change or clear keyword search and/or filters to see matching posts.",
+    "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
     "no_posts_yet": "Es sind noch keine Beiträge vorhanden.",
     "no_posts_yet_location": "There are no posts with location information yet!",
     "add_first_post": "Ersten Beitrag hinzufügen",
@@ -856,8 +974,10 @@
       "unlocked": "Post successfully unlocked",
       "unlock": "Entsperren",
       "lock_broken_by_other": "Your Post has been unlocked. Your current unsaved changes will be lost.",
-      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
     },
+    "post_not_authorized": "You are not authorized to perform this action on this post.",
     "modify": {
       "intro": "Umfrage auswählen:",
       "no_task_values": "Für diese Aufgabe sind zurzeit keine gespeicherten Werte vorhanden.",
@@ -889,6 +1009,20 @@
           "url": "URL des Links",
           "add_link": "Link hinzufügen"
         }
+      },
+      "input_empty_warn": "Input cannot be empty",
+      "max_size": "Max size: {{size}} MB  Format: {{format}}",
+      "format": {
+        "image": "jpeg or png only",
+        "audio": "mp3, aac or ogg only",
+        "document": "PDF or Word only"
+      },
+      "invalid_video_embed": "Invalid video embed url",
+      "errors": {
+        "required": "{{label}} feld ist ein Pflichtfeld",
+        "too_short": "{{label}} field is too short, use at least 2 characters",
+        "invvalid_pattern": "{{label}} field is invalid",
+        "special_char": "{{label}} field contains special characters"
       }
     },
     "preview": {
@@ -913,7 +1047,7 @@
       "reply": "Auf Nachrichten-Thread antworten",
       "send": "Neue Nachricht senden",
       "save": "Speichern",
-      "simple_send": "Send",
+      "simple_send": "Senden",
       "title": "Kommunikation mit Verfasser",
       "associated_messages": "Zu diesem Beiträg gehörige Nachrichten anzeigen",
       "show_only_incoming": "Show only {{provider}} not assigned to a survey yet",
@@ -921,15 +1055,15 @@
       "Twitter": "Twitter",
       "Email": "E-Mail",
       "SMS": "SMS",
-      "previous_page": "<< Previous page",
-      "next_page": "Next page >>",
+      "previous_page": "<< Vorherige Seite",
+      "next_page": "Nächste Seite >>",
       "empty_message_error": "You must add a message",
       "no_messages": "There are no messages yet. Start a conversation with the author by sending a message below."
     },
     "valid": {
       "no_changes": "You haven’t made any changes",
       "invalid_state": "Dieser Beitrag befindet sich zurzeit in einem ungültigen Zustand. Sie müssen alle erforderlichen Aufgaben abschließen, bevor Sie diesen Beitrag erneut veröffentlichen können. Sie können entweder die erforderlichen Aufgaben abschließen oder Ihrem Beitrag auf einen anderen Status setzen, z. B. \"Wird geprüft\".",
-      "validation_fail": "Required fields are missing, these fields are marked with an *.",
+      "validation_fail": "Pflichtfelder fehlen. Diese Felder sind mit einem * markiert",
       "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
       "title": {
         "required": "Ein Titel ist erforderlich",
@@ -937,7 +1071,7 @@
         "maxlength": "Der Titel ist zu lang"
       },
       "label": {
-        "required": "A name is required"
+        "required": "Ein Name ist erforderlich"
       },
       "content": {
         "required": "Die Beschreibung darf nicht leer sein"
@@ -966,9 +1100,24 @@
       "add_caption": "Beschriftung hinzufügen",
       "upload": "Hochladen",
       "add_photo": "Foto hinzufügen",
+      "add_audio": "Audio hinzufügen",
+      "add_document": "Add document",
+      "retry": "Retry",
       "delete_photo": "Foto löschen",
       "replace_image": "Foto ersetzen",
-      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
+      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
+      "messages": {
+        "max_size": "Your file is too large.",
+        "max_files": "You have exceeded the maximum number of files.",
+        "required": "Medien sind erforderlich",
+        "invalid_type": "Unsupported file type."
+      },
+      "status": {
+        "uploading": "Uploading...",
+        "upload_complete": "Upload Complete!",
+        "upload_failed": "Upload failed!"
+      },
+      "special_char": "This field contains special characters"
     },
     "video": {
       "enter_a_url": "Enter a video URL from Youtube or Vimeo."
@@ -990,17 +1139,23 @@
       "you_can_search_or_click": "Sie können den Bereich der Karte suchen oder darauf klicken, in dem Sie die Markierung platzieren möchten.",
       "search_address": "Suchen Sie nach Adressen, Ortsnamen oder Koordinaten...",
       "nothing_found": "Nichts gefunden",
+      "lng": "Lng",
+      "lat": "Lat",
       "errors": {
         "empty_lat": "Breitengrad ist leeres Feld",
         "empty_lng": "Längengrad ist leeres Feld",
         "decimal_lat": "Nur Breitengrad Dezimalzahl",
-        "decimal_lng": "Längengrad nur Dezimalzahl"
+        "decimal_lng": "Längengrad nur Dezimalzahl",
+        "special_lng": "Field longitude contains special characters",
+        "special_lat": "Field latitude contains special characters"
       }
     }
   },
   "role": {
     "are_you_sure_you_want_to_delete_role": "Sind Sie sicher, dass Sie Rolle {{roleName}} löschen möchten?",
     "add_role": "Rolle hinzufügen",
+    "create_role": "Create role",
+    "update_role": "Update role",
     "edit_role": "Rolle bearbeiten",
     "name": "Name",
     "description": "Beschreibung",
@@ -1019,8 +1174,10 @@
     "only_me": "Nur ich"
   },
   "webhook": {
-    "add_webhook": "Rolle hinzufügen",
+    "add_webhook": "Add Webhook ",
     "edit_webhook": "Rolle bearbeiten",
+    "create_webhook": "Create webhook",
+    "update_webhook": "Update webhook",
     "uuid": "Webhook-UUID",
     "name": "Name",
     "shared_secret": "Gemeinsames Geheimnis",
@@ -1031,7 +1188,11 @@
     "save_add_another": "Speichern und weiteren hinzufügen",
     "delete": "Löschen",
     "delete_webhook": "Diesen Webhook löschen",
-    "delete_webhook_desc": "<strong>Wenn Sie diesen Webhook löschen</strong>, gehen alle damit verknüpften Webhook-Ereignisse verloren. Bitte berücksichtigen Sie dies, bevor Sie fortfahren."
+    "delete_webhook_desc": "<strong>Wenn Sie diesen Webhook löschen</strong>, gehen alle damit verknüpften Webhook-Ereignisse verloren. Bitte berücksichtigen Sie dies, bevor Sie fortfahren.",
+    "dialog": {
+      "delete_warn_title": "{{ name }} webhook will be deleted!",
+      "delete_warn_message": "<p>Diese Aktion kann nicht rückgängig gemacht werden.</p><p>Bist du sicher?</p>"
+    }
   },
   "saved_search": {
     "visible_to_public": "Diese Gespeicherte Suche ist öffentlich sichtbar",
@@ -1091,7 +1252,8 @@
     "create_saved_filter": "Gespeicherten Filter erstellen",
     "collection_saved": "Collection saved.",
     "collection_updated": "Collection updated.",
-    "collection_description": "You can add posts to your collection from the Data view"
+    "collection_description": "You can add posts to your collection from the Data view",
+    "collection_definition": " A \"Collection\" is a manually-curated group of posts. You may find it useful in grouping posts that you would like to share with external partners. It is not dynamic, meaning the posts within it do not change unless you manually update them."
   },
   "category": {
     "add_tag": "Kategorie hinzufügen",
@@ -1101,10 +1263,11 @@
     "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
     "show_categories": "Show available categories",
     "child_permissions": "Permissions for this category are managed by the parent category.",
-    "which_categories": "Which categories should be available",
+    "which_categories": "Which categories should be available?",
     "select_all": "Alle wählen",
     "choose_roles": "Rollen auswählen",
     "create_tag": "Kategorie erstellen",
+    "update_tag": "Update Category",
     "saved_tag": "Kategorie wurde gespeichert.",
     "deleted_tags": "Kategorien wurden gelöscht.",
     "manage_tags": "Kategorien verwalten",
@@ -1192,7 +1355,7 @@
       "webhooks_desc": "Webhooks erstellen, die Daten der Ushahidi-Plattform an externe Anwendungen senden, wenn bestimmte Ereignisse ausgelöst werden.",
       "plans": "Tarife",
       "plan_desc": "Der derzeitige Tarif Ihrer Bereitstellung ist <strong>{{current_plan}}</strong>.",
-      "donation": "Donation",
+      "donation": "Spende",
       "donation_desc": "Create and manage the donations people can make towards your organisation."
     },
     "general_settings": {
@@ -1201,7 +1364,10 @@
       "api_key": "API-Schlüssel",
       "placeholder": {
         "pick_location": "Standort auswählen..."
-      }
+      },
+      "satellite": "Satellite",
+      "streets": "Straßen",
+      "humanitarian": "Humanitarian"
     },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1250,6 +1416,13 @@
       "provider_name": "{{providerName}} Datenquelle?",
       "do_you_really_want_to_disconnect": "Wollen Sie Ihren Anbieter wirklich trennen?",
       "add_source": "Quelle hinzufügen",
+      "providers": {
+        "supported": "Supported",
+        "unsupported": "Unsupported Data Sources",
+        "info_add_new_datasource": "Click the \"add source\" button to configure a datasource from our supported datasources"
+      },
+      "edit": "Edit {{provider}} Data Source",
+      "add_data_source": "Add Data Source",
       "associate_with_form": "Import to survey",
       "associate_with_form_desc": "All incoming data from {{provider}} will be used to create responses to the survey you choose",
       "data_sources": "Datenquellen",
@@ -1275,8 +1448,8 @@
         "server_security_TLS": "TLS",
         "incoming_username": "Incoming Username",
         "username_desc": "Email account username",
-        "incoming_password": "Incoming Password",
-        "password_desc": "Email account password",
+        "incoming_password": "Eingehendes Passwort",
+        "password_desc": "Passwort des E-Mail-Kontos",
         "outgoing_server_type": "Outgoing Server Type",
         "outgoing_server_type_SMTP": "SMTP",
         "outgoing_server_type_sendmail": "sendmail",
@@ -1287,7 +1460,7 @@
         "outgoing_server_port_desc": "Common ports: 25 (SMTP default), 465 (SMTP with SSL)",
         "outgoing_server_security": "Outgoing Server Security",
         "outgoing_username": "Outgoing Username",
-        "outgoing_password": "Outgoing Password",
+        "outgoing_password": "Ausgangs-Passwort",
         "email_address": "E-Mail-Adresse",
         "email_sender_name": "Email Sender Name",
         "email_sender_name_desc": "Appears in the 'from:' field on outgoing emails"
@@ -1552,13 +1725,14 @@
     "source": "Quelle",
     "organisation": "Organisation",
     "select_organisation": "Select an organisation",
-    "license": "License",
-    "add_license": "Add license",
+    "license": "Lizenz",
+    "add_license": "Lizenz hinzufügen",
     "read_more_licenses": "Read more about licenses",
     "submit_hdx": "Submit to HDX Account",
     "uploading_data": "Uploading data...",
     "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
     "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+    "data_export_err": "Failed to export",
     "no_fields_selected": "You haven't selected any fields or assigned any hxl tags or attributes. Please select at least one field and assign at least one tag to be able to export to CSV or upload to a Humanitarian Data Exchange (HDX) account.",
     "validation": {
       "title": "A title is needed",
@@ -1573,6 +1747,8 @@
     "role_display": "Rolle: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "Benutzer hinzufügen",
+    "create_user": "Create user",
+    "update_user": "Update user",
     "edit_user": "Benutzer bearbeiten",
     "update_password": "Passwort aktualisieren",
     "change_role": "Rolle ändern",
@@ -1606,14 +1782,18 @@
     "passwordreset_confirm_instructions": "Wenn Ihre E-Mail-Adresse in unserer Datenbank enthalten ist, erhalten Sie in Kürze eine E-Mail zur Passwortzurücksetzung.",
     "forgot_instructions": "No worries! Submit your email and check your inbox for a reset link.",
     "token": "Token zum Zurücksetzen des Kennworts",
-    "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
+    "password_hint": "Das Passwort muss mindestens 8 Zeichen, einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.",
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Passwords do not match",
+    "enter_new_password": "Enter your new password",
+    "password_change_success": "Your password was successfully changed",
+    "password_change_success_info": "Now you can login with new credentials",
     "check_email": "Check your email",
     "name_will_be_a_display_name": "Der Name, den Sie eingeben, ist ein Anzeigename.",
     "valid": {
       "fields": {
-        "email must be unique": "Bu e-posta adresiyle kayıtlı bir kullanıcı mevcut"
+        "email must be unique": "Bu e-posta adresiyle kayıtlı bir kullanıcı mevcut",
+        "email must be valid": "Email must be a valid email address"
       },
       "name": {
         "required": "Anzeigename ist erforderlich",
@@ -1688,6 +1868,8 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Ressource gespeichert",
       "save_error": "Konnte Ressource nicht speichern, bitte erneut versuchen",
@@ -1834,7 +2016,7 @@
       "validation": {
         "name": {
           "required": "A survey-name is needed",
-          "minlength": "Name is too short",
+          "minlength": "Name ist zu kurz",
           "maxlength": "Name ist zu lang"
         },
         "description": {
@@ -1849,7 +2031,7 @@
       "add_to_collection": "Der Beitrag wurde zu \"{{collection}}\" hinzugefügt.",
       "removed_from_collection": "Der Beitrag wurde aus \"{{collection}}\" entfernt.",
       "bulk_add_to_collection": "{{count}} Beiträge wurden zu \"{{collection}}\" hinzugefügt.",
-      "done": "Done"
+      "done": "Fertig"
     },
     "savedsearch": {
       "delete_savedsearch_success": "Saved search deleted successfully.",
@@ -1884,12 +2066,17 @@
       "bulk_destroy_confirm_desc": "Deleting these {{count}} selected surveys will also delete all collected posts and all associated data in the surveys. This step cannot be reversed.",
       "destroy_confirm": "Are you sure you want to delete this survey?",
       "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
-      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting."
+      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
+      "discard_changes": "Discard changes",
+      "save_changes": "Save Changes",
+      "back_to_editing": "Back to editing",
+      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
+      "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
     "confirm_modal": {
       "add_post_success": {
         "success": "Erfolgreich!",
-        "success_description": "Vielen Dank für Ihre Meldung. Der Beitrag wird von unserem Team geprüft und bald auf der Plattform erscheinen.",
+        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
         "success_button": "OK, hört sich gut an"
       },
       "deleted": {
@@ -1897,6 +2084,11 @@
         "success_description": "Sie haben {{count}} Beiträge dauerhaft gelöscht.",
         "success_button": "OK, hört sich gut an"
       }
+    },
+    "snackbar": {
+      "changes_discarded": "Changes discarded successfully",
+      "no_changes_made": "No changes made yet",
+      "close": "Schließen"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Möchten Sie {{lang}} Sprache wirklich löschen?"
@@ -1979,14 +2171,19 @@
     "i_agree": "Ich stimme der <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Datenschutzrichtlinie</a> von Ushahidi zu.\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Allgemeine Geschäftsbedingungen</a>."
   },
   "translations": {
+    "available_languages": "Available translations (select to see post):",
+    "translate_post": "Translate post",
+    "translate_post_to": "Translate post to {{language}}",
     "languages": "Languages",
-    "language": "Language",
-    "default": "default",
+    "language": "Sprache",
+    "default": "standard",
+    "default_language": "Original language",
+    "text_in_original": "Text in original language:",
+    "translation_default": "(standard)",
     "translate_field": "Translate field",
     "survey_select_default": "Select default language for this survey",
     "category_select_default": "Select default language for this category",
     "error_translation_exists": "You cannot select this language since there is already a translation for it.",
-    "edit_default_text": "Text in default language",
     "edit_placeholder": "Write your translation here",
     "add_translation": "Add your translation below:",
     "survey_name_required": "Translation for survey-name is required",
@@ -2000,7 +2197,12 @@
     "add_a_language": "Add a language",
     "error_no_default": "You need to specify a default language before adding a new translation.",
     "select_language": "Select a language to add translation for",
-    "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
+    "select_translate_edit": "Select a language to translate to, or edit:",
+    "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment.",
+    "translated_to": "Translated to {{language}}",
+    "viewing_translated": "You are viewing a translated version of this post.",
+    "view_original": "View original post",
+    "change_lang": "Sprache ändern"
   },
   "languages": {
     "ach": "Acoli",
