@@ -1909,6 +1909,9 @@
       "save_success": "ڕێکبەندەکانی بەخشین پاشەکەوت کرا",
       "delete_question": "ئایا دڵنیایت لەوەی دەتەوێت ئەم {{name}} بسڕیتەوە."
     },
+    "map": {
+      "baselayer_fallback": "The map layer could not be loaded, so we've switched to the Humanitarian layer instead."
+    },
     "map_settings": {
       "save_success": "ڕێکبەندەکانی نەخشە پاشەکەوت کرا"
     },

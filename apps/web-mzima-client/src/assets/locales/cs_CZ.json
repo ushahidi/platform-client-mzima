@@ -1909,6 +1909,9 @@
       "save_success": "Nastavení daru bylo uloženo",
       "delete_question": "Opravdu chcete {{name}} smazat."
     },
+    "map": {
+      "baselayer_fallback": "The map layer could not be loaded, so we've switched to the Humanitarian layer instead."
+    },
     "map_settings": {
       "save_success": "Nastavení mapy uloženo"
     },
