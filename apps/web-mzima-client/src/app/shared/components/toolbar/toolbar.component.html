@@ -9,6 +9,10 @@
   >
     <mat-icon icon svgIcon="back"></mat-icon>
   </mzima-client-button>
+  <div class="toolbar__unread" (click)="refreshPage()">
+    <mat-icon icon svgIcon="eye"></mat-icon>
+    <span class="toolbar__unread-count">{{ unreadCount }}</span>
+  </div>
   <h1 class="toolbar__page-title" [data-qa]="'page-title'" *ngIf="isDesktop || !showSearchForm">
     {{ pageTitle | translate }}
   </h1>

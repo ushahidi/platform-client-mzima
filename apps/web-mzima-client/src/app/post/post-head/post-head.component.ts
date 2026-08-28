@@ -8,6 +8,7 @@ import { BaseComponent } from '../../base.component';
 import { ShareModalComponent } from '../../shared/components';
 import { PostResult, PostsService, PostStatus, postHelpers } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
+import { PostMoveModalComponent } from '../post-move-modal/post-move-modal.component';
 
 @Component({
   selector: 'app-post-head',
@@ -67,6 +68,17 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
         this.postsService.unlockPost(this.post.id).subscribe();
         this.refresh.emit();
         response ? console.log(response) : null;
+      },
+    });
+  }
+
+  openMovePostModal(): void {
+    this.dialog.open(PostMoveModalComponent, {
+      width: '100%',
+      maxWidth: '564px',
+      panelClass: 'modal',
+      data: {
+        post_id: this.post?.id,
       },
     });
   }
