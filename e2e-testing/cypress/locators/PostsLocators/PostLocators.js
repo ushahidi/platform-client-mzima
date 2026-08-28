@@ -2,6 +2,7 @@ const PostLocators = {
   dataViewBtn: '[data-qa="btn-data"]',
   addPostBtn: '[data-qa="submit-post-button"]',
   srvyItemBtn: '[data-qa="add-post-modal-surveys-item125"]',
+  srvyItemBtn2: '[data-qa="add-post-modal-surveys-item766"]',
   successButton: '[data-qa="btn-confirm-success"]',
   submitBtn: '[data-qa="btn-post-item-submit"]',
   postPreview: '[data-qa="post-preview"]',
@@ -29,13 +30,13 @@ const PostLocators = {
   checkboxFieldOption3: '[data-qa="checkboxes-field-f3"]',
   relatedPostField: '[data-qa="related-post-field"]',
   embedVideoField: '[data-qa="embed-video field"]',
+  selectFieldForSearch: '[data-qa="nature-of-this-incident-bombings"]',
 
   //status items
   publishPostBtn: '[data-qa="btn-publish-post"]',
   postStatus: '[data-qa="status"]',
   underReviewPostBtn: '[data-qa="btn-underReview-post"]',
   archivePostBtn: '[data-qa="btn-archive-post"]',
-
 
   //field menu items
   postMenuDots: '[data-qa="post-menu"]',
