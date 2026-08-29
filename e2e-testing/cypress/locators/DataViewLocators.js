@@ -19,6 +19,9 @@ const DataViewLocators = {
 
   postDetails: '[data-qa="post-details"]',
 
+    bulkActionsBtn: '.feed-page__control--bulk',
+  deleteBtn: '.feed-page__control.danger',
+  postCheckbox: 'input[type="checkbox"]',
 };
 
 export default DataViewLocators;
