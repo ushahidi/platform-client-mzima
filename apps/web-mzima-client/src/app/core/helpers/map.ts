@@ -63,6 +63,10 @@ export const getMapLayers = () => {
         name: 'Humanitarian',
         url: '//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
         layerOptions: {
+          // Without maxZoom Leaflet defaults to 18 and hides the layer past it; the HOT
+          // server has tiles up to 20, so upscale those for the remaining zoom levels.
+          maxNativeZoom: 20,
+          maxZoom: 22, // matches the map's maxZoom
           attribution:
             '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>',
         },
