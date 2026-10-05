@@ -112,7 +112,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
     this.leafletOptions = {
       minZoom: 1,
-      maxZoom: 22,
+      maxZoom: mapHelper.MAX_ZOOM,
       scrollWheelZoom: true,
       zoomControl: false,
       layers: [baseTileLayer],
