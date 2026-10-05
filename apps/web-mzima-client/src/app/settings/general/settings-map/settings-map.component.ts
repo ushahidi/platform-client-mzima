@@ -34,7 +34,7 @@ export class SettingsMapComponent implements OnInit {
   mapLayers: Layer[] = [];
   mapConfig: MapConfigInterface;
   mapReady = false;
-  maxZoom = 22; // affects the arrow on number input field for "Default zoom level"
+  maxZoom = mapHelper.MAX_ZOOM; // affects the arrow on number input field for "Default zoom level"
   minZoom = 1; // affects the arrow on number input field for "Default zoom level"
   baseLayers = Object.values(mapHelper.getMapLayers().baselayers);
 

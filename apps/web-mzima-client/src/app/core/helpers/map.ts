@@ -3,6 +3,9 @@ import { NgZone } from '@angular/core';
 import { divIcon, marker, tileLayer, TileLayer } from 'leaflet';
 import { EnvService } from '../services/env.service';
 
+// Highest zoom the maps and base layers allow; also the limit of the "Default zoom level" setting
+export const MAX_ZOOM = 22;
+
 export const pointIcon = (color: string, type: string = 'default') => {
   // Test string to make sure that it does not contain injection
   color = color && /^[a-zA-Z0-9#]+$/.test(color) ? `#${color}` : 'var(--color-neutral-100)';
@@ -36,7 +39,7 @@ export const mapboxStaticTiles = (name: string, mapid: string, code: string, vis
     layerOptions: {
       apikey: EnvService.ENV.mapbox_api_key,
       tileSize: 512,
-      maxZoom: 22, // "Default zoom level" input field in general settings
+      maxZoom: MAX_ZOOM,
       zoomOffset: -1,
       mapid: mapid,
       attribution:
@@ -66,7 +69,7 @@ export const getMapLayers = () => {
           // Without maxZoom Leaflet defaults to 18 and hides the layer past it; the HOT
           // server has tiles up to 20, so upscale those for the remaining zoom levels.
           maxNativeZoom: 20,
-          maxZoom: 22, // matches the map's maxZoom
+          maxZoom: MAX_ZOOM,
           attribution:
             '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>',
         },

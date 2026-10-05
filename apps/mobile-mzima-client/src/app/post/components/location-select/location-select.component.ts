@@ -116,7 +116,6 @@ export class LocationSelectComponent implements OnInit {
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
     this.leafletOptions = {
-      maxZoom: 18,
       scrollWheelZoom: true,
       zoomControl: false,
       layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
