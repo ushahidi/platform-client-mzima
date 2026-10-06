@@ -1909,6 +1909,9 @@
       "save_success": "Mipangilio ya mchango imehifadhiwa",
       "delete_question": "Una uhakika unataka kufuta {{name}} hii."
     },
+    "map": {
+      "baselayer_fallback": "The map layer could not be loaded, so we've switched to the Humanitarian layer instead."
+    },
     "map_settings": {
       "save_success": "Mipangilio ya ramani imehifadhiwa"
     },
