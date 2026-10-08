@@ -31,9 +31,15 @@ class PostFunctions {
 
     //type in nairobi county in full. this gets one result and picks it automatically, populating lat and long fields
     cy.get(PostLocators.locationSearchField).type('nairobi county');
-    //verify values in lat and long fields
-    cy.get(PostLocators.locationLatField).should('have.value', '-1.3026148499999999');
-    cy.get(PostLocators.locationLongField).should('have.value', '36.82884201813725');
+    //verify values in lat and long fields land within Nairobi. Not an exact match because the
+    //geocoder (Nominatim/OSM) can return a slightly different centroid over time as the
+    //underlying OSM boundary data is edited.
+    cy.get(PostLocators.locationLatField).should(($el) => {
+      expect(parseFloat($el.val())).to.be.closeTo(-1.3, 0.15);
+    });
+    cy.get(PostLocators.locationLongField).should(($el) => {
+      expect(parseFloat($el.val())).to.be.closeTo(36.83, 0.15);
+    });
 
     // click on date field to open pop up
     // cy.get(PostLocators.dateField).click(); //the first click opens the date picker
@@ -101,8 +107,12 @@ class PostFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
-    //verify post count to verify we are in correct post page
-    cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
+    //verify post count to verify we are in correct post page. Only the page size (20) is
+    //asserted here, not the total, since the total record count on the shared test backend
+    //grows over time as other automated tests create posts.
+    cy.get('[data-qa="feed-page-results"]').should(($el) => {
+      expect($el.text()).to.match(/Current results: 20 \/ \d+/);
+    });
     cy.contains(this.postTitle).scrollIntoView();
 
     //change post to be deleted to "New Post Title for Location"

@@ -1,6 +1,10 @@
 // import { EnvService } from '@services';
-import { divIcon, marker } from 'leaflet';
+import { NgZone } from '@angular/core';
+import { divIcon, marker, tileLayer, TileLayer } from 'leaflet';
 import { EnvService } from '../services/env.service';
+
+// Highest zoom the maps and base layers allow; also the limit of the "Default zoom level" setting
+export const MAX_ZOOM = 22;
 
 export const pointIcon = (color: string, type: string = 'default') => {
   // Test string to make sure that it does not contain injection
@@ -35,7 +39,7 @@ export const mapboxStaticTiles = (name: string, mapid: string, code: string, vis
     layerOptions: {
       apikey: EnvService.ENV.mapbox_api_key,
       tileSize: 512,
-      maxZoom: 22, // "Default zoom level" input field in general settings
+      maxZoom: MAX_ZOOM,
       zoomOffset: -1,
       mapid: mapid,
       attribution:
@@ -62,6 +66,10 @@ export const getMapLayers = () => {
         name: 'Humanitarian',
         url: '//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
         layerOptions: {
+          // Without maxZoom Leaflet defaults to 18 and hides the layer past it; the HOT
+          // server has tiles up to 20, so upscale those for the remaining zoom levels.
+          maxNativeZoom: 20,
+          maxZoom: MAX_ZOOM,
           attribution:
             '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>',
         },
@@ -70,4 +78,51 @@ export const getMapLayers = () => {
       },
     },
   };
+};
+
+export const FALLBACK_BASELAYER_CODE = 'hOSM';
+
+/**
+ * Wires a base tile layer so that if it never manages to render a single tile (e.g. an
+ * invalid/missing Mapbox API key), it swaps itself out for the Humanitarian (OSM) layer,
+ * which needs no key. A `tileerror` on a layer that has already loaded at least one tile
+ * is treated as a transient network blip, not a broken layer, and is ignored - otherwise
+ * a single dropped tile request would permanently kick a perfectly working layer to the
+ * fallback. `layer._map` is Leaflet's own bookkeeping of whether a layer is still attached
+ * to a map; if the caller has already swapped this layer out for another one by the time
+ * the error arrives, `_map` is unset and the (now stale) error is ignored too.
+ * `onFallback` is called at most once, inside `zone`, and is responsible for actually
+ * replacing the layer wherever the caller keeps track of it (e.g. on the Leaflet map or in
+ * an Angular-bound array).
+ */
+export const attachTileFallback = (
+  layer: TileLayer,
+  currentCode: string,
+  zone: NgZone,
+  onFallback: (fallbackLayer: TileLayer, fallbackCode: string) => void,
+): TileLayer => {
+  if (currentCode === FALLBACK_BASELAYER_CODE) {
+    return layer;
+  }
+
+  let hasLoadedTile = false;
+  let hasFallenBack = false;
+
+  layer.on('tileload', () => {
+    hasLoadedTile = true;
+  });
+
+  layer.on('tileerror', () => {
+    if (hasLoadedTile || hasFallenBack || !(layer as any)._map) {
+      return;
+    }
+    hasFallenBack = true;
+
+    const fallback = getMapLayers().baselayers[FALLBACK_BASELAYER_CODE];
+    zone.run(() => {
+      onFallback(tileLayer(fallback.url, fallback.layerOptions), fallback.code);
+    });
+  });
+
+  return layer;
 };

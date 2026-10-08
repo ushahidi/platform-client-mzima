@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { SnackbarComponent, SnackbarData } from '../../shared/components';
+import {
+  SnackbarComponent,
+  SnackbarData,
+} from '../../shared/components/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface SnackbarOptions extends MatSnackBarConfig {

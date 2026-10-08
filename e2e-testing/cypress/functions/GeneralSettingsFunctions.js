@@ -73,8 +73,15 @@ class GeneralSettingsFunctions {
       .eq(0)
       .click();
     cy.wait(1000);
-    cy.get(GeneralSettingsLocator.defaultLatitudeField).should('have.value', '-1.3026148499999999');
-    cy.get(GeneralSettingsLocator.defaultLongitudeField).should('have.value', '36.82884201813725');
+    // The geocoder (Nominatim/OSM) can return a slightly different centroid for a large
+    // administrative area like "Nairobi County" as the underlying OSM boundary data is
+    // edited over time, so assert the result lands within Nairobi rather than an exact value.
+    cy.get(GeneralSettingsLocator.defaultLatitudeField).should(($el) => {
+      expect(parseFloat($el.val())).to.be.closeTo(-1.3, 0.15);
+    });
+    cy.get(GeneralSettingsLocator.defaultLongitudeField).should(($el) => {
+      expect(parseFloat($el.val())).to.be.closeTo(36.83, 0.15);
+    });
   }
 
   steps_to_generate_new_api_key() {
