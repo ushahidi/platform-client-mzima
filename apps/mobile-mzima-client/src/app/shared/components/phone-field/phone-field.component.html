@@ -1,0 +1,9 @@
+<ion-item lines="none" class="phone-field ion-no-padding" color="default">
+  <input
+    [(ngModel)]="value"
+    type="tel"
+    class="phone-field-input"
+    (ionChange)="handleInputChange()"
+    (keyup)="handleInputChange()"
+  />
+</ion-item>
