@@ -1909,6 +1909,9 @@
       "save_success": "Rregullimet e dhurimit të ruajtura",
       "delete_question": "Je i sigurt që dëshiron ta fshish këtë {{name}}."
     },
+    "map": {
+      "baselayer_fallback": "The map layer could not be loaded, so we've switched to the Humanitarian layer instead."
+    },
     "map_settings": {
       "save_success": "Konfigurimet e hartës u ruajtën"
     },

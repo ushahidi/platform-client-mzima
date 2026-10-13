@@ -1909,6 +1909,9 @@
       "save_success": "Pengaturan donasi disimpan",
       "delete_question": "Anda yakin ingin menghapus {{name}} ini."
     },
+    "map": {
+      "baselayer_fallback": "The map layer could not be loaded, so we've switched to the Humanitarian layer instead."
+    },
     "map_settings": {
       "save_success": "Pengaturan peta telah disimpan"
     },
