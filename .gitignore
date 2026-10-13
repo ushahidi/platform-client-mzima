@@ -25,6 +25,11 @@ yarn-error.log
 *.sublime-workspace
 
 # Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 .history/*
 
 # Miscellaneous
@@ -49,7 +54,3 @@ cypress/videos/*
 .angular
 .eslintcache
 .nx
-branch_structure.json
-temp_auto_push.bat
-temp_interactive_push.bat
-.gitignore
