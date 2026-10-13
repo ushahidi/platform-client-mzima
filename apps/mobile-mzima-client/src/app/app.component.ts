@@ -4,7 +4,13 @@ import { STORAGE_KEYS } from '@constants';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { CollectionsService, MediaService, PostsService, SurveysService } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DatabaseService, NetworkService, ListenerService, ToastService } from '@services';
+import {
+  DatabaseService,
+  NetworkService,
+  ListenerService,
+  ToastService,
+  LanguageService,
+} from '@services';
 import {
   Subject,
   concatMap,
@@ -41,13 +47,28 @@ export class AppComponent extends BaseComponent {
     private collectionsService: CollectionsService,
     private surveysService: SurveysService,
     private listenerService: ListenerService,
+    private languageService: LanguageService,
     @Optional() override routerOutlet?: IonRouterOutlet,
   ) {
     super(router, platform, toastService, alertCtrl, networkService, routerOutlet, location);
+    this.initLanguageListener();
     this.initToastMessageListener();
     this.initNetworkListener();
     this.listenerService.changeDeploymentListener();
     this.loadInitialData();
+  }
+
+  private initLanguageListener(): void {
+    this.languageService.isRTL$.pipe(untilDestroyed(this)).subscribe((isRTL) => {
+      const html: HTMLElement = document.getElementsByTagName('html')[0];
+      if (isRTL) {
+        html.classList.add('rtl');
+        html.setAttribute('dir', 'rtl');
+      } else {
+        html.classList.remove('rtl');
+        html.removeAttribute('dir');
+      }
+    });
   }
 
   private initToastMessageListener() {

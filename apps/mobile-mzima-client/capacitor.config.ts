@@ -1,6 +1,6 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
-const appName: string = 'Ushahidi';
+const appName: string = 'Saferworld';
 
 const config: CapacitorConfig = {
   // need change to app id before publish
@@ -12,7 +12,7 @@ const config: CapacitorConfig = {
     SplashScreen: {
       launchShowDuration: 1000,
       launchAutoHide: true,
-      backgroundColor: '#000000',
+      backgroundColor: '#7075AD',
       androidSplashResourceName: 'splash',
       androidScaleType: 'CENTER',
       splashFullScreen: true,

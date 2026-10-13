@@ -11,16 +11,18 @@
 .logo {
   display: block;
   overflow: hidden;
-  font-size: 156px;
+  width: min(82vw, 320px);
+  height: auto;
+  object-fit: contain;
   text-align: center;
   transition-duration: 0.35s;
   transition-timing-function: ease;
-  transition-property: font-size, opacity;
-  margin-bottom: calc(min(5vh, 80px) + 105px);
+  transition-property: width, opacity, margin-bottom;
+  margin: 0 auto calc(min(5vh, 80px) + 105px);
 
   &--hidden {
     opacity: 0;
-    font-size: 0;
+    width: 0;
     margin-bottom: 0;
   }
 }

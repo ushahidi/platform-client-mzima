@@ -1,7 +1,7 @@
 <app-form-control
   #searchControl
   class="search-form"
-  placeholder="Search"
+  [placeholder]="'common.search' | translate"
   [(ngModel)]="value"
   [rounded]="!isSearchView"
   [clearable]="!!value?.length"

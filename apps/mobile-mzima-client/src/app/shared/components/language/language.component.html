@@ -1,0 +1,40 @@
+<ion-button
+  id="language-trigger"
+  fill="solid"
+  class="language-button"
+  [attr.aria-label]="'form.select_language' | translate"
+  (click)="openLanguageList($event)"
+>
+  <ion-icon name="globe-outline" slot="icon-only"></ion-icon>
+  <span class="language-button__code">{{ selectedLanguage }}</span>
+</ion-button>
+
+<ion-popover
+  trigger="language-trigger"
+  triggerAction="click"
+  [isOpen]="isOpen"
+  (didDismiss)="isOpen = false"
+  cssClass="language-popover"
+>
+  <ng-template>
+    <ion-list class="language-list" lines="none">
+      <ion-list-header class="language-list__header">
+        {{ 'form.select_language' | translate }}
+      </ion-list-header>
+      <ion-item
+        button
+        detail="false"
+        class="language-list__item"
+        *ngFor="let language of languages"
+        [class.language-list__item--active]="language.code === selectedLanguage"
+        (click)="changeLanguage(language.code)"
+      >
+        <ion-label>
+          <span class="language-list__name">{{ language.name }}</span>
+          <span class="language-list__code">{{ language.code }}</span>
+        </ion-label>
+        <ion-icon *ngIf="language.code === selectedLanguage" name="checkmark" slot="end"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+</ion-popover>

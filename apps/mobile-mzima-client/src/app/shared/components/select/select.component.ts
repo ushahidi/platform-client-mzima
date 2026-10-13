@@ -64,4 +64,8 @@ export class SelectComponent implements ControlValueAccessor {
     this.isOnFocus = false;
     this.selectBlur.emit();
   }
+
+  public getOptionLabel(option: SelectOptionInterface | string): string {
+    return typeof option === 'string' ? option : option.label;
+  }
 }

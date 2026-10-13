@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PostPage } from './post.page';
-import { WalkthroughGuard, NotDeploymentGuard } from '@guards';
+import { LanguageGuard, WalkthroughGuard, NotDeploymentGuard } from '@guards';
 
 const routes: Routes = [
   {
     path: '',
     component: PostPage,
-    canActivate: [WalkthroughGuard, NotDeploymentGuard],
+    canActivate: [LanguageGuard, WalkthroughGuard, NotDeploymentGuard],
   },
   {
     path: 'edit',

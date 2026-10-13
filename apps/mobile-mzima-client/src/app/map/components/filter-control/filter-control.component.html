@@ -7,9 +7,10 @@
 >
   <app-icon slot="start" class="filter-control__icon" [name]="filter.icon"></app-icon>
   <div class="filter-control__main">
-    <span class="filter-control__title">{{ filter.label }}</span>
+    <span class="filter-control__title">{{ filter.label | translate }}</span>
     <span class="filter-control__info">
-      {{ filter.selectedLabel ?? 'Selected filters:' }} {{ filter.selected }}
+      {{ filter.selectedLabel ?? 'map.selected_filters' | translate }}
+      {{ filter.selected ?? '' | translate }}
     </span>
   </div>
   <div slot="end" class="filter-control__controls">

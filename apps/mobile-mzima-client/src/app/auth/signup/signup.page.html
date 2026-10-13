@@ -1,37 +1,39 @@
 <ion-content class="page ion-padding-vertical" [fullscreen]="true">
-  <ion-title class="page-title ion-text-center ion-margin-bottom">Welcome to Ushahidi!</ion-title>
+  <ion-title class="page-title ion-text-center">
+    {{ 'auth.welcome_to_saferworld' | translate }}
+  </ion-title>
   <div class="main ion-padding-horizontal">
     <app-deployment-info (deploymentClick)="chooseDeployment()"></app-deployment-info>
     <form class="form" novalidate [formGroup]="form" (ngSubmit)="signUp()">
       <div>
         <div class="input-group">
           <app-form-control
-            label="Name"
+            [label]="'auth.name' | translate"
             [required]="true"
             formControlName="name"
-            placeholder="Enter name"
-            hint="The name you enter will be a display name"
+            [placeholder]="'auth.enter_name' | translate"
+            [hint]="'auth.display_name_hint' | translate"
             [errors]="fieldErrorMessages(form.controls['name'], 'name')"
           >
           </app-form-control>
           <app-form-control
             type="email"
-            label="Email"
+            [label]="'auth.email' | translate"
             [required]="true"
             formControlName="email"
-            placeholder="Enter your email"
+            [placeholder]="'auth.enter_email' | translate"
             [errors]="fieldErrorMessages(form.controls['email'], 'email')"
           >
           </app-form-control>
           <app-form-control
             type="password"
-            label="Password"
+            [label]="'auth.password' | translate"
             [required]="true"
             [togglePassword]="true"
             formControlName="password"
-            placeholder="Enter password"
+            [placeholder]="'auth.enter_password' | translate"
             [errors]="fieldErrorMessages(form.controls['password'], 'password')"
-            [hint]="!form.controls['password'].value?.length ? 'Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol.' : undefined"
+            [hint]="!form.controls['password'].value?.length ? ('auth.password_hint' | translate) : undefined"
           >
             <app-password-strength
               additional
@@ -43,10 +45,14 @@
         </div>
         <div class="agreement">
           <app-checkbox formControlName="agreement">
-            I agree to Ushahidi
-            <a (click)="openLink($event, 'Privacy Policy')">Privacy Policy</a>
-            the <br />
-            <a (click)="openLink($event, 'Privacy Policy')">Terms and Conditions</a>.
+            {{ 'auth.agree_to' | translate }}
+            <a (click)="openLink($event, 'Privacy Policy')"
+              >{{ 'profile.menu.privacy_policy' | translate }}</a
+            >
+            {{ 'auth.and_the' | translate }} <br />
+            <a (click)="openLink($event, 'Privacy Policy')">
+              {{ 'profile.menu.terms_and_conditions' | translate }}</a
+            >.
           </app-checkbox>
         </div>
         <ion-text *ngIf="signupError?.length" class="form-error ion-text-center" color="danger">
@@ -59,10 +65,10 @@
           type="submit"
           [disabled]="form.invalid || form.disabled || !form.controls['agreement'].value"
         >
-          Sign up
+          {{ 'auth.sign_up' | translate }}
         </app-button>
         <app-button class="ion-margin-top" fill="clear" color="medium" routerLink="/">
-          Skip for now
+          {{ 'auth.skip_for_now' | translate }}
         </app-button>
       </div>
     </form>

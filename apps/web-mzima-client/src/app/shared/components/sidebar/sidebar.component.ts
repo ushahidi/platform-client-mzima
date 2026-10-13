@@ -132,13 +132,13 @@ export class SidebarComponent implements OnInit {
 
   private initMenu() {
     this.userMenu = [
-      {
-        label: 'nav.collections',
-        icon: 'collections',
-        visible: this.isDesktop,
-        action: () => this.openCollections(),
-        ref: 'collection',
-      },
+      // {
+      //   label: 'nav.collections',
+      //   icon: 'collections',
+      //   visible: this.isDesktop,
+      //   action: () => this.openCollections(),
+      //   ref: 'collection',
+      // },
       {
         label: 'nav.login',
         icon: 'auth',
@@ -153,13 +153,13 @@ export class SidebarComponent implements OnInit {
         action: () => this.openLogin(),
         ref: 'auth',
       },
-      {
-        label: 'nav.help_support',
-        icon: 'info',
-        visible: true,
-        action: () => this.openSupportModal(),
-        ref: 'support',
-      },
+      // {
+      //   label: 'nav.help_support',
+      //   icon: 'info',
+      //   visible: true,
+      //   action: () => this.openSupportModal(),
+      //   ref: 'support',
+      // },
     ];
   }
 

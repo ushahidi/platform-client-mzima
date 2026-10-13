@@ -7,7 +7,7 @@
   <div class="search-form__form-control-container ion-padding-horizontal">
     <app-form-control
       #formControl
-      placeholder="Search"
+      [placeholder]="'common.search' | translate"
       formControlName="postsQuery"
       [rounded]="!isResultsVisible"
       [clearable]="isResultsVisible"
@@ -49,16 +49,20 @@
     <div class="search-form-results__empty" *ngIf="!posts.length; else postsList">
       <ng-container *ngIf="!isPostsLoading; else spinner">
         <ion-text color="medium" *ngIf="!form.controls['postsQuery'].value?.length">
-          Start typing to find Posts
+          {{ 'map.start_typing_posts' | translate }}
         </ion-text>
         <ion-text color="medium" *ngIf="form.controls['postsQuery'].value?.length">
-          Sorry, no posts were found <br />based on your search criteria.
+          {{ 'map.no_search_posts' | translate }} <br />{{
+            'map.no_search_posts_detail' | translate
+          }}
         </ion-text>
       </ng-container>
     </div>
 
     <ng-template #postsList>
-      <ion-text class="total" color="medium">Found {{ foundPosts }} items</ion-text>
+      <ion-text class="total" color="medium">
+        {{ 'map.found_items' | translate : { count: foundPosts } }}
+      </ion-text>
       <app-post-item
         [routerLink]="[post.id.toString()]"
         *ngFor="let post of posts"
@@ -84,11 +88,11 @@
     offsetBottom: !selectedFilter
   }"
   [closable]="!selectedFilter"
-  title="{{ selectedSavedFilter?.label ?? selectedFilter?.label ?? 'Filters' }}"
+  [title]="selectedSavedFilter?.label || (selectedFilter?.label ?? 'map.filters' | translate)"
 >
   <div class="filters-modal__header" header-end>
     <ion-text color="medium" class="filters-modal__total-posts">
-      Found posts:
+      {{ 'map.found_posts' | translate }}
       <strong class="filters-modal__total-posts__count" *ngIf="!isTotalLoading; else spinner">
         {{ totalPosts }}
       </strong>
@@ -109,7 +113,7 @@
   <div class="filters-modal__footer" footer>
     <ng-container *ngIf="!isAddSavedFiltersMode; else SavedFiltersModeButtons">
       <app-button (buttonClick)="modalCloseHandle()" class="filters-modal__button" expand="inline">
-        Apply
+        {{ 'common.apply' | translate }}
       </app-button>
       <app-button
         fill="outline"
@@ -118,12 +122,12 @@
         class="filters-modal__button"
         (buttonClick)="handleClearFilters()"
       >
-        Clear
+        {{ 'common.clear' | translate }}
       </app-button>
     </ng-container>
     <ng-template #SavedFiltersModeButtons>
       <app-button (buttonClick)="saveSavedFilters()" class="filters-modal__button" expand="inline">
-        Save as
+        {{ 'map.save_as' | translate }}
       </app-button>
       <app-button
         fill="outline"
@@ -132,7 +136,7 @@
         class="filters-modal__button"
         (buttonClick)="cancelAddSavedFiltersMode()"
       >
-        Cancel
+        {{ 'common.cancel' | translate }}
       </app-button>
     </ng-template>
   </div>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DeploymentExistsGuard } from '@guards';
+import { DeploymentExistsGuard, LanguageGuard } from '@guards';
 
 import { DeploymentPage } from './deployment.page';
 
@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: '',
     component: DeploymentPage,
-    canActivate: [DeploymentExistsGuard],
+    canActivate: [LanguageGuard, DeploymentExistsGuard],
   },
 ];
 
