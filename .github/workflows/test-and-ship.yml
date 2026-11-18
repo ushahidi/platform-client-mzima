@@ -242,6 +242,10 @@ jobs:
     needs: [test, e2e-test]
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # id-token: Workload Identity Federation to Google Cloud (no stored keys).
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v3
@@ -261,6 +265,37 @@ jobs:
         with:
           registry: 513259414768.dkr.ecr.eu-west-1.amazonaws.com
 
+      # Artifact Registry in GCP: pushes as sa-platform-ci-push through the
+      # foundation's Workload Identity pool. Only pushes need it.
+      - name: Authenticate to Google Cloud (Workload Identity Federation)
+        if: github.event_name != 'pull_request'
+        id: gcp-auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/384414633675/locations/global/workloadIdentityPools/foundation-pool/providers/foundation-gh-provider
+          service_account: sa-platform-ci-push@prj-c-shared-2uag.iam.gserviceaccount.com
+          token_format: access_token
+
+      - name: Login to Artifact Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: europe-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.gcp-auth.outputs.access_token }}
+
+      # Artifact Registry tags are immutable: a branch build is tagged
+      # <branch>-<sha> (no moving branch tag), a release with its version.
+      - name: Docker meta (Artifact Registry)
+        id: meta_gar
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            europe-docker.pkg.dev/prj-c-shared-2uag/platform/platform-client-mzima
+          tags: |
+            type=raw,value={{branch}}-{{sha}},enable=${{ github.ref_type == 'branch' }}
+            type=ref,event=tag
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -274,13 +309,15 @@ jobs:
             type=semver,pattern={{version}}
             type=sha
 
-      - name: Build and push to Amazon ECR
+      - name: Build and push to Amazon ECR and Artifact Registry
         uses: docker/build-push-action@v2
         with:
           pull: true
           push: ${{ github.event_name != 'pull_request' }}
           labels: ${{ steps.meta.outputs.labels }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ github.event_name != 'pull_request' && steps.meta_gar.outputs.tags || '' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
