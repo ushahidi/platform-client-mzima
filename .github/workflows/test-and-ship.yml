@@ -253,18 +253,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
-
-      - name: Login to AWS Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: 513259414768.dkr.ecr.eu-west-1.amazonaws.com
-
       # Artifact Registry in GCP: pushes as sa-platform-ci-push through the
       # foundation's Workload Identity pool. Only pushes need it.
       - name: Authenticate to Google Cloud (Workload Identity Federation)
@@ -296,28 +284,13 @@ jobs:
             type=raw,value={{branch}}-{{sha}},enable=${{ github.ref_type == 'branch' }}
             type=ref,event=tag
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: |
-            513259414768.dkr.ecr.eu-west-1.amazonaws.com/platform-client-mzima
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=ref,event=tag
-            type=semver,pattern={{version}}
-            type=sha
-
-      - name: Build and push to Amazon ECR and Artifact Registry
+      - name: Build and push to Artifact Registry
         uses: docker/build-push-action@v2
         with:
           pull: true
           push: ${{ github.event_name != 'pull_request' }}
-          labels: ${{ steps.meta.outputs.labels }}
-          tags: |
-            ${{ steps.meta.outputs.tags }}
-            ${{ github.event_name != 'pull_request' && steps.meta_gar.outputs.tags || '' }}
+          labels: ${{ steps.meta_gar.outputs.labels }}
+          tags: ${{ github.event_name != 'pull_request' && steps.meta_gar.outputs.tags || '' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
