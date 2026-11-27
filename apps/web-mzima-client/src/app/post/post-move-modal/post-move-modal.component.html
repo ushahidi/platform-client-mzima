@@ -1,0 +1,50 @@
+<mzima-client-button
+  tabindex="-1"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
+  [data-qa]="'btn-close'"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
+  (buttonClick)="closeModal()"
+>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
+
+<strong mat-dialog-title>Move post from one campaign to another.</strong>
+
+<mat-dialog-content>
+  <p class="post-move-modal__text">Move post {{ data.post_id }} to:.</p>
+  <mat-form-field appearance="outline" class="post-move-modal__field">
+    <mat-label>Campaign</mat-label>
+    <mat-select [(value)]="selectedCampaignId" [disabled]="isLoading">
+      <mat-option *ngIf="isLoading" [disabled]="true">Loading...</mat-option>
+      <mat-option *ngIf="!isLoading && campaigns.length === 0" [disabled]="true">
+        No campaigns found
+      </mat-option>
+      <mat-option *ngFor="let campaign of campaigns" [value]="campaign.id">
+        {{ campaign.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end">
+  <mzima-client-button
+    fill="outline"
+    color="secondary"
+    (buttonClick)="closeModal()"
+    [mat-dialog-close]="false"
+    [data-qa]="'post-move-cancel'"
+  >
+    {{ 'app.cancel' | translate }}
+  </mzima-client-button>
+  <mzima-client-button
+    (buttonClick)="submitMove()"
+    [disabled]="!selectedCampaignId || isSubmitting"
+    [data-qa]="'post-move-submit'"
+  >
+    Submit
+  </mzima-client-button>
+</div>

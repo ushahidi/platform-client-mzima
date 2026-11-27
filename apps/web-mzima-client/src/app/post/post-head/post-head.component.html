@@ -9,7 +9,6 @@
     <mat-icon icon svgIcon="lock" class="post-lock__icon"></mat-icon>
     <span class="post-info__status post-info__status--draft" [data-qa]="'post_lock'">Locked</span>
   </div>
-
   <mzima-client-button
     fill="clear"
     color="gray"
@@ -85,7 +84,7 @@
         [data-qa]="'btn-publish-post'"
         [disabled]="isLocked"
       >
-        <mat-icon svgIcon="sort-up"></mat-icon>
+        <mat-icon svgIcon="roles"></mat-icon>
         {{ 'post.post_actions.publish' | translate }}
       </button>
       <button
@@ -95,6 +94,7 @@
         [data-qa]="'btn-underReview-post'"
         [disabled]="isLocked"
       >
+      <mat-icon svgIcon="account"></mat-icon>
         {{ 'post.post_actions.put_under_review' | translate }}
       </button>
       <button
@@ -104,6 +104,7 @@
         [data-qa]="'btn-archive-post'"
         [disabled]="isLocked"
       >
+      <mat-icon svgIcon="export"></mat-icon>
         {{ 'post.post_actions.archive' | translate }}
       </button>
     </ng-container>
@@ -114,7 +115,20 @@
       [data-qa]="'btn-delete-post'"
       [disabled]="isLocked"
     >
+      <mat-icon svgIcon="delete"></mat-icon>
       {{ 'post.post_actions.delete' | translate }}
+    </button>
+    <button
+      *ngIf="
+        user?.permissions?.includes('Manage Posts')
+      "
+      mat-menu-item
+      (click)="openMovePostModal()"
+      [data-qa]="'move-post'"
+      [disabled]="isLocked"
+    >
+      <mat-icon svgIcon="sorting" class="post-head__sorting-icon"></mat-icon>
+      Move Post
     </button>
   </mat-menu>
 </div>
