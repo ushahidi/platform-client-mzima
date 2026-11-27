@@ -1,7 +1,7 @@
 const PostLocators = {
   dataViewBtn: '[data-qa="btn-data"]',
   addPostBtn: '[data-qa="submit-post-button"]',
-  srvyItemBtn: '[data-qa="add-post-modal-surveys-item125"]',
+  srvyItemBtn: '[data-qa^="add-post-modal-surveys-item"]',
   successButton: '[data-qa="btn-confirm-success"]',
   submitBtn: '[data-qa="btn-post-item-submit"]',
   postPreview: '[data-qa="post-preview"]',
