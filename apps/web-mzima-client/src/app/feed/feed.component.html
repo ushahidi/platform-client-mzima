@@ -220,7 +220,7 @@
       [attr.data-qa]="'posts'"
     >
       <!-- No posts -->
-      <span *ngIf="!posts.length" class="posts-empty">
+      <span *ngIf="!posts.length" class="posts-empty" data-qa="posts-empty">
         <ng-container *ngIf="isDefaultFilters">
           <!-- No posts 1a: When there are no posts at all in the deployment or there no posts because none can be viewed by a user due to the permissions they have  -->
           <ng-container *ngIf="!userIsSearchingPostsByKeyword">
