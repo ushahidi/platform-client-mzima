@@ -1909,6 +1909,9 @@
       "save_success": "تم حفظ إعدادات التبرع",
       "delete_question": "هل أنت متأكد من رغبتك في حذف {{name}}؟"
     },
+    "map": {
+      "baselayer_fallback": "The map layer could not be loaded, so we've switched to the Humanitarian layer instead."
+    },
     "map_settings": {
       "save_success": "تم حفظ إعدادات الخريطة"
     },
