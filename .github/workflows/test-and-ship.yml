@@ -85,6 +85,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     continue-on-error: true
+    # id-token: Workload Identity Federation to Google Cloud for the test data.
+    permissions:
+      id-token: write
+      contents: read
+      packages: read
 
     services:
       mysql:
@@ -132,13 +137,28 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # The test database snapshot is in a private bucket; this workflow reads
+      # it as sa-mzima-ci-test-data through the foundation's Workload Identity
+      # pool (gcp-foundation-app-infra, development stage).
+      - name: Authenticate to Google Cloud (Workload Identity Federation)
+        id: gcp-auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/384414633675/locations/global/workloadIdentityPools/foundation-pool/providers/foundation-gh-provider
+          service_account: sa-mzima-ci-test-data@prj-d-platform-0eb7.iam.gserviceaccount.com
+          token_format: access_token
+
       ## set up API endpoint
       - name: Setup API endpoint
+        env:
+          GCS_TOKEN: ${{ steps.gcp-auth.outputs.access_token }}
         run: |
           set -ex;
 
-          SNAPSHOT_URL="https://ushahidi-static-web-assets.s3.eu-west-1.amazonaws.com/ushahidi-e2e-data.sql.gz"
-          wget -O sql-snapshot.sql.gz ${SNAPSHOT_URL} 2>/dev/null || { echo "Failed downloading snapshot!" && exit 1; }
+          SNAPSHOT_URL="https://storage.googleapis.com/storage/v1/b/bkt-prj-d-platform-0eb7-ci-test-data/o/ushahidi-e2e-data.sql.gz?alt=media"
+          set +x  # keep the token out of the log
+          curl -sSf -H "Authorization: Bearer ${GCS_TOKEN}" -o sql-snapshot.sql.gz "${SNAPSHOT_URL}" || { echo "Failed downloading snapshot!" && exit 1; }
+          set -x
 
           tmp_defaults=`mktemp`
           echo -e "[client]\nhost=127.0.0.1\nuser=ushahidi\nport=33061\npassword=ushahidi" > $tmp_defaults
