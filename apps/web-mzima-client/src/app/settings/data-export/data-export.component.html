@@ -7,7 +7,7 @@
     ></p>
   </div>
   <mat-tab-group dynamicHeight disableRipple disablePagination animationDuration="0ms">
-    <mat-tab [label]="'data_export.export' | translate" [data-qa]="'tab-export'">
+    <mat-tab [label]="'data_export.export' | translate" [attr.data-qa]="'tab-export'">
       <ng-container *ngIf="hxlEnabled && !hxlApiKey">
         <div class="alert">
           <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
@@ -118,7 +118,11 @@
         </mat-checkbox>
       </div>
       <div class="checkbox" *ngFor="let attribute of form.attributes">
-        <mat-checkbox [value]="attribute.key" [(ngModel)]="fieldsMap[form.id][attribute.key]">
+        <mat-checkbox
+          [value]="attribute.key"
+          [(ngModel)]="fieldsMap[form.id][attribute.key]"
+          [data-qa]="'selected-checkbox'"
+        >
           {{ attribute.label }}
         </mat-checkbox>
       </div>
